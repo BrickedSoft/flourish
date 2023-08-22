@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run semantic-release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ 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 }}
+          NPM_TOKEN: ${{ asdadasdja-sdkjqjedq-wqjkjwq-dj12ka=dj123=askdj1=kajd }}
