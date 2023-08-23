@@ -1,8 +1,8 @@
-export const header = [
+export const nav = [
   { title: "Resources", href: "/resources" },
   {
-    title: "Community",
-    href: "/community",
+    title: "Dashboard",
+    href: "/dashboard",
   },
   {
     title: "Support",

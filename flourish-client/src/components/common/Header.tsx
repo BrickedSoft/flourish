@@ -1,10 +1,10 @@
 import { Link, Box, List, Image } from "@chakra-ui/react";
 
 import logo from "../../assets/img/logo.png";
-import { header } from "../../assets/data/header";
+import { nav } from "../../assets/data/header";
 
 const Header = () => {
-  const renderedLinks = header.map(({ title, href }, index) => (
+  const renderedLinks = nav.map(({ title, href }, index) => (
     <Link
       key={index}
       href={href}
@@ -31,9 +31,8 @@ const Header = () => {
   return (
     <Box
       as="header"
-      w={"100%"}
+      w={"full"}
       h={"header"}
-      px={"48"}
       fontSize={"2xl"}
       display={"grid"}
       gridTemplateColumns={"repeat(2, auto)"}
