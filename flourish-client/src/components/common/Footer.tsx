@@ -34,31 +34,18 @@ const Footer = () => {
     </Heading>
   );
 
-  const renderedContacts = contacts.map(({ title, href, type }, index) => (
-    <Link
-      key={index}
-      href={`${type}:${href}`}
-      fontSize={"xl"}
-      color={"font.muted"}
-      transition={"all .3s"}
-      _hover={{
-        color: "#555",
-      }}
-    >
-      {title}
-    </Link>
-  ));
-
   const renderFooterLink = ({
     title,
     href,
+    type,
   }: {
     title: string;
     href: string;
+    type?: string;
   }) => (
     <Link
       key={title}
-      href={href}
+      href={`${type ? type + ":" : ""}${href}`}
       fontSize={"xl"}
       color={"font.muted"}
       transition={"all .3s"}
@@ -94,7 +81,7 @@ const Footer = () => {
           {renderFooterHeading("Contact Us")}
 
           <Flex flexDirection="column" gap={"24"}>
-            {renderedContacts}
+            {contacts.map((item, index) => renderFooterLink(item))}
           </Flex>
         </GridItem>
 
