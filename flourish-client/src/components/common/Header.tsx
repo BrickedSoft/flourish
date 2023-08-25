@@ -49,13 +49,8 @@ const Header = () => {
         zIndex={"sticky"}
         _focus={{ outline: "none", boxShadow: "none" }}
       >
-        <Link
-          href="/"
-          textDecoration={"none"}
-          height={"5.2rem"}
-          width={"13.8rem"}
-        >
-          <Image w={"full"} src={logo} alt={"logo"} />
+        <Link href={"/"}>
+          <Image src={logo} h={"24"} w={"auto"} alt={"logo"} />
         </Link>
 
         <List

@@ -69,7 +69,7 @@ const Footer = () => {
         >
           <GridItem display={"flex"} flexDir={"column"} gap={"24"}>
             <Link href={"/"}>
-              <Image src={logo} h={"24"} w={"auto"} />
+              <Image src={logo} h={"24"} w={"auto"} alt={"logo"} />
             </Link>
             <Flex gap={"28"}>{renderedLinkIcons}</Flex>
             <Box fontSize={"lg"} color={"font.muted"} lineHeight={"tall"}>
