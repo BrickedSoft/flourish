@@ -1,7 +1,8 @@
 import { Link, Box, List, Image } from "@chakra-ui/react";
 
-import logo from "../../assets/img/logo.png";
 import { nav } from "../../assets/data/header";
+import Container from "./Container";
+import logo from "../../assets/img/logo.png";
 
 const Header = () => {
   const renderedLinks = nav.map(({ title, href }, index) => (
@@ -29,38 +30,46 @@ const Header = () => {
   ));
 
   return (
-    <Box
-      as="header"
+    <Container
+      id={"header"}
       w={"full"}
-      h={"header"}
-      fontSize={"2xl"}
-      display={"grid"}
-      gridTemplateColumns={"repeat(2, auto)"}
-      justifyContent={"space-between"}
-      alignItems={"center"}
-      zIndex={"sticky"}
-      _focus={{ outline: "none", boxShadow: "none" }}
+      maxW={"full"}
+      px={"32"}
+      bg={"bgContainer2"}
     >
-      <Link
-        href="/"
-        textDecoration={"none"}
-        height={"5.2rem"}
-        width={"13.8rem"}
-      >
-        <Image w={"full"} src={logo} alt={"logo"} />
-      </Link>
-
-      <List
-        as={"nav"}
-        className={"header-page-nav-list header-nav-list"}
-        listStyleType={"none"}
-        display={"flex"}
+      <Box
+        as="header"
+        w={"full"}
+        h={"header"}
+        fontSize={"2xl"}
+        display={"grid"}
+        gridTemplateColumns={"repeat(2, auto)"}
+        justifyContent={"space-between"}
         alignItems={"center"}
-        columnGap={"48"}
+        zIndex={"sticky"}
+        _focus={{ outline: "none", boxShadow: "none" }}
       >
-        {renderedLinks}
-      </List>
-    </Box>
+        <Link
+          href="/"
+          textDecoration={"none"}
+          height={"5.2rem"}
+          width={"13.8rem"}
+        >
+          <Image w={"full"} src={logo} alt={"logo"} />
+        </Link>
+
+        <List
+          as={"nav"}
+          className={"header-page-nav-list header-nav-list"}
+          listStyleType={"none"}
+          display={"flex"}
+          alignItems={"center"}
+          columnGap={"48"}
+        >
+          {renderedLinks}
+        </List>
+      </Box>
+    </Container>
   );
 };
 

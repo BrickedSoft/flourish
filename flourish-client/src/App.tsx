@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 
-import Container from "./components/common/Container";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Homepage from "./pages/homepage";
+import Login from "./pages/login";
 
 const App = () => {
   return (
@@ -17,21 +17,13 @@ const App = () => {
       justifyContent={"space-between"}
     >
       <BrowserRouter>
-        <Container
-          id={"header"}
-          w={"full"}
-          maxW={"full"}
-          px={"32"}
-          bg={"bgContainer2"}
-        >
-          <Header />
-        </Container>
+        <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<Login />} />
         </Routes>
-        <Container px={"32"} bg={"bgAsh"} maxW={"full"}>
-          <Footer />
-        </Container>
+
+        <Footer />
       </BrowserRouter>
     </Box>
   );

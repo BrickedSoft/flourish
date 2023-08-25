@@ -18,6 +18,7 @@ import {
   supportLinks,
 } from "../../assets/data/footer";
 import logo from "../../assets/img/logo.png";
+import Container from "./Container";
 
 const Footer = () => {
   const renderedLinkIcons = socialLinks.map(({ icon, href }, index) => {
@@ -58,58 +59,60 @@ const Footer = () => {
   );
 
   return (
-    <Box as="footer" w={"full"} py={"64"}>
-      <Grid
-        gridTemplateColumns={"repeat(5, auto)"}
-        alignContent={"flex-start"}
-        alignItems={"flex-start"}
-        justifyContent={"space-between"}
-      >
-        <GridItem display={"flex"} flexDir={"column"} gap={"24"}>
-          <Link href={"/"}>
-            <Image src={logo} h={"24"} w={"auto"} />
-          </Link>
-          <Flex gap={"28"}>{renderedLinkIcons}</Flex>
-          <Box fontSize={"lg"} color={"font.muted"} lineHeight={"tall"}>
-            {copyright.map(({ data }, index) => (
-              <Text key={index}>{data}</Text>
-            ))}
-          </Box>
-        </GridItem>
+    <Container px={"32"} bg={"bgAsh"} maxW={"full"}>
+      <Box as="footer" w={"full"} py={"64"}>
+        <Grid
+          gridTemplateColumns={"repeat(5, auto)"}
+          alignContent={"flex-start"}
+          alignItems={"flex-start"}
+          justifyContent={"space-between"}
+        >
+          <GridItem display={"flex"} flexDir={"column"} gap={"24"}>
+            <Link href={"/"}>
+              <Image src={logo} h={"24"} w={"auto"} />
+            </Link>
+            <Flex gap={"28"}>{renderedLinkIcons}</Flex>
+            <Box fontSize={"lg"} color={"font.muted"} lineHeight={"tall"}>
+              {copyright.map(({ data }, index) => (
+                <Text key={index}>{data}</Text>
+              ))}
+            </Box>
+          </GridItem>
 
-        <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
-          {renderFooterHeading("Contact Us")}
+          <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
+            {renderFooterHeading("Contact Us")}
 
-          <Flex flexDirection="column" gap={"24"}>
-            {contacts.map((item, index) => renderFooterLink(item))}
-          </Flex>
-        </GridItem>
+            <Flex flexDirection="column" gap={"24"}>
+              {contacts.map((item, index) => renderFooterLink(item))}
+            </Flex>
+          </GridItem>
 
-        <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
-          {renderFooterHeading("Account")}
+          <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
+            {renderFooterHeading("Account")}
 
-          <Flex flexDirection="column" gap={"24"}>
-            {accountLinks.map((item, index) => renderFooterLink(item))}
-          </Flex>
-        </GridItem>
+            <Flex flexDirection="column" gap={"24"}>
+              {accountLinks.map((item, index) => renderFooterLink(item))}
+            </Flex>
+          </GridItem>
 
-        <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
-          {renderFooterHeading("Company")}
+          <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
+            {renderFooterHeading("Company")}
 
-          <Flex flexDirection={"column"} gap={"24"}>
-            {companyLinks.map((item, index) => renderFooterLink(item))}
-          </Flex>
-        </GridItem>
+            <Flex flexDirection={"column"} gap={"24"}>
+              {companyLinks.map((item, index) => renderFooterLink(item))}
+            </Flex>
+          </GridItem>
 
-        <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
-          {renderFooterHeading("Support")}
+          <GridItem display={"flex"} flexDir={"column"} gap={"36"}>
+            {renderFooterHeading("Support")}
 
-          <Flex flexDirection={"column"} gap={"24"}>
-            {supportLinks.map((item, index) => renderFooterLink(item))}
-          </Flex>
-        </GridItem>
-      </Grid>
-    </Box>
+            <Flex flexDirection={"column"} gap={"24"}>
+              {supportLinks.map((item, index) => renderFooterLink(item))}
+            </Flex>
+          </GridItem>
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 
