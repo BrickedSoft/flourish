@@ -18,6 +18,7 @@ import logo from "../../assets/img/logo.png";
 import Container from "../../components/common/Container";
 import ButtonFull from "../../components/common/button/ButtonFull";
 import { setLoginData } from "../../store/slices/formSlice";
+import { loginContent } from "../../assets/data/login";
 
 export default function HookForm() {
   const dispatch = useAppDispatch();
@@ -37,25 +38,28 @@ export default function HookForm() {
       <Flex flexDir={"column"} gap={"44"}>
         <Link
           href={"/"}
+          alignSelf={"end"}
           _focus={{
             boxShadow: "none",
           }}
+          mb={"16"}
         >
-          <Image src={logo} h={"20"} w={"auto"} alt={"logo"} />
+          <Image src={logo} h={"14"} w={"auto"} alt={"logo"} />
         </Link>
 
         <Flex flexDir={"column"} gap={"16"}>
           <Heading
             color="font.secondary"
             fontSize="7xl"
+            textAlign={"center"}
             lineHeight="shorter"
-            letterSpacing="tight"
-            fontWeight="semibold"
+            letterSpacing="tighter"
+            fontWeight="medium"
           >
-            Login
+            {loginContent.title}
           </Heading>
-          <Text fontSize={"xl"} color={"font.muted2"}>
-            Welcome back! Please enter your credentials.
+          <Text fontSize={"xl"} textAlign={"center"} color={"font.muted2"}>
+            {loginContent.description}
           </Text>
         </Flex>
 
