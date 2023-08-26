@@ -645,5 +645,5 @@ const Hero = (props: SVGProps<SVGSVGElement>) => (
     </g>
   </svg>
 );
-  
+
 export default Hero;
