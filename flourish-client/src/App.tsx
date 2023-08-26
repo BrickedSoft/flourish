@@ -5,9 +5,12 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Homepage from "./pages/homepage";
 import Login from "./pages/login";
+import Signup from "./pages/signup";
+import { customLayoutPaths } from "./assets/data/app";
 
 const App = () => {
   const currentRoute = window.location.pathname;
+  const isLayout = !customLayoutPaths.includes(currentRoute);
 
   return (
     <Box
@@ -19,14 +22,15 @@ const App = () => {
       justifyContent={"space-between"}
     >
       <BrowserRouter>
-        {currentRoute !== "/login" && <Header />}
+        {isLayout && <Header />}
 
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
 
-        {currentRoute !== "/login" && <Footer />}
+        {isLayout && <Footer />}
       </BrowserRouter>
     </Box>
   );

@@ -1,10 +1,10 @@
 import { Center, Grid } from "@chakra-ui/react";
 
-import LoginImage from "../../assets/svg/Login";
+import SignupImage from "../../assets/svg/Signup";
 import Form from "./Form";
 import Container from "../../components/common/Container";
 
-const Login = () => {
+const Signup = () => {
   return (
     <Container w={"full"} h={"100vh"} overflow={"hidden"} bg={"bg.container2"}>
       <Center h="full" py={"24"}>
@@ -20,7 +20,7 @@ const Login = () => {
           borderRadius={"xl"}
           boxShadow={`0 4.8rem 6.4rem rgba(28, 126, 214, 0.15)`}
         >
-          <LoginImage />
+          <SignupImage />
           <Form />
         </Grid>
       </Center>
@@ -28,4 +28,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

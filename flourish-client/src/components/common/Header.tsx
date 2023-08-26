@@ -36,7 +36,7 @@ const Header = () => {
       w={"full"}
       maxW={"full"}
       px={"32"}
-      bg={"bgContainer2"}
+      bg={"bg.container2"}
     >
       <Box
         as="header"
