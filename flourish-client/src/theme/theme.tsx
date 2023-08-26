@@ -5,7 +5,7 @@ const theme = extendTheme({
   /*                             Chakra Custom Theme                            */
   /* -------------------------------------------------------------------------- */
   fonts: {
-    heading: `"Poppins", sans-serif`,
+    heading: "Work Sans, sans-serif",
     body: `"Rubik", sans-serif`,
     mono: "Menlo, monospace",
   },
@@ -176,6 +176,14 @@ const theme = extendTheme({
     "2xl": "1.6rem",
     "3xl": "2rem",
     full: "9999px",
+  },
+
+  borderWidths: {
+    px: "1px",
+    0.5: "0.5rem",
+    1: "0.1rem",
+    2: "0.2rem",
+    4: "0.4rem",
   },
 
   zIndices: {

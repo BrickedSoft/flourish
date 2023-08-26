@@ -11,6 +11,7 @@ const ButtonOutline = ({
   bg,
   borderColor,
   onClick,
+  ...rest
 }: {
   children: ReactNode;
   px?: string;
@@ -31,7 +32,6 @@ const ButtonOutline = ({
       textDecoration="none"
       fontSize={fontSize ?? "18"}
       fontWeight={fontWeight ?? "medium"}
-      letterSpacing=".25px"
       px={px}
       py={py}
       color="font.hero"
@@ -44,6 +44,7 @@ const ButtonOutline = ({
         bg: "bgContainer",
         boxShadow: "inset 0 0 0 0.25rem #fff",
       }}
+      {...rest}
     >
       {children}
     </Button>

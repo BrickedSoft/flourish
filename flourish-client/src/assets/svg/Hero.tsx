@@ -1,4 +1,6 @@
-export const Hero = (props: any) => (
+import { SVGProps } from "react";
+
+const Hero = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" {...props}>
     <style>
       {`@keyframes wave {
@@ -643,3 +645,5 @@ export const Hero = (props: any) => (
     </g>
   </svg>
 );
+
+export default Hero;
