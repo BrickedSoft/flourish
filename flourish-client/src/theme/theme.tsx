@@ -35,21 +35,27 @@ const theme = extendTheme({
       900: "#000e1e",
     },
 
-    bgContainer: "#f2f5fe",
-    bgContainer2: "#f7faff",
-    bgContainer3: "#f9fcfe",
     bg: "#fff",
-    bgDarker: "#fafafc",
     bgAsh: "#f2f3f4",
+    bgDarker: "#fafafc",
+    bgContainer: "#fcfcfc",
+    bgContainer2: "#f2f5fe",
+    bgContainer3: "#f7faff",
+    bgContainer4: "#f9fcfe",
+    shades: ["#1971c2"],
+    tints: ["#339af0"],
+    tintsTransparent: ["#e8f2fbbf", "#bbd8f3f2"],
 
     font: {
       // hero: "#204289",
       hero: "#064273",
+      heroLight: "#1b77cb",
       primary: "#1c7ed6",
       focused: "#18181B",
+      secondary: "#333",
+      general: "#555",
       muted: "#767676",
       muted2: "#aaa",
-      general: "#555",
       light: "#fff",
     },
   },
@@ -130,6 +136,7 @@ const theme = extendTheme({
   },
 
   sizes: {
+    header: "8rem",
     max: "max-content",
     min: "min-content",
     full: "100%",
@@ -185,75 +192,6 @@ const theme = extendTheme({
     skipLink: 1600,
     toast: 1700,
     tooltip: 1800,
-  },
-
-  /* -------------------------------------------------------------------------- */
-  /*                                   Custom                                   */
-  /* -------------------------------------------------------------------------- */
-
-  typography: {
-    // Colors
-    colors: {
-      primaryFirst: {
-        primary: "#1c7ed6",
-        shades: ["#1971c2"],
-        tints: ["#339af0"],
-      },
-      background: {
-        personCard: "#fff",
-        container: "#fcfcfc",
-        tintsTransparent: ["#e8f2fbbf", "#bbd8f3f2"],
-      },
-    },
-
-    // Spacing
-
-    sectionGap: {
-      small: "1.2rem",
-      mediumLow: "1.6rem",
-      medium: "2.4rem",
-      mediumHigh: "3.6rem",
-      large: "4.8rem",
-      veryLarge: "9.6rem",
-
-      headerBottom: "0rem",
-    },
-
-    // Heights
-
-    containerWidth: {
-      overviewMin: "35rem",
-    },
-
-    containerHeight: {
-      header: "8rem",
-    },
-  },
-
-  components: {
-    btn: {
-      btnLink: `.btn:link,
-        .btn:visited { {
-          font-weight: 600;
-          padding: 1.6rem 2.4rem;
-          border-radius: 0.9rem;
-
-          border: none !important;
-          cursor: pointer;
-
-          transition: all 0.3s;
-        }`,
-
-      btnFullLink: `.btn--full:link,
-        .btn--full:visited {
-          background-color: #1c7ed6;
-          color: #fff;
-        }`,
-      btnFullActive: `.btn--outline:hover,
-        .btn--outline:active {
-          background-color: #1c7ed6;
-        }`,
-    },
   },
 });
 
