@@ -10,9 +10,10 @@ const Header = () => {
       key={index}
       href={href}
       display={"inline-block"}
-      letterSpacing={".25px"}
+      letterSpacing={"-.25px"}
       textDecoration={"none"}
       color={"secondary"}
+      fontSize={"2xl"}
       fontWeight={"medium"}
       pt={"0.6rem"}
       pb={"0.5rem"}
@@ -41,7 +42,6 @@ const Header = () => {
         as="header"
         w={"full"}
         h={"header"}
-        fontSize={"2xl"}
         display={"grid"}
         gridTemplateColumns={"repeat(2, auto)"}
         justifyContent={"space-between"}
@@ -50,7 +50,7 @@ const Header = () => {
         _focus={{ outline: "none", boxShadow: "none" }}
       >
         <Link href={"/"}>
-          <Image src={logo} h={"24"} w={"auto"} alt={"logo"} />
+          <Image src={logo} h={"20"} w={"auto"} alt={"logo"} />
         </Link>
 
         <List

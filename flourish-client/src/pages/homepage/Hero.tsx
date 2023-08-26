@@ -1,8 +1,8 @@
-import { Flex, Grid, GridItem, Text, Box } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Text, Box, Heading } from "@chakra-ui/react";
 
 import ButtonFull from "../../components/common/button/ButtonFull";
 import ButtonOutline from "../../components/common/button/ButtonOutline";
-import { Hero as HeroImage } from "../../assets/svg/Hero";
+import HeroImage from "../../assets/svg/Hero";
 import { heroButtonData, heroData } from "../../assets/data/hero";
 
 const Hero = () => {
@@ -27,16 +27,16 @@ const Hero = () => {
         >
           {heroData.announcement}
         </Text>
-        <Text
+        <Heading
           color="font.hero"
           fontSize="8xl"
-          lineHeight="1.1"
-          letterSpacing="tight"
+          lineHeight="shorter"
+          letterSpacing="tighter"
           fontWeight="bold"
           mb="32"
         >
           {heroData.title}
-        </Text>
+        </Heading>
         <Text
           color="font.hero"
           fontSize="16"
@@ -48,7 +48,7 @@ const Hero = () => {
           {heroData.description}
         </Text>
         <Flex alignItems="center" gap="16" mb="80">
-          <ButtonFull py="24" px="32" fontSize="18" onClick={(e) => {}}>
+          <ButtonFull py="24" px="32" fontSize="18">
             {heroButtonData[0].title}
           </ButtonFull>
           <ButtonOutline py="24" px="32" fontSize="18" onClick={(e) => {}}>

@@ -7,6 +7,8 @@ import Homepage from "./pages/homepage";
 import Login from "./pages/login";
 
 const App = () => {
+  const currentRoute = window.location.pathname;
+
   return (
     <Box
       display={"flex"}
@@ -17,13 +19,14 @@ const App = () => {
       justifyContent={"space-between"}
     >
       <BrowserRouter>
-        <Header />
+        {currentRoute !== "/login" && <Header />}
+
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
         </Routes>
 
-        <Footer />
+        {currentRoute !== "/login" && <Footer />}
       </BrowserRouter>
     </Box>
   );
