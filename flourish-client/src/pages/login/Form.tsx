@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 import {
   Flex,
   FormControl,
@@ -12,23 +13,34 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import logo from "../../assets/img/logo.png";
 import Container from "../../components/common/Container";
 import ButtonFull from "../../components/common/button/ButtonFull";
+import { setLoginData } from "../../store/slices/formSlice";
 
 export default function HookForm() {
+  const dispatch = useAppDispatch();
+  const formData = useAppSelector((state) => state.form?.login);
+
   const {
+    control,
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({ defaultValues: formData });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => dispatch(setLoginData(data));
 
   return (
     <Container maxW={"2xl"}>
       <Flex flexDir={"column"} gap={"44"}>
-        <Link href={"/"}>
+        <Link
+          href={"/"}
+          _focus={{
+            boxShadow: "none",
+          }}
+        >
           <Image src={logo} h={"20"} w={"auto"} alt={"logo"} />
         </Link>
 
@@ -47,95 +59,102 @@ export default function HookForm() {
           </Text>
         </Flex>
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "2.4rem",
-          }}
-        >
-          {/* ---------------------------------- Email --------------------------------- */}
-
-          <FormControl
-            isInvalid={errors.email ? true : false}
-            display={"flex"}
-            flexDir={"column"}
-            gap={"8"}
+        <>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "2.4rem",
+            }}
           >
-            <FormLabel
-              htmlFor="email"
-              fontSize={"xl"}
-              color={"font.muted2"}
-              fontWeight={"normal"}
+            {/* ---------------------------------- Email --------------------------------- */}
+
+            <FormControl
+              isInvalid={errors.email ? true : false}
+              display={"flex"}
+              flexDir={"column"}
+              gap={"8"}
             >
-              Email address
-            </FormLabel>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@mail.com"
-              {...register("email", {
-                required: "This is required",
-              })}
+              <FormLabel
+                htmlFor="email"
+                fontSize={"xl"}
+                color={"font.muted2"}
+                fontWeight={"normal"}
+              >
+                Email address
+              </FormLabel>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@mail.com"
+                {...register("email", {
+                  required: "This is required",
+                })}
+                px={"16"}
+                py={"24"}
+                fontSize={"lg"}
+                borderWidth={"2"}
+                borderRadius={"lg"}
+              />
+              <FormErrorMessage fontSize={"md"}>
+                {errors?.email && (errors?.email?.message as React.ReactNode)}
+              </FormErrorMessage>
+            </FormControl>
+
+            {/* -------------------------------- Password -------------------------------- */}
+
+            <FormControl
+              isInvalid={errors.password ? true : false}
+              display={"flex"}
+              flexDir={"column"}
+              gap={"8"}
+            >
+              <FormLabel
+                htmlFor="password"
+                fontSize={"xl"}
+                color={"font.muted2"}
+                fontWeight={"normal"}
+              >
+                Password
+              </FormLabel>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                {...register("password", {
+                  required: "This is required",
+                  minLength: {
+                    value: 8,
+                    message: "Minimum length should be 8",
+                  },
+                })}
+                px={"16"}
+                py={"24"}
+                fontSize={"lg"}
+                borderWidth={"none"}
+                borderRadius={"lg"}
+              />
+              <FormErrorMessage fontSize={"md"}>
+                {errors?.password && (errors?.password?.message as ReactNode)}
+              </FormErrorMessage>
+            </FormControl>
+
+            <ButtonFull
+              mt={"12"}
+              isLoading={isSubmitting}
               px={"16"}
               py={"24"}
-              fontSize={"lg"}
-              borderWidth={"2"}
-              borderRadius={"lg"}
-            />
-            <FormErrorMessage fontSize={"md"}>
-              {errors?.email && (errors?.email?.message as React.ReactNode)}
-            </FormErrorMessage>
-          </FormControl>
-
-          {/* -------------------------------- Password -------------------------------- */}
-
-          <FormControl
-            isInvalid={errors.password ? true : false}
-            display={"flex"}
-            flexDir={"column"}
-            gap={"8"}
-          >
-            <FormLabel
-              htmlFor="password"
               fontSize={"xl"}
-              color={"font.muted2"}
-              fontWeight={"normal"}
+              type="submit"
+              borderWidth={"2px"}
             >
-              Password
-            </FormLabel>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              {...register("password", {
-                required: "This is required",
-                minLength: { value: 8, message: "Minimum length should be 8" },
-              })}
-              px={"16"}
-              py={"24"}
-              fontSize={"lg"}
-              borderWidth={"none"}
-              borderRadius={"lg"}
-            />
-            <FormErrorMessage fontSize={"md"}>
-              {errors?.password && (errors?.password?.message as ReactNode)}
-            </FormErrorMessage>
-          </FormControl>
+              Login
+            </ButtonFull>
+          </form>
 
-          <ButtonFull
-            mt={"12"}
-            isLoading={isSubmitting}
-            px={"16"}
-            py={"24"}
-            fontSize={"xl"}
-            type="submit"
-            borderWidth={"2px"}
-          >
-            Login
-          </ButtonFull>
-        </form>
+          <DevTool control={control} />
+        </>
 
         <Flex
           gap={"12"}
@@ -147,7 +166,7 @@ export default function HookForm() {
             Don't have an account?
           </Text>
           <Link
-            href={"/register"}
+            href={"/signup"}
             fontSize={"xl"}
             fontWeight={"medium"}
             color={"font.primary"}
