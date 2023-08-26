@@ -35,16 +35,18 @@ const theme = extendTheme({
       900: "#000e1e",
     },
 
-    bg: "#fff",
-    bgAsh: "#f2f3f4",
-    bgDarker: "#fafafc",
-    bgContainer: "#fcfcfc",
-    bgContainer2: "#f2f5fe",
-    bgContainer3: "#f7faff",
-    bgContainer4: "#f9fcfe",
-    shades: ["#1971c2"],
-    tints: ["#339af0"],
-    tintsTransparent: ["#e8f2fbbf", "#bbd8f3f2"],
+    bg: {
+      white: "#fff",
+      ash: "#f2f3f4",
+      darker: "#fafafc",
+      container: "#fcfcfc",
+      container2: "#f2f5fe",
+      container3: "#f7faff",
+      container4: "#f9fcfe",
+      shade: "#1971c2",
+      tints: { 1: "#339af0", 5: "#e4f3ff" },
+      tintsTransparent: { 1: "#e8f2fbbf", 2: "#e4f3ff", 3: "#bbd8f3f2" },
+    },
 
     font: {
       // hero: "#204289",

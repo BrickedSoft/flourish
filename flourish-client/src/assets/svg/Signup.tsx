@@ -587,23 +587,7 @@ const Login = (props: SVGProps<SVGSVGElement>) => {
             d="M194.36,170.79a19.64,19.64,0,1,1-19.64-19.63A19.62,19.62,0,0,1,194.36,170.79Z"
           />
         </g>
-        <g id="el2ayo3yxcx3i">
-          <g
-            className="animable"
-            id="el8gsfe513zv"
-            style={{ opacity: "0.5", transformOrigin: "173.296px 279.655px" }}
-          >
-            <text
-              style={{
-                fontSize: "4px",
-                fontFamily: "Rubik, sans-serif",
-              }}
-              transform="translate(156.73 280.86)"
-            >
-              Forgot Password
-            </text>
-          </g>
-        </g>
+
         <g id="el5ukvp5f3do2">
           <g
             className="animable"
@@ -684,7 +668,7 @@ const Login = (props: SVGProps<SVGSVGElement>) => {
           }}
           transform="translate(162.14 247.82)"
         >
-          Sign up now
+          Login now
         </text>
         <text
           style={{
@@ -695,7 +679,7 @@ const Login = (props: SVGProps<SVGSVGElement>) => {
           }}
           transform="translate(163.65 264.3)"
         >
-          Login
+          Sign Up
         </text>
         <text
           style={{

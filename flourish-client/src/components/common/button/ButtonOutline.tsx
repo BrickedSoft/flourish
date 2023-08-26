@@ -37,11 +37,11 @@ const ButtonOutline = ({
       color="font.hero"
       border="none"
       borderRadius="xl"
-      bg={bg ?? "bg"}
+      bg={bg ?? "bg.white"}
       boxShadow={`inset 0 0 0 0.25rem ${borderColor ?? "#fff"}`}
       transition="all 0.3s"
       _hover={{
-        bg: "bgContainer",
+        bg: "bg.container",
         boxShadow: "inset 0 0 0 0.25rem #fff",
       }}
       {...rest}

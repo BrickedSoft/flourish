@@ -1,27 +1,32 @@
 import { ReactNode } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import {
+  Center,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  HStack,
   Heading,
   Image,
   Input,
   Link,
   Text,
+  useRadioGroup,
 } from "@chakra-ui/react";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import logo from "../../assets/img/logo.png";
 import ButtonFull from "../../components/common/button/ButtonFull";
-import { setLoginData } from "../../store/slices/formSlice";
-import { loginContent } from "../../assets/data/login";
+import { setSignupData } from "../../store/slices/formSlice";
+import { signupContent, userTypes } from "../../assets/data/signup";
+import RadioCard from "./RadioCard";
+import { Signup } from "../../types/FormTypes";
 
 export default function HookForm() {
   const dispatch = useAppDispatch();
-  const formData = useAppSelector((state) => state.form?.login);
+  const formData = useAppSelector((state) => state.form?.signup);
 
   const {
     control,
@@ -30,7 +35,14 @@ export default function HookForm() {
     formState: { errors, isSubmitting },
   } = useForm({ defaultValues: formData });
 
-  const onSubmit = (data: any) => dispatch(setLoginData(data));
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: "userType",
+    defaultValue: userTypes[0],
+  });
+
+  const group = getRootProps();
+
+  const onSubmit = (data: Signup) => dispatch(setSignupData(data));
 
   return (
     <Flex
@@ -51,7 +63,6 @@ export default function HookForm() {
       >
         <Image src={logo} h={"14"} w={"auto"} alt={"logo"} />
       </Link>
-
       <Flex flexDir={"column"} gap={"44"}>
         <Flex flexDir={"column"} gap={"16"}>
           <Heading
@@ -62,10 +73,10 @@ export default function HookForm() {
             letterSpacing="tighter"
             fontWeight="medium"
           >
-            {loginContent.title}
+            {signupContent.title}
           </Heading>
           <Text fontSize={"lg"} textAlign={"center"} color={"font.muted2"}>
-            {loginContent.description}
+            {signupContent.description}
           </Text>
         </Flex>
 
@@ -78,6 +89,29 @@ export default function HookForm() {
               gap: "2.4rem",
             }}
           >
+            {/* ------------------------------- Radio Card ------------------------------- */}
+
+            <FormControl>
+              <Center>
+                <Controller
+                  name="type"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <HStack {...group} spacing={0} onChange={onChange}>
+                      {userTypes.map((value, index) => {
+                        const radio = getRadioProps({ value });
+                        return (
+                          <RadioCard key={value} {...radio} index={index}>
+                            {value}
+                          </RadioCard>
+                        );
+                      })}
+                    </HStack>
+                  )}
+                />
+              </Center>
+            </FormControl>
+
             {/* ---------------------------------- Email --------------------------------- */}
 
             <FormControl
@@ -159,7 +193,7 @@ export default function HookForm() {
               type="submit"
               borderWidth={"2px"}
             >
-              Login
+              Sign Up
             </ButtonFull>
           </form>
 
@@ -173,15 +207,15 @@ export default function HookForm() {
           justifySelf={"flex-end"}
         >
           <Text fontSize={"lg"} color={"font.muted2"}>
-            Don't have an account?
+            Already have an account?
           </Text>
           <Link
-            href={"/signup"}
+            href={"/login"}
             fontSize={"xl"}
             fontWeight={"medium"}
             color={"font.primary"}
           >
-            Sign Up
+            Login
           </Link>
         </Flex>
       </Flex>

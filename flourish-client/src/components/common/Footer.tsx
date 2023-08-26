@@ -59,7 +59,7 @@ const Footer = () => {
   );
 
   return (
-    <Container px={"32"} bg={"bgAsh"} maxW={"full"}>
+    <Container px={"32"} bg={"bg.ash"} maxW={"full"}>
       <Box as="footer" w={"full"} py={"64"}>
         <Grid
           gridTemplateColumns={"repeat(5, auto)"}

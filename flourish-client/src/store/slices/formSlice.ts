@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { userTypes } from "../../assets/data/signup";
 
-interface Login {
-  email: string;
-  password: string;
-}
-
-interface Form {
-  login: Login;
-}
+import { Login, Signup, Form } from "../../types/FormTypes";
 
 const initialState: Form = {
   login: {
+    email: "",
+    password: "",
+  },
+  signup: {
+    type: userTypes[0],
     email: "",
     password: "",
   },
@@ -24,8 +23,11 @@ const formSlice = createSlice({
     setLoginData: (state, action: PayloadAction<Login>) => {
       state.login = action.payload;
     },
+    setSignupData: (state, action: PayloadAction<Signup>) => {
+      state.signup = action.payload;
+    },
   },
 });
 
 export default formSlice.reducer;
-export const { setLoginData } = formSlice.actions;
+export const { setLoginData, setSignupData } = formSlice.actions;
