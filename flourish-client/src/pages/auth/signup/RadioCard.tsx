@@ -3,7 +3,8 @@ import { Box, useRadio, keyframes, Text } from "@chakra-ui/react";
 
 const RadioCard = (props: any) => {
   const { getInputProps, getRadioProps } = useRadio(props);
-  const [bg, setBg] = useState("bg.tints.5");
+  const [isAnimation, setIsAnimation] = useState(false);
+  const [bg, setBg] = useState(isAnimation ? "bg.tints.5" : "primary.500");
 
   useEffect(() => {
     setTimeout(() => {
@@ -68,8 +69,9 @@ const RadioCard = (props: any) => {
           borderLeftRadius: `${props.index === 0 && "xl"} `,
           borderRightRadius: `${props.index === 1 && "xl"} `,
           display: `${props.isChecked ? "block" : "none"}`,
-          animation: `${animationSlid}`,
+          animation: `${isAnimation && animationSlid}`,
         }}
+        onClick={() => setIsAnimation(true)}
       >
         <Text
           position={"relative"}

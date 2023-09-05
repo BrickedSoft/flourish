@@ -1,26 +1,31 @@
 import { SVGProps } from "react";
+import { useLocation } from "react-router-dom";
+import { nav } from "../../utils/nav";
 
-const Login = (props: SVGProps<SVGSVGElement>) => {
+const SignIn = (props: SVGProps<SVGSVGElement>) => {
+  const { pathname } = useLocation();
+  const isSignUp = pathname !== nav.signUp;
+
   return (
     <svg
       className="animated"
-      id="freepik_stories-tablet-login"
+      id="freepik_stories-tablet-signIn"
       version="1.1"
       viewBox="0 0 500 500"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <style>{`
-        svg#freepik_stories-tablet-login:not(.animated) .animable {opacity:
-            0;}svg#freepik_stories-tablet-login.animated #freepik--Plant--inject-3 {animation: 1s 1
+        svg#freepik_stories-tablet-signIn:not(.animated) .animable {opacity:
+            0;}svg#freepik_stories-tablet-signIn.animated #freepik--Plant--inject-3 {animation: 1s 1
             forwards cubic-bezier(.36,-0.01,.5,1.38) fadeIn;animation-delay:
-            0s;}svg#freepik_stories-tablet-login.animated #freepik--Streetlight--inject-3 {animation: 1s
+            0s;}svg#freepik_stories-tablet-signIn.animated #freepik--Streetlight--inject-3 {animation: 1s
             1 forwards cubic-bezier(.36,-0.01,.5,1.38) fadeIn;animation-delay:
-            0s;}svg#freepik_stories-tablet-login.animated #freepik--Screen--inject-3 {animation: 0.5s 1
+            0s;}svg#freepik_stories-tablet-signIn.animated #freepik--Screen--inject-3 {animation: 0.5s 1
             forwards ease-in slideRight,3s Infinite linear floating;animation-delay: 1.8s,2.8s;opacity:
-            0}svg#freepik_stories-tablet-login.animated #freepik--speech-bubble--inject-3 {animation:
+            0}svg#freepik_stories-tablet-signIn.animated #freepik--speech-bubble--inject-3 {animation:
             0.5s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) zoomIn;animation-delay: 1.2s;opacity:
-            0}svg#freepik_stories-tablet-login.animated #freepik--Character--inject-3 {animation: 1s 1
+            0}svg#freepik_stories-tablet-signIn.animated #freepik--Character--inject-3 {animation: 1s 1
             forwards ease-in fadeIn;animation-delay: 0.5s;opacity: 0} @keyframes fadeIn { 0% { opacity:
             0; } 100% { opacity: 1; } } @keyframes slideRight { 0% { opacity: 0; transform:
             translateX(30px); } 100% { opacity: 1; transform: translateX(0); } } @keyframes floating {
@@ -587,7 +592,23 @@ const Login = (props: SVGProps<SVGSVGElement>) => {
             d="M194.36,170.79a19.64,19.64,0,1,1-19.64-19.63A19.62,19.62,0,0,1,194.36,170.79Z"
           />
         </g>
-
+        <g id="el2ayo3yxcx3i">
+          <g
+            className="animable"
+            id="el8gsfe513zv"
+            style={{ opacity: "0.5", transformOrigin: "173.296px 279.655px" }}
+          >
+            <text
+              style={{
+                fontSize: "4px",
+                fontFamily: "Rubik, sans-serif",
+              }}
+              transform="translate(156.73 280.86)"
+            >
+              {isSignUp && "Forgot Password"}
+            </text>
+          </g>
+        </g>
         <g id="el5ukvp5f3do2">
           <g
             className="animable"
@@ -665,10 +686,11 @@ const Login = (props: SVGProps<SVGSVGElement>) => {
             opacity: "0.5",
             fontSize: "4px",
             fontFamily: "Rubik, sans-serif",
+            textAlign: "center",
           }}
           transform="translate(162.14 247.82)"
         >
-          Login now
+          {isSignUp ? "Sign In" : "Sign Up"} now
         </text>
         <text
           style={{
@@ -676,10 +698,11 @@ const Login = (props: SVGProps<SVGSVGElement>) => {
             fill: "#fff",
             fontFamily: "Rubik, sans-serif",
             fontWeight: "500",
+            textAlign: "center",
           }}
-          transform="translate(163.65 264.3)"
+          transform="translate(160 264.3)"
         >
-          Sign Up
+          {isSignUp ? "Sign In" : "Sign Up"}
         </text>
         <text
           style={{
@@ -1589,4 +1612,4 @@ const Login = (props: SVGProps<SVGSVGElement>) => {
   );
 };
 
-export default Login;
+export default SignIn;

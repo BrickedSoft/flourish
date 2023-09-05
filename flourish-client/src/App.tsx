@@ -1,36 +1,35 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Header from "./components/common/Header";
-import Footer from "./components/common/Footer";
+// import { customLayoutPaths } from "./assets/data/app";
+import Auth from "./pages/auth";
+import SignIn from "./pages/auth/signin";
+import SignUp from "./pages/auth/signup";
 import Homepage from "./pages/homepage";
-import Login from "./pages/login";
-import Signup from "./pages/signup";
-import { customLayoutPaths } from "./assets/data/app";
 
 const App = () => {
-  const currentRoute = window.location.pathname;
-  const isLayout = !customLayoutPaths.includes(currentRoute);
+  // const currentRoute = window.location.pathname;
+  // const isLayout = !customLayoutPaths.includes(currentRoute);
 
   return (
     <Box
       display={"flex"}
       flexDir={"column"}
       minH={"100vh"}
+      h={"full"}
       w={"full"}
       alignItems={"center"}
       justifyContent={"space-between"}
     >
       <BrowserRouter>
-        {isLayout && <Header />}
-
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route index element={<Homepage />} />
+          <Route path="auth" element={<Auth />}>
+            <Route index element={<SignIn />} />
+            <Route path="signIn" element={<SignIn />} />
+            <Route path="signUp" element={<SignUp />} />
+          </Route>
         </Routes>
-
-        {isLayout && <Footer />}
       </BrowserRouter>
     </Box>
   );
