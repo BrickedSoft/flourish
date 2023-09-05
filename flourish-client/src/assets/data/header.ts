@@ -9,7 +9,7 @@ export const nav = [
     href: "/support",
   },
   {
-    title: "Login",
-    href: "/login",
+    title: "SignIn",
+    href: "/signIn",
   },
 ];

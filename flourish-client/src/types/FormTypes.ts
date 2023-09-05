@@ -1,13 +1,13 @@
-export interface Login {
+export interface SignIn {
   email: string;
   password: string;
 }
 
-export interface Signup extends Login {
+export interface SignUp extends SignIn {
   type: string;
 }
 
 export interface Form {
-  login: Login;
-  signup: Signup;
+  signIn: SignIn;
+  signUp: SignUp;
 }

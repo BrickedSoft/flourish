@@ -1,14 +1,20 @@
 import { Box } from "@chakra-ui/react";
 
 import Hero from "./Hero";
+import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 
 const Homepage = () => {
   return (
-    <Box w={"full"}>
-      <Box bg="bg.container2" pt={"32"}>
-        <Hero />
+    <>
+      <Header />
+      <Box w={"full"}>
+        <Box bg="bg.container2" pt={"32"}>
+          <Hero />
+        </Box>
       </Box>
-    </Box>
+      <Footer />
+    </>
   );
 };
 

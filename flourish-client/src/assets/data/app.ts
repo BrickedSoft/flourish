@@ -1,1 +1,1 @@
-export const customLayoutPaths = ["/login", "/signup"];
+export const customLayoutPaths = ["/auth"];
