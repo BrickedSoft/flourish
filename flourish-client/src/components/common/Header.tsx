@@ -1,17 +1,18 @@
 import { Link, Box, List, Image } from "@chakra-ui/react";
 
-import { nav } from "../../assets/data/header";
+import { header } from "../../utils/nav";
 import Container from "./Container";
 import logo from "../../assets/img/logo.png";
 
 const Header = () => {
-  const renderedLinks = nav.map(({ title, href }, index) => (
+  const renderedLinks = header.map(({ title, href }, index) => (
     <Link
       key={index}
       href={href}
       display={"inline-block"}
       letterSpacing={"-.25px"}
       textDecoration={"none"}
+      whiteSpace={"nowrap"}
       color={"secondary"}
       fontSize={"2xl"}
       fontWeight={"medium"}
