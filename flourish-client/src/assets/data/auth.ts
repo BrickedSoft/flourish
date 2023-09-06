@@ -1,22 +1,14 @@
 import { nav } from "./nav";
 
-export enum userTypes {
-  Admin = "Admin",
-  Client = "Client",
-  Counselor = "Counselor",
-}
+const headerSignIn = {
+  title: "Welcome Back!",
+  description:
+    "To keep connected with us please sign in with your personal info.",
+};
 
 export const headerContent = {
-  auth: {
-    title: "Welcome Back!",
-    description:
-      "To keep connected with us please sign in with your personal info.",
-  },
-  signin: {
-    title: "Welcome Back!",
-    description:
-      "To keep connected with us please sign in with your personal info.",
-  },
+  auth: headerSignIn,
+  signin: headerSignIn,
   signup: {
     title: "Welcome to Flourish!",
     description:
@@ -24,17 +16,22 @@ export const headerContent = {
   },
 };
 
+const buttonSignIn = {
+  title: "Sign In",
+  href: nav.signIn,
+};
+
 export const buttonData = {
-  auth: {
-    title: "Sign Up",
-    href: nav.signUp,
-  },
-  signin: {
-    title: "Sign Up",
-    href: nav.signUp,
-  },
+  auth: buttonSignIn,
+  signin: buttonSignIn,
   signup: {
-    title: "Sign In",
-    href: nav.signIn,
+    title: "Sign Up",
+    href: nav.signUp,
   },
+};
+
+export const buttonDataAlternate = {
+  auth: buttonData.signup,
+  signin: buttonData.signup,
+  signup: buttonData.signin,
 };

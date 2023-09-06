@@ -10,21 +10,25 @@ import {
 import { ReactNode, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { userTypes } from "../../../assets/data/auth";
+import { userTypes } from "../../../types/User";
 import ButtonFull from "../../../components/common/button/ButtonFull";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
-import { setSignUpData } from "../../../store/slices/formSlice";
-import { SignUp } from "../../../types/FormTypes";
+import { useAppDispatch } from "../../../hooks/useStore";
+import { signUp } from "../../../store/actions/authActions";
+import { SignUp } from "../../../types/Form";
 import RadioCard from "./RadioCard";
 
-export default function HookForm() {
+const SignUpFormInit: SignUp = {
+  type: userTypes.CLIENT,
+  name: "test",
+  email: "",
+  password: "",
+};
+
+const SignUpForm = () => {
   const dispatch = useAppDispatch();
-  const formData = useAppSelector((state) => state.form?.signUp);
 
   const prevState = useRef<number>(
-    formData
-      ? Object.keys(userTypes).indexOf(formData?.type)
-      : Object.keys(userTypes).indexOf(userTypes.Client)
+    Object.keys(userTypes).indexOf(userTypes.CLIENT)
   );
 
   const {
@@ -32,11 +36,11 @@ export default function HookForm() {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues: formData });
+  } = useForm({ defaultValues: SignUpFormInit });
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "userType",
-    defaultValue: formData?.type ?? userTypes.Client,
+    defaultValue: userTypes.CLIENT,
     onChange: (value) => {
       prevState.current = Object.keys(userTypes).indexOf(value);
     },
@@ -44,11 +48,11 @@ export default function HookForm() {
 
   const group = getRootProps();
 
-  const onSubmit = (data: SignUp) => dispatch(setSignUpData(data));
-
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data: SignUp) =>
+        dispatch(signUp({ ...data, name: "test" }))
+      )}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -176,4 +180,6 @@ export default function HookForm() {
       </ButtonFull>
     </form>
   );
-}
+};
+
+export default SignUpForm;

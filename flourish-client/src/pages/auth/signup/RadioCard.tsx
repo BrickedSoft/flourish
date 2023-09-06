@@ -1,10 +1,10 @@
 import { Box, Text, keyframes, useRadio } from "@chakra-ui/react";
 import { useState } from "react";
-import { userTypes } from "../../../assets/data/auth";
+import { userTypes } from "../../../types/User";
 
 const RadioCard = (props: any) => {
   const { getInputProps, getRadioProps } = useRadio(props);
-  const [prevState, setPrevState] = useState<number>(1);
+  const [prevState, setPrevState] = useState<number>(props.prevState);
 
   const totalUserTypes = Object.keys(userTypes).length;
   const index = Object.keys(userTypes).indexOf(props.children);
@@ -28,7 +28,7 @@ const RadioCard = (props: any) => {
     100% { background-color: #1b77cb; }
   `;
 
-  const animationSlid = `${slide} .5s ease-in-out`;
+  const animationSlide = `${slide} .5s ease-in-out`;
 
   return (
     <Box as="label">
@@ -62,11 +62,10 @@ const RadioCard = (props: any) => {
           borderLeftRadius: `${index === 0 && "xl"} `,
           borderRightRadius: `${index === totalUserTypes - 1 && "xl"} `,
           display: `${props.isChecked ? "block" : "none"}`,
-          animation: `${animationSlid}`,
+          animation: `${animationSlide}`,
         }}
         onClick={() => {
           setPrevState(props.prevState);
-          console.clear();
         }}
       >
         <Text
@@ -76,6 +75,11 @@ const RadioCard = (props: any) => {
           fontWeight={"medium"}
           userSelect={"none"}
           textAlign={"center"}
+          textTransform={"lowercase"}
+          letterSpacing={"wide"}
+          _firstLetter={{
+            textTransform: "uppercase",
+          }}
         >
           {props.children}
         </Text>

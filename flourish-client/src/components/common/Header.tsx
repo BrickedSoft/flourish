@@ -1,4 +1,5 @@
-import { Link, Box, List, Image } from "@chakra-ui/react";
+import { Box, List, Image } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 import { header } from "../../assets/data/nav";
 import Container from "./Container";
@@ -6,9 +7,8 @@ import logo from "../../assets/img/logo.png";
 
 const Header = () => {
   const renderedLinks = header.map(({ title, href }, index) => (
-    <Link
+    <Box
       key={index}
-      href={href}
       display={"inline-block"}
       letterSpacing={"-.25px"}
       textDecoration={"none"}
@@ -27,8 +27,8 @@ const Header = () => {
         boxShadow: "0 0.6rem 0.4rem -0.4rem rgba(28, 126, 214, 0.5)",
       }}
     >
-      {title}
-    </Link>
+      <Link to={href}>{title}</Link>
+    </Box>
   ));
 
   return (
@@ -50,7 +50,7 @@ const Header = () => {
         zIndex={"sticky"}
         _focus={{ outline: "none", boxShadow: "none" }}
       >
-        <Link href={"/"}>
+        <Link to={"/"}>
           <Image src={logo} h={"20"} w={"auto"} alt={"logo"} />
         </Link>
 

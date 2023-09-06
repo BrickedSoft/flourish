@@ -3,7 +3,7 @@ import { api } from "../../assets/data/server";
 
 export const flourish: AxiosInstance = axios.create({
   baseURL: api.base,
-  timeout: 3000,
+  timeout: 30000,
 });
 
 const errorHandler = (error: AxiosError) => {
