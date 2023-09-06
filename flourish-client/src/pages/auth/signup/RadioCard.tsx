@@ -16,10 +16,6 @@ const RadioCard = (props: any) => {
       transform: translateX(${(prevState - index) * 100}%);
       background-color: #1b77cb;
       border-radius: 0;
-      border-top-left-radius: ${index === totalUserTypes - 1 && "11px"};
-      border-bottom-left-radius: ${index === totalUserTypes - 1 && "11px"};
-      border-top-right-radius: ${index === 0 && "11px"};
-      border-bottom-right-radius: ${index === 0 && "11px"};
     }
 
     25% {
