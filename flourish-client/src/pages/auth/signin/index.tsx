@@ -8,25 +8,31 @@ import { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
 import ButtonFull from "../../../components/common/button/ButtonFull";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
-import { setSignInData } from "../../../store/slices/formSlice";
-import { SignIn } from "../../../types/FormTypes";
+import { useAppDispatch } from "../../../hooks/useStore";
+import { SignIn as SignInType } from "../../../types/Form";
+import { signIn } from "../../../store/actions/authActions";
+import { buttonData } from "../../../assets/data/auth";
 
-export default function HookForm() {
+const SignInFormInit: SignInType = {
+  name: "test",
+  email: "",
+  password: "",
+};
+
+const SignInForm = () => {
   const dispatch = useAppDispatch();
-  const formData = useAppSelector((state) => state.form?.signIn);
 
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues: formData });
-
-  const onSubmit = (data: SignIn) => dispatch(setSignInData(data));
+  } = useForm({ defaultValues: SignInFormInit });
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data: SignInType) =>
+        dispatch(signIn({ ...data, name: "test" }))
+      )}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -114,8 +120,10 @@ export default function HookForm() {
         type="submit"
         borderWidth={"2px"}
       >
-        SignIn
+        {buttonData.signin.title}
       </ButtonFull>
     </form>
   );
-}
+};
+
+export default SignInForm;

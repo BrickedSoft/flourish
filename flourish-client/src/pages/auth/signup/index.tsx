@@ -3,43 +3,56 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack,
+  Grid,
   Input,
   useRadioGroup,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { userTypes } from "../../../assets/data/auth";
+import { userTypes } from "../../../types/User";
 import ButtonFull from "../../../components/common/button/ButtonFull";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
-import { setSignUpData } from "../../../store/slices/formSlice";
-import { SignUp } from "../../../types/FormTypes";
+import { useAppDispatch } from "../../../hooks/useStore";
+import { signUp } from "../../../store/actions/authActions";
+import { SignUp } from "../../../types/Form";
 import RadioCard from "./RadioCard";
 
-export default function HookForm() {
+const SignUpFormInit: SignUp = {
+  type: userTypes.CLIENT,
+  name: "test",
+  email: "",
+  password: "",
+};
+
+const SignUpForm = () => {
   const dispatch = useAppDispatch();
-  const formData = useAppSelector((state) => state.form?.signUp);
+
+  const prevState = useRef<number>(
+    Object.keys(userTypes).indexOf(userTypes.CLIENT)
+  );
 
   const {
     control,
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues: formData });
+  } = useForm({ defaultValues: SignUpFormInit });
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "userType",
-    defaultValue: userTypes[0],
+    defaultValue: userTypes.CLIENT,
+    onChange: (value) => {
+      prevState.current = Object.keys(userTypes).indexOf(value);
+    },
   });
 
   const group = getRootProps();
 
-  const onSubmit = (data: SignUp) => dispatch(setSignUpData(data));
-
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data: SignUp) =>
+        dispatch(signUp({ ...data, name: "test" }))
+      )}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -54,16 +67,29 @@ export default function HookForm() {
             name="type"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <HStack {...group} spacing={0} onChange={onChange}>
-                {userTypes.map((value, index) => {
-                  const radio = getRadioProps({ value });
-                  return (
-                    <RadioCard key={value} {...radio} index={index}>
-                      {value}
-                    </RadioCard>
-                  );
-                })}
-              </HStack>
+              <Grid
+                templateColumns={"repeat(3,1fr)"}
+                gap={0}
+                justifyContent={"center"}
+                alignItems={"center"}
+                {...group}
+                onChange={onChange}
+              >
+                {(Object.keys(userTypes) as Array<keyof typeof userTypes>).map(
+                  (value) => {
+                    const radio = getRadioProps({ value });
+                    return (
+                      <RadioCard
+                        key={value}
+                        {...radio}
+                        prevState={prevState.current}
+                      >
+                        {value}
+                      </RadioCard>
+                    );
+                  }
+                )}
+              </Grid>
             )}
           />
         </Center>
@@ -154,4 +180,6 @@ export default function HookForm() {
       </ButtonFull>
     </form>
   );
-}
+};
+
+export default SignUpForm;

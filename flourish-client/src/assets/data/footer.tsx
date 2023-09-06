@@ -1,7 +1,7 @@
 import { FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { faker } from "@faker-js/faker";
 
-import { ContactTypes } from "../../types/ContactTypes";
+import { ContactTypes } from "../../types/Contact";
 
 export const socialLinks = [
   {
