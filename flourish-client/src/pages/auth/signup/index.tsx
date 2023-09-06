@@ -3,11 +3,11 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack,
+  Grid,
   Input,
   useRadioGroup,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { userTypes } from "../../../assets/data/auth";
@@ -21,6 +21,12 @@ export default function HookForm() {
   const dispatch = useAppDispatch();
   const formData = useAppSelector((state) => state.form?.signUp);
 
+  const prevState = useRef<number>(
+    formData
+      ? Object.keys(userTypes).indexOf(formData?.type)
+      : Object.keys(userTypes).indexOf(userTypes.Client)
+  );
+
   const {
     control,
     handleSubmit,
@@ -30,7 +36,10 @@ export default function HookForm() {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "userType",
-    defaultValue: userTypes[0],
+    defaultValue: formData?.type ?? userTypes.Client,
+    onChange: (value) => {
+      prevState.current = Object.keys(userTypes).indexOf(value);
+    },
   });
 
   const group = getRootProps();
@@ -54,16 +63,29 @@ export default function HookForm() {
             name="type"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <HStack {...group} spacing={0} onChange={onChange}>
-                {userTypes.map((value, index) => {
-                  const radio = getRadioProps({ value });
-                  return (
-                    <RadioCard key={value} {...radio} index={index}>
-                      {value}
-                    </RadioCard>
-                  );
-                })}
-              </HStack>
+              <Grid
+                templateColumns={"repeat(3,1fr)"}
+                gap={0}
+                justifyContent={"center"}
+                alignItems={"center"}
+                {...group}
+                onChange={onChange}
+              >
+                {(Object.keys(userTypes) as Array<keyof typeof userTypes>).map(
+                  (value) => {
+                    const radio = getRadioProps({ value });
+                    return (
+                      <RadioCard
+                        key={value}
+                        {...radio}
+                        prevState={prevState.current}
+                      >
+                        {value}
+                      </RadioCard>
+                    );
+                  }
+                )}
+              </Grid>
             )}
           />
         </Center>

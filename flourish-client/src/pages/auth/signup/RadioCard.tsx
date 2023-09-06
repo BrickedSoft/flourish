@@ -1,40 +1,37 @@
-import { useEffect, useState } from "react";
-import { Box, useRadio, keyframes, Text } from "@chakra-ui/react";
+import { Box, Text, keyframes, useRadio } from "@chakra-ui/react";
+import { useState } from "react";
+import { userTypes } from "../../../assets/data/auth";
 
 const RadioCard = (props: any) => {
   const { getInputProps, getRadioProps } = useRadio(props);
-  const [isAnimation, setIsAnimation] = useState(false);
-  const [bg, setBg] = useState(isAnimation ? "bg.tints.5" : "primary.500");
+  const [prevState, setPrevState] = useState<number>(1);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setBg("primary.500");
-    }, 500);
-  }, []);
-
+  const totalUserTypes = Object.keys(userTypes).length;
+  const index = Object.keys(userTypes).indexOf(props.children);
   const input = getInputProps();
   const checkbox = getRadioProps();
 
   const slide = keyframes`
     0% {
-      transform: translateX(${props.index === 1 && "-"}100%);
+      transform: translateX(${(prevState - index) * 100}%);
       background-color: #1b77cb;
       border-radius: 0;
-      border-top-left-radius: ${props.index === 1 && "11px"};
-      border-bottom-left-radius: ${props.index === 1 && "11px"};
-      border-top-right-radius: ${props.index === 0 && "11px"};
-      border-bottom-right-radius: ${props.index === 0 && "11px"};
+      border-top-left-radius: ${index === totalUserTypes - 1 && "11px"};
+      border-bottom-left-radius: ${index === totalUserTypes - 1 && "11px"};
+      border-top-right-radius: ${index === 0 && "11px"};
+      border-bottom-right-radius: ${index === 0 && "11px"};
     }
 
     25% {
-      border-top-left-radius: ${props.index === 1 && "0"};
-      border-bottom-left-radius: ${props.index === 1 && "0"};
-      border-top-right-radius: ${props.index === 0 && "0"};
-      border-bottom-right-radius: ${props.index === 0 && "0"};
+      border-top-left-radius: ${index === totalUserTypes - 1 && "0"};
+      border-bottom-left-radius: ${index === totalUserTypes - 1 && "0"};
+      border-top-right-radius: ${index === 0 && "0"};
+      border-bottom-right-radius: ${index === 0 && "0"};
     }
 
     100% { background-color: #1b77cb; }
   `;
+
   const animationSlid = `${slide} .5s ease-in-out`;
 
   return (
@@ -44,10 +41,10 @@ const RadioCard = (props: any) => {
         {...checkbox}
         position={"relative"}
         cursor="pointer"
-        px={16}
+        px={12}
         py={"0.6rem"}
-        borderLeftRadius={`${props.index === 0 && "xl"} `}
-        borderRightRadius={`${props.index === 1 && "xl"} `}
+        borderLeftRadius={`${index === 0 && "xl"} `}
+        borderRightRadius={`${index === totalUserTypes - 1 && "xl"} `}
         bg={"bg.tints.5"}
         transition={"all 0.5s ease-in-out"}
         _checked={{
@@ -64,14 +61,17 @@ const RadioCard = (props: any) => {
           width: "full",
           height: "full",
           zIndex: "docked",
-          bg: bg,
+          bg: "primary.500",
           transform: "translateZ(-1px)",
-          borderLeftRadius: `${props.index === 0 && "xl"} `,
-          borderRightRadius: `${props.index === 1 && "xl"} `,
+          borderLeftRadius: `${index === 0 && "xl"} `,
+          borderRightRadius: `${index === totalUserTypes - 1 && "xl"} `,
           display: `${props.isChecked ? "block" : "none"}`,
-          animation: `${isAnimation && animationSlid}`,
+          animation: `${animationSlid}`,
         }}
-        onClick={() => setIsAnimation(true)}
+        onClick={() => {
+          setPrevState(props.prevState);
+          console.clear();
+        }}
       >
         <Text
           position={"relative"}
@@ -79,6 +79,7 @@ const RadioCard = (props: any) => {
           fontSize={"lg"}
           fontWeight={"medium"}
           userSelect={"none"}
+          textAlign={"center"}
         >
           {props.children}
         </Text>

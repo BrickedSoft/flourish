@@ -1,6 +1,6 @@
 import { Link, Box, List, Image } from "@chakra-ui/react";
 
-import { header } from "../../utils/nav";
+import { header } from "../../assets/data/nav";
 import Container from "./Container";
 import logo from "../../assets/img/logo.png";
 

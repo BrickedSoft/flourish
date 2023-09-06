@@ -1,6 +1,10 @@
-import { nav } from "../../utils/nav";
+import { nav } from "./nav";
 
-export const userTypes = ["Student", "Admin"];
+export enum userTypes {
+  Admin = "Admin",
+  Client = "Client",
+  Counselor = "Counselor",
+}
 
 export const headerContent = {
   auth: {

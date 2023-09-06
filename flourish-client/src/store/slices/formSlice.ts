@@ -9,7 +9,7 @@ const initialState: Form = {
     password: "",
   },
   signUp: {
-    type: userTypes[0],
+    type: userTypes.Client,
     email: "",
     password: "",
   },
