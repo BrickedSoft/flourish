@@ -9,8 +9,3 @@ export interface SignIn {
 export interface SignUp extends SignIn {
   type: userTypes;
 }
-
-export interface Form {
-  signIn: SignIn;
-  signUp: SignUp;
-}

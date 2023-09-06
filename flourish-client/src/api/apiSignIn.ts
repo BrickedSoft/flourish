@@ -1,9 +1,9 @@
-import { api } from "../assets/data/server";
+import { api as apiData } from "../assets/data/server";
 import { SignIn } from "../types/Form";
-import { flourish } from "./config/apiConfig";
+import { api } from "./config/apiConfig";
 
 export const apiSignIn = async (data: SignIn) => {
-  const response = await flourish.post(api.signIn.CLIENT, {
+  const response = await api.post(apiData.signIn.CLIENT, {
     ...data,
   });
 

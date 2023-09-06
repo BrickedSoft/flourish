@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { api } from "../../assets/data/server";
+import { api as apiData } from "../../assets/data/server";
 
-export const flourish: AxiosInstance = axios.create({
-  baseURL: api.base,
+export const api: AxiosInstance = axios.create({
+  baseURL: apiData.base,
   timeout: 30000,
 });
 
@@ -19,6 +19,6 @@ const errorHandler = (error: AxiosError) => {
   return Promise.reject(error);
 };
 
-flourish.interceptors.response.use(undefined, (error) => {
+api.interceptors.response.use(undefined, (error) => {
   return errorHandler(error);
 });
