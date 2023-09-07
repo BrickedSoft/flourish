@@ -1,4 +1,4 @@
-import { Loading } from "./Loading";
+import { Status } from "./Status";
 
 export enum userTypes {
   ADMIN = "ADMIN",
@@ -8,8 +8,7 @@ export enum userTypes {
 
 export interface User {
   token: string;
-  type: userTypes;
   name: string;
   email: string;
-  loading: Loading;
+  status: Status;
 }

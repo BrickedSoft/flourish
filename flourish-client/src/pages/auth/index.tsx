@@ -1,44 +1,11 @@
-import { useEffect, useState } from "react";
-import {
-  Box,
-  Center,
-  Flex,
-  Grid,
-  Heading,
-  Image,
-  Text,
-  keyframes,
-} from "@chakra-ui/react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Box, Center, Flex, Grid, Image } from "@chakra-ui/react";
+import { Link, Outlet } from "react-router-dom";
 
-import {
-  buttonData,
-  buttonDataAlternate,
-  headerContent,
-} from "../../assets/data/auth";
 import logo from "../../assets/img/logo.png";
 import SignInImage from "../../assets/svg/Auth";
 import Container from "../../components/common/Container";
 
-const slideIn = keyframes`
-    from { opacity: 0; transform: translateX(1rem); }
-    to { opacity: 1; }
-`;
-const animationSlideIn = `${slideIn} .5s ease-in`;
-
 const Auth = () => {
-  const { pathname } = useLocation();
-  const currentRoute =
-    (pathname.split("/").at(-1) as keyof typeof buttonData &
-      keyof typeof headerContent) ||
-    (pathname.split("/").at(-2) as keyof typeof buttonData &
-      keyof typeof headerContent);
-  const [keyIndex, setKeyIndex] = useState(1);
-
-  useEffect(() => {
-    setKeyIndex((e) => e + 1);
-  }, [currentRoute]);
-
   return (
     <Container
       w={"full"}
@@ -96,62 +63,7 @@ const Auth = () => {
               </Link>
             </Box>
 
-            <Flex
-              flexDir={"column"}
-              justifyContent={"space-between"}
-              flexGrow={1}
-              gap={"16"}
-            >
-              <Flex
-                key={keyIndex}
-                flexDir={"column"}
-                gap={"8"}
-                animation={animationSlideIn}
-              >
-                <Heading
-                  color="font.secondary"
-                  fontSize="6xl"
-                  textAlign={"center"}
-                  lineHeight="shorter"
-                  letterSpacing="tighter"
-                  fontWeight="medium"
-                >
-                  {headerContent[currentRoute]?.title}
-                </Heading>
-                <Text
-                  fontSize={"lg"}
-                  textAlign={"center"}
-                  color={"font.muted2"}
-                >
-                  {headerContent[currentRoute]?.description}
-                </Text>
-              </Flex>
-
-              <Box key={keyIndex + 1} animation={animationSlideIn}>
-                <Outlet />
-              </Box>
-
-              <Flex
-                gap={"12"}
-                alignItems={"baseline"}
-                justifyContent={"center"}
-                justifySelf={"flex-end"}
-              >
-                <Text fontSize={"lg"} color={"font.muted2"}>
-                  Don't have an account?
-                </Text>
-                <Box
-                  fontSize={"xl"}
-                  fontWeight={"medium"}
-                  color={"font.primary"}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <Link to={buttonDataAlternate[currentRoute].href}>
-                    {buttonDataAlternate[currentRoute].title}
-                  </Link>
-                </Box>
-              </Flex>
-            </Flex>
+            <Outlet />
           </Flex>
         </Grid>
       </Center>

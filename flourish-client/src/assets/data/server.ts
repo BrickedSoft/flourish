@@ -7,9 +7,5 @@ export const api = {
     [userTypes.ADMIN]: "/adminCounselor/signup",
     [userTypes.COUNSELOR]: "counselor/signup",
   },
-  signIn: {
-    [userTypes.CLIENT]: "/client/login",
-    [userTypes.ADMIN]: "/adminCounselor/login",
-    [userTypes.COUNSELOR]: "/counselor/login",
-  },
+  signIn: "/login",
 };

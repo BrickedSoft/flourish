@@ -1,7 +1,6 @@
 import { userTypes } from "../types/User";
 
 export interface SignIn {
-  name?: string;
   email: string;
   password: string;
 }

@@ -48,6 +48,8 @@ const theme = extendTheme({
       tintsTransparent: { 1: "#e8f2fbbf", 2: "#e4f3ff", 3: "#bbd8f3f2" },
     },
 
+    success: "#40c057",
+
     font: {
       // hero: "#204289",
       hero: "#064273",
