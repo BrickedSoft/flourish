@@ -11,7 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
-import { buttonData, headerContent } from "../../assets/data/auth";
+import {
+  buttonData,
+  buttonDataAlternate,
+  headerContent,
+} from "../../assets/data/auth";
 import logo from "../../assets/img/logo.png";
 import SignInImage from "../../assets/svg/Auth";
 import Container from "../../components/common/Container";
@@ -20,12 +24,15 @@ const slideIn = keyframes`
     from { opacity: 0; transform: translateX(1rem); }
     to { opacity: 1; }
 `;
-const animationSlideIn = `${slideIn} .3s ease-in`;
+const animationSlideIn = `${slideIn} .5s ease-in`;
 
 const Auth = () => {
   const { pathname } = useLocation();
-  const currentRoute = pathname.split("/").at(-1) as keyof typeof buttonData &
-    keyof typeof headerContent;
+  const currentRoute =
+    (pathname.split("/").at(-1) as keyof typeof buttonData &
+      keyof typeof headerContent) ||
+    (pathname.split("/").at(-2) as keyof typeof buttonData &
+      keyof typeof headerContent);
   const [keyIndex, setKeyIndex] = useState(1);
 
   useEffect(() => {
@@ -139,8 +146,8 @@ const Auth = () => {
                   color={"font.primary"}
                   onClick={(e) => e.preventDefault()}
                 >
-                  <Link to={buttonData[currentRoute].href}>
-                    {buttonData[currentRoute].title}
+                  <Link to={buttonDataAlternate[currentRoute].href}>
+                    {buttonDataAlternate[currentRoute].title}
                   </Link>
                 </Box>
               </Flex>

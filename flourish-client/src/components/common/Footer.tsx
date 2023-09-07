@@ -5,9 +5,9 @@ import {
   GridItem,
   Heading,
   Image,
-  Link,
   Text,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 import {
   accountLinks,
@@ -23,7 +23,7 @@ import Container from "./Container";
 const Footer = () => {
   const renderedLinkIcons = socialLinks.map(({ icon, href }, index) => {
     return (
-      <Link key={index} href={href}>
+      <Link key={index} to={href}>
         {icon}
       </Link>
     );
@@ -44,9 +44,8 @@ const Footer = () => {
     href: string;
     type?: string;
   }) => (
-    <Link
+    <Box
       key={title}
-      href={`${type ? type + ":" : ""}${href}`}
       fontSize={"xl"}
       color={"font.muted"}
       transition={"all .3s"}
@@ -54,8 +53,8 @@ const Footer = () => {
         color: "#555",
       }}
     >
-      {title}
-    </Link>
+      <Link to={`${type ? type + ":" : ""}${href}`}>{title}</Link>
+    </Box>
   );
 
   return (
@@ -68,7 +67,7 @@ const Footer = () => {
           justifyContent={"space-between"}
         >
           <GridItem display={"flex"} flexDir={"column"} gap={"24"}>
-            <Link href={"/"}>
+            <Link to={"/"}>
               <Image src={logo} h={"24"} w={"auto"} alt={"logo"} />
             </Link>
             <Flex gap={"28"}>{renderedLinkIcons}</Flex>
