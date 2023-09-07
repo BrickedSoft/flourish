@@ -9,12 +9,7 @@ from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from client.models import Client
 
-from client.serializers import SigninSerializer, SignupSerializer
-
-
-@api_view(["POST"])
-def register(request):
-    pass
+from client.serializers import SigninSerializer, SignupSerializer, UserSerializer
 
 
 @api_view(["POST"])
@@ -33,11 +28,13 @@ def login(request):
             status=status.HTTP_401_UNAUTHORIZED,
         )
     user = User.objects.get(username=authenticated)
-    client = get_object_or_404(Client, user=user)
 
     token, created = Token.objects.get_or_create(user=user)
 
-    return Response(data={"token": token.key}, status=status.HTTP_200_OK)
+    return Response(
+        data={"token": token.key, "user": UserSerializer(user).data},
+        status=status.HTTP_200_OK,
+    )
 
 
 @api_view(["POST"])
@@ -47,7 +44,7 @@ def signup(request):
     if not serializer.is_valid():
         return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
-    user = get_or_none(User, username = serializer.data["email"])
+    user = get_or_none(User, username=serializer.data["email"])
     if not user is None:
         return Response(status=status.HTTP_409_CONFLICT)
 
@@ -57,10 +54,9 @@ def signup(request):
     )
 
     user.save()
-    client = Client(name=serializer.data["name"], user=user)
+    client = Client(user=user)
     client.save()
     return Response(status=status.HTTP_201_CREATED)
-
 
 
 def get_or_none(classmodel, **kwargs):
