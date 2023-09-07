@@ -6,6 +6,5 @@ class SigninSerializer(serializers.Serializer):
     password = serializers.CharField()
 
 class SignupSerializer(serializers.Serializer):
-    name = serializers.CharField()
     email = serializers.CharField()
     password = serializers.CharField()
