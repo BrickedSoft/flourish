@@ -14,12 +14,11 @@ import { Link } from "react-router-dom";
 
 import { header, headerNav } from "../../assets/data/nav";
 import logo from "../../assets/img/logo.png";
+import { useSignOut } from "../../hooks/useSignOut";
 import { useAppSelector } from "../../hooks/useStore";
 import { persistor } from "../../store/store";
-import { useSignOut } from "../../hooks/useSignOut";
 import Container from "./Container";
 import ButtonFull from "./button/ButtonFull";
-import { buttonData } from "../../assets/data/auth";
 
 const Header = () => {
   const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
@@ -127,10 +126,14 @@ const Header = () => {
                   _hover={{
                     bg: "primary.50",
                     borderRadius: "md",
+                    color: "font.heroLight",
+                    textShadow: "0 0.4rem 0.8rem rgba(28, 126, 214, 0.25)",
                   }}
                   _focus={{
                     bg: "primary.50",
                     borderRadius: "md",
+                    color: "font.heroLight",
+                    textShadow: "0 0.4rem 0.8rem rgba(28, 126, 214, 0.25)",
                   }}
                 >
                   <Link to={headerNav.dashboard.href}>
@@ -142,16 +145,20 @@ const Header = () => {
                   _hover={{
                     bg: "primary.50",
                     borderRadius: "md",
+                    color: "font.heroLight",
+                    textShadow: "0 0.4rem 0.8rem rgba(28, 126, 214, 0.25)",
                   }}
                   _focus={{
                     bg: "primary.50",
                     borderRadius: "md",
+                    color: "font.heroLight",
+                    textShadow: "0 0.4rem 0.8rem rgba(28, 126, 214, 0.25)",
                   }}
                   onClick={() => {
                     signOut();
                   }}
                 >
-                  {buttonData.signup.title}
+                  Sign Out
                 </MenuItem>
               </MenuList>
             </Menu>

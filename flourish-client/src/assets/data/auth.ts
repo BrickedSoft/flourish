@@ -1,37 +1,38 @@
 import { nav } from "./nav";
 
-const headerSignIn = {
-  title: "Welcome Back!",
-  description:
-    "To keep connected with us please sign in with your personal info.",
-};
-
 export const headerContent = {
-  auth: headerSignIn,
-  signin: headerSignIn,
-  signup: {
+  signIn: {
+    title: "Welcome Back!",
+    description:
+      "To keep connected with us please sign in with your personal info.",
+  },
+  signUp: {
     title: "Welcome to Flourish!",
     description:
       "Flourish connects you with AI to enhance your mental wellbeing. Sign up now to get started.",
   },
 };
 
-const buttonSignIn = {
-  title: "Sign In",
-  href: nav.signIn,
-};
-
-export const buttonData = {
-  auth: buttonSignIn,
-  signin: buttonSignIn,
-  signup: {
+export const footerContent = {
+  signIn: {
     title: "Sign Up",
     href: nav.signUp,
+    description: "Don't have an account?",
+  },
+  signUp: {
+    title: "Sign In",
+    href: nav.signIn,
+    description: "Already have an account?",
   },
 };
 
-export const buttonDataAlternate = {
-  auth: buttonData.signup,
-  signin: buttonData.signup,
-  signup: buttonData.signin,
+export const successMessage = {
+  signIn: {
+    title: "Signed in successfully!",
+    description: "You're being redirected to your dashboard.",
+  },
+  signUp: {
+    title: "Your account has been created!",
+    description: "You're being redirected to the sign in page.",
+  },
 };
