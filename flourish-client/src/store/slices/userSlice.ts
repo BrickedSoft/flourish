@@ -15,7 +15,11 @@ const initialState: User = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    purgeUser: (state) => {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     /* --------------------------------- Sign Up -------------------------------- */
 
@@ -59,4 +63,5 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { purgeUser } = userSlice.actions;
 export const { name } = userSlice;

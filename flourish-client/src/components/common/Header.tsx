@@ -16,9 +16,10 @@ import { header, headerNav } from "../../assets/data/nav";
 import logo from "../../assets/img/logo.png";
 import { useAppSelector } from "../../hooks/useStore";
 import { persistor } from "../../store/store";
-import { useSignOut } from "../../hooks/SignOut";
+import { useSignOut } from "../../hooks/useSignOut";
 import Container from "./Container";
 import ButtonFull from "./button/ButtonFull";
+import { buttonData } from "../../assets/data/auth";
 
 const Header = () => {
   const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
@@ -84,7 +85,7 @@ const Header = () => {
           listStyleType={"none"}
           display={"flex"}
           alignItems={"center"}
-          columnGap={"48"}
+          columnGap={"36"}
         >
           {renderedLinks}
 
@@ -104,7 +105,7 @@ const Header = () => {
                   bg: "transparent",
                 }}
               >
-                <Avatar name={userName} boxSize={"3.6rem"}>
+                <Avatar name={userName} boxSize={"3.2rem"}>
                   <AvatarBadge boxSize="1.25em" bg="green.500" />
                 </Avatar>
               </MenuButton>
@@ -150,7 +151,7 @@ const Header = () => {
                     signOut();
                   }}
                 >
-                  Sign Out
+                  {buttonData.signup.title}
                 </MenuItem>
               </MenuList>
             </Menu>
