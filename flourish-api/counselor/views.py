@@ -11,30 +11,6 @@ from counselor.models import Counselor
 from client.serializers import SigninSerializer, SignupSerializer
 
 
-
-@api_view(["POST"])
-def login(request):
-    signinSerializer = SigninSerializer(data=request.data)
-    if not signinSerializer.is_valid():
-        return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
-
-    authenticated = authenticate(
-        username=signinSerializer.data["email"],
-        password=signinSerializer.data["password"],
-    )
-
-    if not authenticated:
-        return Response(
-            status=status.HTTP_401_UNAUTHORIZED,
-        )
-    user = User.objects.get(username=authenticated)
-    counselor = get_object_or_404(Counselor, user=user)
-
-    token, created = Token.objects.get_or_create(user=user)
-
-    return Response(data={"token": token.key}, status=status.HTTP_200_OK)
-
-
 @api_view(["POST"])
 def signup(request):
     serializer = SignupSerializer(data=request.data)

@@ -12,34 +12,6 @@ from client.serializers import SigninSerializer, SignupSerializer
 
 
 @api_view(["POST"])
-def register(request):
-    pass
-
-
-@api_view(["POST"])
-def login(request):
-    signinSerializer = SigninSerializer(data=request.data)
-    if not signinSerializer.is_valid():
-        return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
-
-    authenticated = authenticate(
-        username=signinSerializer.data["email"],
-        password=signinSerializer.data["password"],
-    )
-
-    if not authenticated:
-        return Response(
-            status=status.HTTP_401_UNAUTHORIZED,
-        )
-    user = User.objects.get(username=authenticated)
-    adminCounselor = get_object_or_404(AdminCounselor, user=user)
-
-    token, created = Token.objects.get_or_create(user=user)
-
-    return Response(data={"token": token.key}, status=status.HTTP_200_OK)
-
-
-@api_view(["POST"])
 def signup(request):
     serializer = SignupSerializer(data=request.data)
 
@@ -56,7 +28,7 @@ def signup(request):
     )
 
     user.save()
-    adminCounselor = AdminCounselor(name=serializer.data["name"], user=user)
+    adminCounselor = AdminCounselor(user=user)
     adminCounselor.save()
     return Response(status=status.HTTP_201_CREATED)
 
