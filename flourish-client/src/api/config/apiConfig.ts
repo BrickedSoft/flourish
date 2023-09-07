@@ -3,11 +3,11 @@ import { api as apiData } from "../../assets/data/server";
 
 export const api: AxiosInstance = axios.create({
   baseURL: apiData.base,
-  timeout: 30000,
+  timeout: 30000, // 30 seconds
 });
 
 const errorHandler = (error: AxiosError) => {
-  const { request, response, config } = error;
+  const { response } = error;
   const statusCode = response?.status;
 
   if (statusCode && statusCode === 401) {

@@ -1,3 +1,4 @@
+import { ReactNode, useRef, useState } from "react";
 import {
   Center,
   FormControl,
@@ -7,25 +8,28 @@ import {
   Input,
   useRadioGroup,
 } from "@chakra-ui/react";
-import { ReactNode, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-import { userTypes } from "../../../types/User";
+import { nav } from "../../../assets/data/nav";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
-import { signUp } from "../../../store/actions/authActions";
-import { SignUp } from "../../../types/Form";
+import { signUp as signUpAction } from "../../../store/actions/authActions";
+import { SignUp as SignUpType } from "../../../types/Form";
+import { Status } from "../../../types/Status";
+import { userTypes } from "../../../types/User";
 import RadioCard from "./RadioCard";
 
-const SignUpFormInit: SignUp = {
+const SignUpFormInit: SignUpType = {
   type: userTypes.CLIENT,
-  name: "test",
   email: "",
   password: "",
 };
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [isValid, setIsValid] = useState(true);
 
   const prevState = useRef<number>(
     Object.keys(userTypes).indexOf(userTypes.CLIENT)
@@ -48,11 +52,23 @@ const SignUpForm = () => {
 
   const group = getRootProps();
 
+  const onSubmit = async (data: SignUpType) => {
+    const res = await dispatch(signUpAction(data));
+    switch (res.meta.requestStatus) {
+      case Status.FULFILLED:
+        navigate(nav.signIn);
+        break;
+      case Status.REJECTED:
+        setIsValid(false);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <form
-      onSubmit={handleSubmit((data: SignUp) =>
-        dispatch(signUp({ ...data, name: "test" }))
-      )}
+      onSubmit={handleSubmit(onSubmit)}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -98,10 +114,11 @@ const SignUpForm = () => {
       {/* ---------------------------------- Email --------------------------------- */}
 
       <FormControl
-        isInvalid={errors.email ? true : false}
+        isInvalid={errors.email || !isValid ? true : false}
         display={"flex"}
         flexDir={"column"}
         gap={"8"}
+        onChange={() => setIsValid(true)}
       >
         <FormLabel
           htmlFor="email"
@@ -125,17 +142,22 @@ const SignUpForm = () => {
           borderRadius={"xl"}
         />
         <FormErrorMessage fontSize={"md"}>
-          {errors?.email && (errors?.email?.message as React.ReactNode)}
+          {errors?.email
+            ? (errors?.email?.message as React.ReactNode)
+            : !isValid
+            ? "Email already exists"
+            : null}
         </FormErrorMessage>
       </FormControl>
 
       {/* -------------------------------- Password -------------------------------- */}
 
       <FormControl
-        isInvalid={errors.password ? true : false}
+        isInvalid={errors.password || !isValid ? true : false}
         display={"flex"}
         flexDir={"column"}
         gap={"8"}
+        onChange={() => setIsValid(true)}
       >
         <FormLabel
           htmlFor="password"

@@ -1,25 +1,30 @@
+import { ReactNode, useState } from "react";
 import {
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import { ReactNode } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
+import { buttonData } from "../../../assets/data/auth";
+import { nav } from "../../../assets/data/nav";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
+import { signIn as signInAction } from "../../../store/actions/authActions";
 import { SignIn as SignInType } from "../../../types/Form";
-import { signIn } from "../../../store/actions/authActions";
-import { buttonData } from "../../../assets/data/auth";
+import { Status } from "../../../types/Status";
 
 const SignInFormInit: SignInType = {
-  name: "test",
   email: "",
   password: "",
 };
 
 const SignInForm = () => {
+  const navigate = useNavigate();
+  const [isValid, setIsValid] = useState(true);
+
   const dispatch = useAppDispatch();
 
   const {
@@ -28,11 +33,23 @@ const SignInForm = () => {
     formState: { errors, isSubmitting },
   } = useForm({ defaultValues: SignInFormInit });
 
+  const onSubmit = async (data: SignInType) => {
+    const res = await dispatch(signInAction(data));
+    switch (res.meta.requestStatus) {
+      case Status.FULFILLED:
+        navigate(nav.dashboard);
+        break;
+      case Status.REJECTED:
+        setIsValid(false);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <form
-      onSubmit={handleSubmit((data: SignInType) =>
-        dispatch(signIn({ ...data, name: "test" }))
-      )}
+      onSubmit={handleSubmit(onSubmit)}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -42,10 +59,11 @@ const SignInForm = () => {
       {/* ---------------------------------- Email --------------------------------- */}
 
       <FormControl
-        isInvalid={errors.email ? true : false}
+        isInvalid={errors.email || !isValid ? true : false}
         display={"flex"}
         flexDir={"column"}
         gap={"8"}
+        onChange={() => setIsValid(true)}
       >
         <FormLabel
           htmlFor="email"
@@ -69,17 +87,22 @@ const SignInForm = () => {
           borderRadius={"xl"}
         />
         <FormErrorMessage fontSize={"md"}>
-          {errors?.email && (errors?.email?.message as React.ReactNode)}
+          {errors?.email
+            ? (errors?.email?.message as React.ReactNode)
+            : !isValid
+            ? "Invalid email or password"
+            : null}
         </FormErrorMessage>
       </FormControl>
 
       {/* -------------------------------- Password -------------------------------- */}
 
       <FormControl
-        isInvalid={errors.password ? true : false}
+        isInvalid={errors.password || !isValid ? true : false}
         display={"flex"}
         flexDir={"column"}
         gap={"8"}
+        onChange={() => setIsValid(true)}
       >
         <FormLabel
           htmlFor="password"

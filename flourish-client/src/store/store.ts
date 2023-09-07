@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import userSlice from "./slices/authSlice";
+import userSlice, { name as userSliceName } from "./slices/userSlice";
 
 const persistConfig = {
   key: "flourish",
@@ -19,7 +19,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  [userSlice.name]: userSlice,
+  [userSliceName]: userSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

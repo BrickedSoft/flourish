@@ -3,6 +3,7 @@ export const nav = {
   auth: "/auth",
   signIn: "/auth/signin",
   signUp: "/auth/signup",
+  dashboard: "/dashboard",
 };
 
 export const header = [

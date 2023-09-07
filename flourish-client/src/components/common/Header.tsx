@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { header } from "../../assets/data/nav";
 import Container from "./Container";
 import logo from "../../assets/img/logo.png";
+import ButtonFull from "./button/ButtonFull";
+import { persistor } from "../../store/store";
 
 const Header = () => {
   const renderedLinks = header.map(({ title, href }, index) => (
@@ -63,6 +65,19 @@ const Header = () => {
           columnGap={"48"}
         >
           {renderedLinks}
+
+          {/* ----------------------- TODO: Remove on production ---------------------- */}
+          <ButtonFull
+            px={"8"}
+            py={"4"}
+            onClick={async () => {
+              await persistor.pause();
+              await persistor.flush();
+              await persistor.purge();
+            }}
+          >
+            Purge
+          </ButtonFull>
         </List>
       </Box>
     </Container>

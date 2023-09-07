@@ -3,7 +3,7 @@ import { SignIn } from "../types/Form";
 import { api } from "./config/apiConfig";
 
 export const apiSignIn = async (data: SignIn) => {
-  const response = await api.post(apiData.signIn.CLIENT, {
+  const response = await api.post(apiData.signIn, {
     ...data,
   });
 
