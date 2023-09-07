@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 
 import userSlice, { name as userSliceName } from "./slices/userSlice";
+import flagSlice, { name as flagSliceName } from "./slices/flagSlice";
 
 const persistConfig = {
   key: "flourish",
@@ -20,6 +21,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [userSliceName]: userSlice,
+  [flagSliceName]: flagSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

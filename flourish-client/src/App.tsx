@@ -6,10 +6,13 @@ import Auth from "./pages/auth";
 import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
 import Homepage from "./pages/homepage";
+import { useAppSelector } from "./hooks/useStore";
 
 const App = () => {
   // const currentRoute = window.location.pathname;
   // const isLayout = !customLayoutPaths.includes(currentRoute);
+
+  const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
 
   return (
     <Box
@@ -24,11 +27,13 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route index element={<Homepage />} />
-          <Route path="auth" element={<Auth />}>
-            <Route index element={<SignIn />} />
-            <Route path="signIn" element={<SignIn />} />
-            <Route path="signUp" element={<SignUp />} />
-          </Route>
+          {!isSignedIn && (
+            <Route path="auth" element={<Auth />}>
+              <Route index element={<SignIn />} />
+              <Route path="signIn" element={<SignIn />} />
+              <Route path="signUp" element={<SignUp />} />
+            </Route>
+          )}
         </Routes>
       </BrowserRouter>
     </Box>

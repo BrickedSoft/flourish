@@ -15,6 +15,7 @@ import { useAppDispatch } from "../../../hooks/useStore";
 import { signIn as signInAction } from "../../../store/actions/authActions";
 import { SignIn as SignInType } from "../../../types/Form";
 import { Status } from "../../../types/Status";
+import { setIsSignedIn } from "../../../store/slices/flagSlice";
 
 const SignInFormInit: SignInType = {
   email: "",
@@ -37,6 +38,7 @@ const SignInForm = () => {
     const res = await dispatch(signInAction(data));
     switch (res.meta.requestStatus) {
       case Status.FULFILLED:
+        dispatch(setIsSignedIn(true));
         navigate(nav.dashboard);
         break;
       case Status.REJECTED:
