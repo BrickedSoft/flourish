@@ -1,10 +1,10 @@
 import { SVGProps } from "react";
 import { useLocation } from "react-router-dom";
-import { nav } from "../data/nav";
+import { routes } from "../data/routes";
 
 const SignIn = (props: SVGProps<SVGSVGElement>) => {
   const { pathname } = useLocation();
-  const isSignUp = pathname !== nav.signUp;
+  const isSignUp = pathname !== routes.signUp;
 
   return (
     <svg

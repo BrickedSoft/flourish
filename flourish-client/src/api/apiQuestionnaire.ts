@@ -1,5 +1,5 @@
 import { api as apiData } from "../assets/data/server";
-import { SignIn } from "../types/Form";
+import { SignIn, SignUp } from "../types/Form";
 import { api } from "./config/apiConfig";
 
 export const apiSignIn = async (data: SignIn) => {

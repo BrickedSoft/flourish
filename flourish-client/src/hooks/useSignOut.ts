@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { nav } from "../assets/data/nav";
+import { routes } from "../assets/data/routes";
 import { setIsSignedIn } from "../store/slices/flagSlice";
 import { purgeUser } from "../store/slices/userSlice";
 import { useAppDispatch } from "./useStore";
@@ -12,7 +12,7 @@ export const useSignOut = () => {
   const signOut = () => {
     dispatch(purgeUser());
     dispatch(setIsSignedIn(false));
-    navigate(nav.home);
+    navigate(routes.home);
   };
 
   return { signOut };
