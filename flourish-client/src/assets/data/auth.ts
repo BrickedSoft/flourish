@@ -1,36 +1,38 @@
-import { nav } from "../../utils/nav";
-
-export const userTypes = ["Student", "Admin"];
+import { nav } from "./nav";
 
 export const headerContent = {
-  auth: {
+  signIn: {
     title: "Welcome Back!",
     description:
       "To keep connected with us please sign in with your personal info.",
   },
-  signin: {
-    title: "Welcome Back!",
-    description:
-      "To keep connected with us please sign in with your personal info.",
-  },
-  signup: {
+  signUp: {
     title: "Welcome to Flourish!",
     description:
       "Flourish connects you with AI to enhance your mental wellbeing. Sign up now to get started.",
   },
 };
 
-export const buttonData = {
-  auth: {
+export const footerContent = {
+  signIn: {
     title: "Sign Up",
     href: nav.signUp,
+    description: "Don't have an account?",
   },
-  signin: {
-    title: "Sign Up",
-    href: nav.signUp,
-  },
-  signup: {
+  signUp: {
     title: "Sign In",
     href: nav.signIn,
+    description: "Already have an account?",
+  },
+};
+
+export const successMessage = {
+  signIn: {
+    title: "Signed in successfully!",
+    description: "You're being redirected to your dashboard.",
+  },
+  signUp: {
+    title: "Your account has been created!",
+    description: "You're being redirected to the sign in page.",
   },
 };

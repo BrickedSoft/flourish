@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 import { useLocation } from "react-router-dom";
-import { nav } from "../../utils/nav";
+import { nav } from "../data/nav";
 
 const SignIn = (props: SVGProps<SVGSVGElement>) => {
   const { pathname } = useLocation();
