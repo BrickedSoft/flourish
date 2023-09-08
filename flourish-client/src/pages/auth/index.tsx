@@ -4,8 +4,11 @@ import { Link, Outlet } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
 import SignInImage from "../../assets/svg/Auth";
 import Container from "../../components/common/Container";
+import { useAppSelector } from "../../hooks/useStore";
 
 const Auth = () => {
+  const token = useAppSelector((state) => state.user.token);
+
   return (
     <Container
       w={"full"}
@@ -58,7 +61,12 @@ const Auth = () => {
               }}
               mb={"16"}
             >
-              <Link to={"/"}>
+              <Link
+                to={"/"}
+                style={{
+                  pointerEvents: `${token ? "none" : "auto"}`,
+                }}
+              >
                 <Image src={logo} h={"14"} w={"auto"} alt={"logo"} />
               </Link>
             </Box>

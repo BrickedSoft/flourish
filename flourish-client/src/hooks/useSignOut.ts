@@ -10,8 +10,8 @@ export const useSignOut = () => {
   const navigate = useNavigate();
 
   const signOut = () => {
-    dispatch(setIsSignedIn(false));
     dispatch(purgeUser());
+    dispatch(setIsSignedIn(false));
     navigate(nav.home);
   };
 

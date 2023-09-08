@@ -1,17 +1,14 @@
 import { Box } from "@chakra-ui/react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-// import { customLayoutPaths } from "./assets/data/app";
 import Auth from "./pages/auth";
 import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
 import Homepage from "./pages/homepage";
 import { useAppSelector } from "./hooks/useStore";
+import Dashboard from "./pages/dashboard";
 
 const App = () => {
-  // const currentRoute = window.location.pathname;
-  // const isLayout = !customLayoutPaths.includes(currentRoute);
-
   const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
 
   return (
@@ -34,6 +31,8 @@ const App = () => {
               <Route path="signUp" element={<SignUp />} />
             </Route>
           )}
+          {isSignedIn && <Route path="dashboard" element={<Dashboard />} />}
+          <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </BrowserRouter>
     </Box>

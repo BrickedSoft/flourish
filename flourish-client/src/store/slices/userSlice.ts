@@ -17,7 +17,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     purgeUser: (state) => {
-      state = initialState;
+      state.email = "";
+      state.token = "";
+      state.name = "";
+      state.status = Status.IDLE;
     },
   },
   extraReducers: (builder) => {
@@ -51,13 +54,15 @@ const userSlice = createSlice({
 
     builder.addCase(signIn.rejected, (state) => {
       state.status = Status.REJECTED;
-      state.token = "";
     });
 
     /* ---------------------------------- PURGE --------------------------------- */
 
     builder.addCase(PURGE, (state) => {
-      state = initialState;
+      state.email = "";
+      state.token = "";
+      state.name = "";
+      state.status = Status.IDLE;
     });
   },
 });
