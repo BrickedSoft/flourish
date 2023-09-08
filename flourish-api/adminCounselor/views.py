@@ -12,11 +12,11 @@ from adminCounselor.models import AdminCounselor
 
 from client.serializers import SigninSerializer, SignupSerializer
 
-from questionnaire.models import Questionnaire, QuestionnaireField
+from questionnaire.models import Questionnaire, QuestionnaireField, FilledQuestionnaire
 from questionnaire.serializers import (
     QuestionnaireSerializer,
     QuestionnaireViewSerializer,
-    QuestionnaireFieldSerializer,
+    FilledQuestionnaireSerializer,
 )
 
 
@@ -43,10 +43,6 @@ def signup(request):
 
 
 class QuestionnaireView(APIView):
-    """
-    Authorized provider create , edit and update case
-    """
-
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -101,6 +97,17 @@ class QuestionnaireView(APIView):
         instance.delete()
 
         return Response(status=status.HTTP_200_OK)
+
+
+class FilledQuestionnaireView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        adminCounselor = get_object_or_404(AdminCounselor, user=request.user)
+        questionnaires = FilledQuestionnaire.objects.all()
+        serializer = FilledQuestionnaireSerializer(questionnaires, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 def get_or_none(classmodel, **kwargs):

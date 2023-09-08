@@ -2,14 +2,22 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from client.models import Client
-
 from client.serializers import SigninSerializer, SignupSerializer, UserSerializer
+from questionnaire.models import Questionnaire, FilledQuestionnaire
+from questionnaire.serializers import (
+    QuestionnaireViewSerializer,
+    FilledQuestionnaireSerializer,
+)
+from adminCounselor.models import AdminCounselor
 
 
 @api_view(["POST"])
@@ -56,6 +64,43 @@ def signup(request):
     client = Client(user=user)
     client.save()
     return Response(status=status.HTTP_201_CREATED)
+
+
+@api_view(["GET"])
+def ping(request):
+    return Response(status=status.HTTP_200_OK, data="I'm up")
+
+
+class QuestionnaireView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        client = get_object_or_404(Client, user=request.user)
+        questionnaires = Questionnaire.objects.all()
+        serializer = QuestionnaireViewSerializer(questionnaires, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class FilledQuestionnaireView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        client = get_object_or_404(Client, user=request.user)
+        questionnaires = FilledQuestionnaire.objects.filter(client_id=client.id)
+        serializer = FilledQuestionnaireSerializer(questionnaires, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        client = get_object_or_404(Client, user=request.user)
+        request.data["client"] = client.id
+        serializer = FilledQuestionnaireSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
+
+        serializer.save()
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
 
 def get_or_none(classmodel, **kwargs):

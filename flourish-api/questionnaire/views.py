@@ -12,7 +12,7 @@ from .serializers import QuestionnaireFieldSerializer
 
 class QuestionnaireFieldView(APIView):
     """
-    Authorized provider create , edit and update case
+    Authorized admin create , edit and update questionnairefields
     """
 
     authentication_classes = [TokenAuthentication]
@@ -70,3 +70,4 @@ class QuestionnaireFieldView(APIView):
         instance.delete()
 
         return Response(status=status.HTTP_200_OK)
+
