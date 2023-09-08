@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "client",
     "counselor",
     "adminCounselor",
+    'questionnaire',
 ]
 
 MIDDLEWARE = [

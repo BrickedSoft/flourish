@@ -29,10 +29,9 @@ def login(request):
         )
     user = User.objects.get(username=authenticated)
 
-    token, created = Token.objects.get_or_create(user=user)
-
+    serializer = UserSerializer(instance=user)
     return Response(
-        data={"token": token.key, "user": UserSerializer(user).data},
+        data=serializer.data,
         status=status.HTTP_200_OK,
     )
 
