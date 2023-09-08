@@ -10,6 +10,8 @@ class Questionnaire(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+    options = models.TextField(blank=True, default="")
+    evaluation_range = models.TextField(blank=True, default="")
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -40,6 +42,7 @@ class FilledQuestionnaire(models.Model):
     client = models.ForeignKey("client.Client", on_delete=models.CASCADE)
     questionnaire = models.ForeignKey("questionnaire.Questionnaire", on_delete=models.CASCADE)
     filled = models.TextField(blank=True, default="")
+    comment = models.TextField(blank=True, default="")
     
     created_at = models.DateTimeField(auto_now_add=True)
     
