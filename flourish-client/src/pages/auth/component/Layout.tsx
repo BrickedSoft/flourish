@@ -3,6 +3,7 @@ import { Box, Flex, Heading, Text, keyframes } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
 import { footerContent, headerContent } from "../../../assets/data/auth";
+import { useAppSelector } from "../../../hooks/useStore";
 
 const Layout = ({
   header,
@@ -15,6 +16,8 @@ const Layout = ({
 }) => {
   const [keyIndex, setKeyIndex] = useState(1);
   const { pathname } = useLocation();
+
+  const token = useAppSelector((state) => state.user.token);
 
   useEffect(() => {
     setKeyIndex((e) => e + 1);
@@ -63,6 +66,7 @@ to { opacity: 1; }
         alignItems={"baseline"}
         justifyContent={"center"}
         justifySelf={"flex-end"}
+        opacity={token ? 0 : 1}
       >
         <Text fontSize={"lg"} color={"font.muted2"}>
           {footer.description}

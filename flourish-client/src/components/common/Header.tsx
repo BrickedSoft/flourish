@@ -12,7 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-import { header, headerNav } from "../../assets/data/nav";
+import {
+  header,
+  headerNav,
+  signOut as signOutTitle,
+} from "../../assets/data/routes";
 import logo from "../../assets/img/logo.png";
 import { useSignOut } from "../../hooks/useSignOut";
 import { useAppSelector } from "../../hooks/useStore";
@@ -22,7 +26,7 @@ import ButtonFull from "./button/ButtonFull";
 
 const Header = () => {
   const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
-  const userName = useAppSelector((state) => state.user.name);
+  const name = useAppSelector((state) => state.user.name);
   const { signOut } = useSignOut();
 
   const renderLink = ({ title, href }: { title: string; href: string }) => (
@@ -32,7 +36,7 @@ const Header = () => {
         letterSpacing={"-.25px"}
         textDecoration={"none"}
         whiteSpace={"nowrap"}
-        color={"secondary"}
+        color={"font.secondary"}
         fontSize={"2xl"}
         fontWeight={"medium"}
         pt={"0.6rem"}
@@ -40,10 +44,9 @@ const Header = () => {
         borderBottom={"1px solid transparent"}
         transition={"all .3s"}
         _hover={{
-          borderColor: "primary",
           color: "font.heroLight",
           textShadow: "0 0.4rem 0.8rem rgba(28, 126, 214, 0.25)",
-          boxShadow: "0 0.6rem 0.4rem -0.4rem rgba(28, 126, 214, 0.5)",
+          boxShadow: "0 0.6rem 0 -0.4rem rgba(28, 126, 214, 0.5)",
         }}
       >
         {title}
@@ -104,7 +107,7 @@ const Header = () => {
                   bg: "transparent",
                 }}
               >
-                <Avatar name={userName} boxSize={"3.2rem"}>
+                <Avatar name={name} boxSize={"3.2rem"}>
                   <AvatarBadge boxSize="1.25em" bg="green.500" />
                 </Avatar>
               </MenuButton>
@@ -154,11 +157,9 @@ const Header = () => {
                     color: "font.heroLight",
                     textShadow: "0 0.4rem 0.8rem rgba(28, 126, 214, 0.25)",
                   }}
-                  onClick={() => {
-                    signOut();
-                  }}
+                  onClick={signOut}
                 >
-                  Sign Out
+                  {signOutTitle.title}
                 </MenuItem>
               </MenuList>
             </Menu>

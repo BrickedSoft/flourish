@@ -49,6 +49,7 @@ const theme = extendTheme({
     },
 
     success: "#40c057",
+    error: "#f03e3e",
 
     font: {
       // hero: "#204289",

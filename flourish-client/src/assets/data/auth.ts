@@ -1,4 +1,4 @@
-import { nav } from "./nav";
+import { routes } from "./routes";
 
 export const headerContent = {
   signIn: {
@@ -16,12 +16,12 @@ export const headerContent = {
 export const footerContent = {
   signIn: {
     title: "Sign Up",
-    href: nav.signUp,
+    href: routes.signUp,
     description: "Don't have an account?",
   },
   signUp: {
     title: "Sign In",
-    href: nav.signIn,
+    href: routes.signIn,
     description: "Already have an account?",
   },
 };

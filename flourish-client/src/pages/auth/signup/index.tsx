@@ -16,7 +16,7 @@ import {
   headerContent,
   successMessage,
 } from "../../../assets/data/auth";
-import { nav } from "../../../assets/data/nav";
+import { routes } from "../../../assets/data/routes";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
 import { signUp as signUpAction } from "../../../store/actions/authActions";
@@ -66,7 +66,7 @@ const SignUpForm = () => {
       case Status.FULFILLED:
         setIsFulfilled(true);
         setTimeout(() => {
-          navigate(nav.signIn);
+          navigate(routes.signIn);
         }, 3000);
         break;
       case Status.REJECTED:
@@ -211,7 +211,6 @@ const SignUpForm = () => {
             py={"24"}
             fontSize={"xl"}
             type="submit"
-            borderWidth={"2px"}
           >
             Sign Up
           </ButtonFull>

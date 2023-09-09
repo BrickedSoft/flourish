@@ -1,14 +1,14 @@
-import { Status } from "./Status";
-
 export enum userTypes {
-  ADMIN = "ADMIN",
-  CLIENT = "CLIENT",
-  COUNSELOR = "COUNSELOR",
+  ADMIN = "adminCounselor",
+  CLIENT = "counselor",
+  COUNSELOR = "client",
 }
 
 export interface User {
   token: string;
-  name: string;
   email: string;
-  status: Status;
+  name: string;
+  adminCounselor: string | null;
+  counselor: string | null;
+  client: string | null;
 }

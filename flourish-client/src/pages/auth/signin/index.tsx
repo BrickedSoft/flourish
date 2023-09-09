@@ -13,7 +13,7 @@ import {
   headerContent,
   successMessage,
 } from "../../../assets/data/auth";
-import { nav } from "../../../assets/data/nav";
+import { routes } from "../../../assets/data/routes";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
 import { signIn as signInAction } from "../../../store/actions/authActions";
@@ -48,7 +48,7 @@ const SignInForm = () => {
         setIsFulfilled(true);
         setTimeout(() => {
           dispatch(setIsSignedIn(true));
-          navigate(nav.dashboard);
+          navigate(routes.dashboard);
         }, 3000);
 
         break;
@@ -158,7 +158,6 @@ const SignInForm = () => {
             py={"24"}
             fontSize={"xl"}
             type="submit"
-            borderWidth={"2px"}
           >
             {footerContent.signUp.title}
           </ButtonFull>
