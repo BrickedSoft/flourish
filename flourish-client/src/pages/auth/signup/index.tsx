@@ -39,9 +39,7 @@ const SignUpForm = () => {
   const [isValid, setIsValid] = useState(true);
   const [isFulfilled, setIsFulfilled] = useState(false);
 
-  const prevState = useRef<number>(
-    Object.keys(userTypes).indexOf(userTypes.CLIENT)
-  );
+  const prevState = useRef<number>(1);
 
   const {
     control,
@@ -52,7 +50,7 @@ const SignUpForm = () => {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "userType",
-    defaultValue: userTypes.CLIENT,
+    defaultValue: userTypes.CLIENT.toUpperCase(),
     onChange: (value) => {
       prevState.current = Object.keys(userTypes).indexOf(value);
     },

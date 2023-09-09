@@ -52,6 +52,7 @@ const Auth = () => {
             gap={"24"}
             alignItems={"space-between"}
             justifyContent={"space-between"}
+            overflow={"hidden"}
           >
             <Box
               alignSelf={"end"}

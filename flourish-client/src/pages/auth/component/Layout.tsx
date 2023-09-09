@@ -1,9 +1,46 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Box, Flex, Heading, Text, keyframes } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  chakra,
+  keyframes,
+  shouldForwardProp,
+} from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
+import { isValidMotionProp, motion } from "framer-motion";
 
 import { footerContent, headerContent } from "../../../assets/data/auth";
 import { useAppSelector } from "../../../hooks/useStore";
+
+const ChakraBox = chakra(motion.div, {
+  shouldForwardProp: (props) =>
+    isValidMotionProp(props) || shouldForwardProp(props),
+});
+
+const formVariants = {
+  hidden: {
+    x: "100vw",
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      delay: 0.25,
+      duration: 0.5,
+      type: "tween",
+    },
+  },
+  exit: {
+    x: "100vw",
+    transition: {
+      ease: "easeInOut",
+      duration: 0.5,
+    },
+  },
+};
 
 const Layout = ({
   header,
@@ -30,11 +67,17 @@ to { opacity: 1; }
   const animationSlideIn = `${slideIn} .5s ease-in`;
 
   return (
-    <Flex
+    <ChakraBox
+      display={"flex"}
       flexDir={"column"}
       justifyContent={"space-between"}
       flexGrow={1}
       gap={"16"}
+      variants={formVariants}
+      initial={"hidden"}
+      animate={"visible"}
+      exit={"exit"}
+      transition={"transition"}
     >
       <Flex
         key={keyIndex}
@@ -80,7 +123,7 @@ to { opacity: 1; }
           <Link to={footer.href}>{footer.title}</Link>
         </Box>
       </Flex>
-    </Flex>
+    </ChakraBox>
   );
 };
 
