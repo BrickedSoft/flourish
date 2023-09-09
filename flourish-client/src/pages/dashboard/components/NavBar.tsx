@@ -17,6 +17,8 @@ const NavBar = () => {
     setCurrentRoute(newRoute === nav.dashboard ? nav.members : newRoute);
   }, [pathname]);
 
+  console.log(currentRoute)
+
   const renderLink = ({
     title,
     href,
@@ -64,7 +66,7 @@ const NavBar = () => {
 
   return (
     <Flex px={32} gap={48} alignItems={"center"}>
-      {navBar.ADMIN.map(renderLink)}
+      {navBar.adminCounselor.map(renderLink)}
     </Flex>
   );
 };

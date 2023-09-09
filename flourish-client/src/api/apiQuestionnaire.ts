@@ -1,11 +1,9 @@
 import { api as apiData } from "../assets/data/server";
-import { SignIn, SignUp } from "../types/Form";
+import { Questionnaire } from "../types/Questionnaire";
 import { api } from "./config/apiConfig";
 
-export const apiSignIn = async (data: SignIn) => {
-  const response = await api.post(apiData.signIn, {
-    ...data,
-  });
+export const getQuestionnaire = async (): Promise<Questionnaire[]> => {
+  const response = await api.get(apiData.questionnaire.adminCounselor, {});
 
-  return response.data.token;
+  return response.data;
 };

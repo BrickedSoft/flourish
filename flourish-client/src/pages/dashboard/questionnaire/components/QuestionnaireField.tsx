@@ -1,16 +1,23 @@
 import {
-  FormControl,
-  FormLabel,
   Editable,
-  EditablePreview,
   EditableInput,
-  FormErrorMessage,
-  Text,
+  EditablePreview,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Text,
 } from "@chakra-ui/react";
-import React from "react";
-import { questionnaireData } from "../../../assets/data/dashboard/questionnaire/questionnaire";
-import ButtonFull from "../../../components/common/button/ButtonFull";
+import {
+  FieldArrayWithId,
+  FieldErrors,
+  UseFieldArrayRemove,
+  UseFormRegister,
+} from "react-hook-form";
+
+import { questionnaireData } from "../../../../assets/data/dashboard/questionnaire/questionnaire";
+import ButtonFull from "../../../../components/common/button/ButtonFull";
+import { Questionnaire } from "../../../../types/Questionnaire";
 
 const QuestionnaireField = ({
   data,
@@ -19,11 +26,11 @@ const QuestionnaireField = ({
   register,
   remove,
 }: {
-  data: any;
-  errors: any;
+  data: FieldArrayWithId<Questionnaire, "questionnaireFields", "id">;
+  errors: FieldErrors<Questionnaire>;
   index: number;
-  remove: any;
-  register: any;
+  remove: UseFieldArrayRemove;
+  register: UseFormRegister<Questionnaire>;
 }) => (
   <FormControl
     w={"full"}
@@ -55,7 +62,9 @@ const QuestionnaireField = ({
         borderWidth={"2"}
         borderColor={"transparent"}
         borderRadius={"xl"}
-        defaultValue={questionnaireData.questionnaireField.placeholder}
+        defaultValue={
+          data.question || questionnaireData.questionnaireField.placeholder
+        }
       >
         <EditablePreview px={12} py={4} borderColor={"transparent"} />
         <EditableInput

@@ -1,9 +1,13 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+
 import { api as apiData } from "../../assets/data/server";
 
 export const api: AxiosInstance = axios.create({
   baseURL: apiData.base,
   timeout: 30000, // 30 seconds
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const errorHandler = (error: AxiosError) => {
@@ -22,3 +26,10 @@ const errorHandler = (error: AxiosError) => {
 api.interceptors.response.use(undefined, (error) => {
   return errorHandler(error);
 });
+
+export const setupInterceptors = (token: string) => {
+  api.interceptors.request.use((config) => {
+    config.headers.Authorization = `token ${token}`;
+    return config;
+  });
+};

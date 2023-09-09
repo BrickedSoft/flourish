@@ -4,8 +4,8 @@ import { Button } from "@chakra-ui/react";
 const ButtonFull = (props: any) => {
   const {
     children,
-    px,
-    py,
+    px = "16",
+    py = "20",
     bg,
     fontSize,
     fontWeight,

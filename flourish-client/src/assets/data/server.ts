@@ -8,4 +8,7 @@ export const api = {
     [userTypes.COUNSELOR]: "counselor/signup/",
   },
   signIn: "login/",
+  questionnaire: {
+    [userTypes.ADMIN]: "adminCounselor/questionnaire/",
+  },
 };

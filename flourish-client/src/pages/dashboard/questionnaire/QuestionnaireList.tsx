@@ -5,7 +5,7 @@ import { fetchQuestionnaire } from "../../../store/actions/questionnaireActions"
 import QuestionnaireCard from "./components/QuestionnaireCard";
 import { Outlet } from "react-router-dom";
 
-const Questionnaire = () => {
+const QuestionnaireList = () => {
   const dispatch = useAppDispatch();
   const questionnaires = useAppSelector(
     (state) => state.questionnaire.questionnaires
@@ -16,10 +16,16 @@ const Questionnaire = () => {
   }, [dispatch]);
 
   return (
-    <Box w={"full"} px={0} borderRadius={"xl"}>
-      <Outlet />
-    </Box>
+    <SimpleGrid
+      spacing={16}
+      borderRadius={"xl"}
+      templateRows="repeat(auto-fill)"
+    >
+      {questionnaires.map((questionnaire, index) => (
+        <QuestionnaireCard key={index} questionnaire={questionnaire} />
+      ))}
+    </SimpleGrid>
   );
 };
 
-export default Questionnaire;
+export default QuestionnaireList;

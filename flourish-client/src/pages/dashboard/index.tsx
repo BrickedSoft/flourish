@@ -33,9 +33,11 @@ const Dashboard = () => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          {[...navBar.ADMIN, { href: nav.dashboard }].some(
+          {[...navBar.adminCounselor, { href: nav.dashboard }].some(
             ({ href }) =>
-              href.split("/").at(-1) === (pathname.split("/").at(-1) as string)
+              href.split("/").at(-1) ===
+              ((pathname.split("/").at(-1) as string) ||
+                (pathname.split("/").at(-2) as string))
           ) ? (
             <NavBar />
           ) : (
@@ -56,6 +58,7 @@ const Dashboard = () => {
             w={"full"}
             mx={24}
             my={24}
+            py={32}
             bg={"white"}
             borderRadius={"xl"}
             overflowY={"scroll"}

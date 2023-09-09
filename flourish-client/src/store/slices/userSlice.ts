@@ -1,14 +1,21 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
 
 import { Status } from "../../types/Status";
 import { User } from "../../types/User";
 import { signIn, signUp } from "../actions/authActions";
 
-const initialState: User = {
+interface reducerType extends User {
+  status: Status;
+}
+
+const initialState: reducerType = {
   token: "",
-  name: "",
   email: "",
+  name: "",
+  adminCounselor: "",
+  counselor: "",
+  client: "",
   status: Status.IDLE,
 };
 
@@ -44,15 +51,18 @@ const userSlice = createSlice({
       state.status = Status.PENDING;
     });
 
-    builder.addCase(
-      signIn.fulfilled,
-      (state, action: PayloadAction<string>) => {
-        state.status = Status.FULFILLED;
-        state.token = action.payload;
-      }
-    );
+    builder.addCase(signIn.fulfilled, (state, action) => {
+      state.email = action.payload.email;
+      state.token = action.payload.token;
+      state.name = action.payload.name;
+      state.adminCounselor = action.payload.adminCounselor;
+      state.counselor = action.payload.counselor;
+      state.client = action.payload.client;
+      state.status = Status.FULFILLED;
+    });
 
     builder.addCase(signIn.rejected, (state) => {
+      state = { ...initialState };
       state.status = Status.REJECTED;
     });
 

@@ -1,7 +1,7 @@
 import { RxDashboard, RxQuestionMarkCircled } from "react-icons/rx";
 
 import { userTypes } from "../../../types/User";
-import { routes } from "../routes";
+import { nav, routes } from "../routes";
 
 export const menu = {
   [userTypes.ADMIN]: [
@@ -9,6 +9,7 @@ export const menu = {
       title: "Dashboard",
       href: routes.dashboard,
       icon: <RxDashboard fontSize={24} strokeWidth={0.1} />,
+      exclude: [nav.questionnaire],
     },
     {
       title: "Questionnaires",

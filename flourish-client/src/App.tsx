@@ -1,17 +1,23 @@
 import { Box } from "@chakra-ui/react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import { setupInterceptors } from "./api/config/apiConfig";
+import { nav } from "./assets/data/routes";
+import { useAppSelector } from "./hooks/useStore";
 import Auth from "./pages/auth";
 import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
-import Homepage from "./pages/homepage";
-import { useAppSelector } from "./hooks/useStore";
 import Dashboard from "./pages/dashboard";
-import Questions from "./pages/dashboard/questionnaire";
-import { nav } from "./assets/data/routes";
+import Questionnaire from "./pages/dashboard/questionnaire";
+import Homepage from "./pages/homepage";
+import QuestionnaireDetails from "./pages/dashboard/questionnaire/QuestionnaireDetails";
+import QuestionnaireList from "./pages/dashboard/questionnaire/QuestionnaireList";
 
 const App = () => {
   const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
+  const token = useAppSelector((state) => state?.user?.token);
+
+  if (token) setupInterceptors(token);
 
   return (
     <Box
@@ -36,7 +42,10 @@ const App = () => {
 
           {isSignedIn && (
             <Route path={`${nav.dashboard}`} element={<Dashboard />}>
-              <Route path={nav.questionnaire} element={<Questions />} />
+              <Route path={nav.questionnaire} element={<Questionnaire />}>
+                <Route index element={<QuestionnaireList />} />
+                <Route path=":id" element={<QuestionnaireDetails />} />
+              </Route>
               <Route index element={<h1>Members</h1>} />
               <Route path={nav.members} element={<h1>Members</h1>} />
               <Route

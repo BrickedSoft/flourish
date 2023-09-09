@@ -1,9 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { SignIn, SignUp } from "../../types/Form";
-import { apiSignUp } from "../../api/apiAuth";
-import { apiSignIn } from "../../api/apiAuth";
+import { getQuestionnaire } from "../../api/apiQuestionnaire";
+import { Questionnaire } from "../../types/Questionnaire";
 
-export const signUp = createAsyncThunk("auth/signUp", async (data: SignUp) => {
-  return await apiSignUp(data);
-});
+export const fetchQuestionnaire = createAsyncThunk(
+  "flourish/questionnaire",
+  async (): Promise<Questionnaire[]> => {
+    return await getQuestionnaire();
+  }
+);
