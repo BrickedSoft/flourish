@@ -28,7 +28,7 @@ def signup(request):
     )
 
     user.save()
-    counselor = Counselor(name=serializer.data["name"], user=user)
+    counselor = Counselor(user=user)
     counselor.save()
     return Response(status=status.HTTP_201_CREATED)
 
