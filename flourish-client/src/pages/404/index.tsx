@@ -1,22 +1,17 @@
-import React from "react";
-import Container from "../../components/common/Container";
 import {
-  Box,
-  Grid,
-  VStack,
-  Text,
-  Heading,
   Center,
-  GridItem,
+  Grid,
+  Heading,
   Image,
+  Text,
   chakra,
   shouldForwardProp,
 } from "@chakra-ui/react";
-import ButtonFull from "../../components/common/button/ButtonFull";
-import ghostImage from "../../assets/img/ghost.png";
-import { Link, Route } from "react-router-dom";
-import { routes } from "../../assets/data/routes";
 import { isValidMotionProp, motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { routes } from "../../assets/data/routes";
+import ghostImage from "../../assets/img/ghost.png";
+import { useEffect, useState } from "react";
 
 const ChakraBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
@@ -39,29 +34,54 @@ const containerVariants = {
       type: "spring",
       mass: 0.5,
       damping: 10,
-      stiffness: 15,
+      stiffness: 12,
       // when: "beforeChildren",
       // staggerChildren: 0.5,
     },
   },
 };
 
+const imageVariants = {
+  imageInitial: {
+    y: -15,
+  },
+  visible: {
+    y: 15,
+    transition: {
+      type: "spring",
+      mass: 0.6,
+      damping: 5,
+      stiffness: 10,
+      repeat: Infinity,
+      repeatType: "reverse",
+    },
+  },
+};
+
 const NotFound = () => {
+  const [firstAnimation, setFirstAnimation] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFirstAnimation(false);
+    }, 3000);
+  }, []);
+
   return (
     <Center
       w={"100vw"}
       h={"100vh"}
-      bg="#DFAA4E"
+      bg="#1C39BB"
       fontFamily={"secondary"}
       fontWeight={"medium"}
-      color={"font.focused"}
+      color={"white"}
       fontSize={"xl"}
     >
       <Grid
         templateColumns={"auto auto"}
-        justifyContent={"space-around"}
+        justifyContent={"center"}
         alignItems={"center"}
-        gap={64}
+        gap={128}
       >
         <ChakraBox
           as={motion.div}
@@ -86,7 +106,8 @@ const NotFound = () => {
             bg="black"
             fontSize={"xl"}
             color={"white"}
-            p={16}
+            py={12}
+            px={24}
             whileHover={{
               scale: 1.05,
               textShadow: "0px 0px 12px rgb(255,255,255)",
@@ -101,11 +122,40 @@ const NotFound = () => {
         </ChakraBox>
 
         <ChakraBox
-          variants={containerVariants}
+          display={"flex"}
+          flexDir={"column"}
+          alignItems={"center"}
+          gap={-4}
+          //@ts-ignore
+          variants={firstAnimation && containerVariants}
           initial={"imageInitial"}
           animate={"visible"}
         >
-          <Image src={ghostImage} alt="ghost" w={400} h={400} />
+          <ChakraBox
+            //@ts-ignore
+            variants={firstAnimation || imageVariants}
+            initial={"imageInitial"}
+            animate={"visible"}
+          >
+            <Image src={ghostImage} alt="ghost" w={400} h={400} />
+          </ChakraBox>
+          <ChakraBox
+            w="60%"
+            h={32}
+            borderRadius={"50%"}
+            bg={"hsla(38, 21%, 19%, .16)"}
+            filter={"blur(7px)"}
+            initial={{ scale: 0.85 }}
+            //@ts-ignore
+            animate={
+              firstAnimation || {
+                scale: [0.85, 1],
+                transition: {
+                  ...imageVariants.visible.transition,
+                },
+              }
+            }
+          ></ChakraBox>
         </ChakraBox>
       </Grid>
     </Center>

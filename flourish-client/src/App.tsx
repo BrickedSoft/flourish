@@ -1,19 +1,19 @@
 import { Box } from "@chakra-ui/react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { setupInterceptors } from "./api/config/apiConfig";
 import { nav } from "./assets/data/routes";
 import { useAppSelector } from "./hooks/useStore";
+import NotFound from "./pages/404";
 import Auth from "./pages/auth";
 import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
 import Dashboard from "./pages/dashboard";
 import Questionnaire from "./pages/dashboard/questionnaire";
-import Homepage from "./pages/homepage";
 import QuestionnaireDetails from "./pages/dashboard/questionnaire/QuestionnaireDetails";
 import QuestionnaireList from "./pages/dashboard/questionnaire/QuestionnaireList";
-import NotFound from "./pages/404";
+import Homepage from "./pages/homepage";
 
 const App = () => {
   const location = useLocation();
