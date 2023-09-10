@@ -8,7 +8,6 @@ const theme = extendTheme({
     heading: "Work Sans, sans-serif",
     body: `"Rubik", sans-serif`,
     mono: "Menlo, monospace",
-    secondary: "Space Grotesk, Work Sans",
   },
 
   breakpoints: {

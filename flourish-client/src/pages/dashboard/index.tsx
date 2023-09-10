@@ -54,18 +54,18 @@ const Dashboard = () => {
           borderTopRadius={"xl"}
           overflow={"hidden"}
         >
-          <Container
+          <Flex
             w={"full"}
             mx={24}
             my={24}
-            py={32}
+            p={32}
             bg={"white"}
             borderRadius={"xl"}
             overflowY={"scroll"}
             overflowX={"hidden"}
           >
             <Outlet />
-          </Container>
+          </Flex>
         </Flex>
       </Grid>
     </Container>

@@ -20,13 +20,10 @@ import ButtonFull from "../../../../components/common/button/ButtonFull";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
 import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions";
 import QuestionnaireField from "./QuestionnaireField";
+import { Questionnaire as QuestionnaireType } from "../../../../types/Questionnaire";
 
-const Questionnaire = () => {
+const Questionnaire = ({ questionnaire }: { questionnaire: QuestionnaireType }) => {
   const dispatch = useAppDispatch();
-  const questionnaires = useAppSelector(
-    (state) => state.questionnaire.questionnaires[0]
-  );
-  const status = useAppSelector((state) => state.questionnaire.status);
 
   const {
     handleSubmit,
@@ -34,7 +31,7 @@ const Questionnaire = () => {
     register,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues: questionnaires });
+  } = useForm({ defaultValues: questionnaire });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -66,7 +63,7 @@ const Questionnaire = () => {
             type="submit"
             onClick={() =>
               reset({
-                ...questionnaires,
+                ...questionnaire,
               })
             }
           >
@@ -117,7 +114,7 @@ const Questionnaire = () => {
               borderColor={"transparent"}
               borderRadius={"xl"}
               defaultValue={
-                questionnaires?.name || questionnaireData.name.placeholder
+                questionnaire?.name || questionnaireData.name.placeholder
               }
             >
               <EditablePreview px={12} py={4} borderColor={"transparent"} />

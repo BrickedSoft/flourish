@@ -72,7 +72,6 @@ const NotFound = () => {
       w={"100vw"}
       h={"100vh"}
       bg="#1C39BB"
-      fontFamily={"secondary"}
       fontWeight={"medium"}
       color={"white"}
       fontSize={"xl"}
@@ -94,9 +93,7 @@ const NotFound = () => {
           animate={"visible"}
         >
           <Text>Error 404</Text>
-          <Heading fontSize={"8rem"} fontFamily={"secondary"}>
-            OOPS!
-          </Heading>
+          <Heading fontSize={"8rem"}>OOPS!</Heading>
           <Text maxW={"25ch"}>
             We can't seem to find the page you are looking for.
           </Text>
@@ -144,7 +141,7 @@ const NotFound = () => {
             h={32}
             borderRadius={"50%"}
             bg={"hsla(38, 21%, 19%, .16)"}
-            filter={"blur(7px)"}
+            filter={"blur(9px)"}
             initial={{ scale: 0.85 }}
             //@ts-ignore
             animate={
