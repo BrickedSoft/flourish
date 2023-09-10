@@ -11,4 +11,5 @@ export const api = {
   questionnaire: {
     [userTypes.ADMIN]: "adminCounselor/questionnaire/",
   },
+  question: "questionnaire/",
 };

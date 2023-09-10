@@ -2,8 +2,8 @@ import { ReactNode, useEffect, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
-import { navBar } from "../../../assets/data/dashboard/dashboard";
-import { nav } from "../../../assets/data/routes";
+import { navBar } from "../../assets/data/dashboard/dashboard";
+import { nav } from "../../assets/data/routes";
 
 const NavBar = () => {
   const { pathname } = useLocation();

@@ -1,8 +1,8 @@
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 
 export const questionnaireData = {
-  name: { title: "Questionnaire Group", placeholder: "Enter a name" },
-  questionnaires: "All Questionnaires",
+  name: { title: "Questionnaire Name", placeholder: "Enter a name" },
+  questionnaires: "Questionnaires",
   questionnaireField: {
     title: "Question",
     placeholder: "Enter a question",
@@ -14,9 +14,9 @@ export const questionnaireData = {
   },
 
   button: {
-    questionnaire: {
+    question: {
       add: {
-        title: "Add a Questionnaire",
+        title: "Add a Question",
         icon: <IoAddCircleOutline />,
       },
       remove: {

@@ -10,9 +10,9 @@ import {
 import { isValidMotionProp, motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 
-import { footerContent, headerContent } from "../../../assets/data/auth";
-import { useAppSelector } from "../../../hooks/useStore";
-import { Status } from "../../../types/Status";
+import { footerContent, headerContent } from "../../assets/data/auth";
+import { useAppSelector } from "../../hooks/useStore";
+import { Status } from "../../types/Status";
 
 const ChakraBox = chakra(motion.div, {
   shouldForwardProp: (props) =>

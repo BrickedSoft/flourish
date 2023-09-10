@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 import { IoLogOutOutline } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 
-import { menu } from "../../../assets/data/dashboard/dashboard";
-import { signOut as signOutTitle } from "../../../assets/data/routes";
-import { useSignOut } from "../../../hooks/useSignOut";
+import { menu } from "../../assets/data/dashboard/dashboard";
+import { signOut as signOutTitle } from "../../assets/data/routes";
+import { useSignOut } from "../../hooks/useSignOut";
 
 const Menu = () => {
   const { signOut } = useSignOut();

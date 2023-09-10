@@ -6,8 +6,8 @@ import { nav, routes } from "../../assets/data/routes";
 import logo from "../../assets/img/logo.png";
 import Container from "../../components/common/Container";
 import { useAppSelector } from "../../hooks/useStore";
-import Menu from "./components/Menu";
-import NavBar from "./components/NavBar";
+import Menu from "../../components/dashboard/Menu";
+import NavBar from "../../components/dashboard/NavBar";
 
 const Dashboard = () => {
   const { pathname } = useLocation();

@@ -9,10 +9,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { Questionnaire } from "../../../../types/Questionnaire";
-import ButtonFull from "../../../../components/common/button/ButtonFull";
+import { Questionnaire } from "../../types/Questionnaire";
+import ButtonFull from "../common/button/ButtonFull";
 import { Link } from "react-router-dom";
-import { routes } from "../../../../assets/data/routes";
+import { routes } from "../../assets/data/routes";
 
 const QuestionnaireCard = ({
   questionnaire,

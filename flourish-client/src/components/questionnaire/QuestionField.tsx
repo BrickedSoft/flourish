@@ -15,11 +15,11 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 
-import { questionnaireData } from "../../../../assets/data/dashboard/questionnaire/questionnaire";
-import ButtonFull from "../../../../components/common/button/ButtonFull";
-import { Questionnaire } from "../../../../types/Questionnaire";
+import { questionnaireData } from "../../assets/data/questionnaire/questionnaire";
+import ButtonFull from "../common/button/ButtonFull";
+import { Questionnaire } from "../../types/Questionnaire";
 
-const QuestionnaireField = ({
+const QuestionField = ({
   data,
   index,
   errors,
@@ -95,12 +95,12 @@ const QuestionnaireField = ({
     >
       <Flex gap={4} alignItems={"center"}>
         <Text as={"span"} fontSize={24} color={"error"}>
-          {questionnaireData.button.questionnaire.remove.icon}
+          {questionnaireData.button.question.remove.icon}
         </Text>
-        {questionnaireData.button.questionnaire.remove.title}
+        {questionnaireData.button.question.remove.title}
       </Flex>
     </ButtonFull>
   </FormControl>
 );
 
-export default QuestionnaireField;
+export default QuestionField;

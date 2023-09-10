@@ -25,9 +25,9 @@ import { signUp as signUpAction } from "../../../store/actions/authActions";
 import { SignUp as SignUpType } from "../../../types/Form";
 import { Status } from "../../../types/Status";
 import { userTypes } from "../../../types/User";
-import Layout from "../component/Layout";
-import SuccessMessage from "../component/SuccessMessage";
-import RadioCard from "./RadioCard";
+import Layout from "../../../components/auth/Layout";
+import SuccessMessage from "../../../components/auth/SuccessMessage";
+import RadioCard from "./RadioUser";
 
 const SignUpFormInit: SignUpType = {
   type: userTypes.CLIENT,

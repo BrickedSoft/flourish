@@ -22,8 +22,8 @@ import { signIn as signInAction } from "../../../store/actions/authActions";
 import { setIsSignedIn } from "../../../store/slices/flagSlice";
 import { SignIn as SignInType } from "../../../types/Form";
 import { Status } from "../../../types/Status";
-import Layout from "../component/Layout";
-import SuccessMessage from "../component/SuccessMessage";
+import Layout from "../../../components/auth/Layout";
+import SuccessMessage from "../../../components/auth/SuccessMessage";
 
 const SignInFormInit: SignInType = {
   email: "",

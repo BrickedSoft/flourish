@@ -1,12 +1,12 @@
-import { Box, Center, SimpleGrid } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
-import { fetchQuestionnaire } from "../../../store/actions/questionnaireActions";
-import QuestionnaireCard from "./components/QuestionnaireCard";
-import { Outlet } from "react-router-dom";
-import { Status } from "../../../types/Status";
+import { Center, SimpleGrid } from "@chakra-ui/react";
+
 import Spinner from "../../../components/common/Spinner";
 import ButtonFull from "../../../components/common/button/ButtonFull";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
+import { fetchQuestionnaire } from "../../../store/actions/questionnaireActions";
+import { Status } from "../../../types/Status";
+import QuestionnaireCard from "../../../components/questionnaire/QuestionnaireCard";
 
 const QuestionnaireList = () => {
   const dispatch = useAppDispatch();
