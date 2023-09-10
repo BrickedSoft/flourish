@@ -1,18 +1,18 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import {
   Box,
   Flex,
   Heading,
   Text,
   chakra,
-  keyframes,
   shouldForwardProp,
 } from "@chakra-ui/react";
-import { Link, useLocation } from "react-router-dom";
 import { isValidMotionProp, motion } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 
 import { footerContent, headerContent } from "../../../assets/data/auth";
 import { useAppSelector } from "../../../hooks/useStore";
+import { Status } from "../../../types/Status";
 
 const ChakraBox = chakra(motion.div, {
   shouldForwardProp: (props) =>
@@ -38,6 +38,7 @@ const formVariants = {
     transition: {
       ease: "easeInOut",
       duration: 0.5,
+      type: "tween",
     },
   },
 };
@@ -51,20 +52,10 @@ const Layout = ({
   footer: typeof footerContent.signIn;
   children: ReactNode;
 }) => {
-  const [keyIndex, setKeyIndex] = useState(1);
-  const { pathname } = useLocation();
-
-  const token = useAppSelector((state) => state.user.token);
-
-  useEffect(() => {
-    setKeyIndex((e) => e + 1);
-  }, [pathname]);
-
-  const slideIn = keyframes`
-from { opacity: 0; transform: translateX(1rem); }
-to { opacity: 1; }
-`;
-  const animationSlideIn = `${slideIn} .5s ease-in`;
+  useLocation();
+  const status = useAppSelector(
+    (state) => state.user.status === Status.FULFILLED
+  );
 
   return (
     <ChakraBox
@@ -77,14 +68,8 @@ to { opacity: 1; }
       initial={"hidden"}
       animate={"visible"}
       exit={"exit"}
-      transition={"transition"}
     >
-      <Flex
-        key={keyIndex}
-        flexDir={"column"}
-        gap={"8"}
-        animation={animationSlideIn}
-      >
+      <Flex flexDir={"column"} gap={"8"}>
         <Heading
           color="font.secondary"
           fontSize="6xl"
@@ -100,16 +85,14 @@ to { opacity: 1; }
         </Text>
       </Flex>
 
-      <Box key={keyIndex + 1} animation={animationSlideIn}>
-        {children}
-      </Box>
+      {children}
 
       <Flex
         gap={"12"}
         alignItems={"baseline"}
         justifyContent={"center"}
         justifySelf={"flex-end"}
-        opacity={token ? 0 : 1}
+        opacity={status ? 0 : 1}
       >
         <Text fontSize={"lg"} color={"font.muted2"}>
           {footer.description}

@@ -1,5 +1,6 @@
 import { ReactNode, useRef, useState } from "react";
 import {
+  Box,
   Center,
   FormControl,
   FormErrorMessage,
@@ -10,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import {
   footerContent,
@@ -31,6 +33,24 @@ const SignUpFormInit: SignUpType = {
   type: userTypes.CLIENT,
   email: "",
   password: "",
+};
+
+const messageVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      delay: 0.25,
+      type: "tween",
+      ease: "easeInOut",
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+  },
 };
 
 const SignUpForm = () => {
@@ -78,7 +98,15 @@ const SignUpForm = () => {
   return (
     <Layout header={headerContent.signUp} footer={footerContent.signUp}>
       {isFulfilled ? (
-        <SuccessMessage data={successMessage.signUp} />
+        <Box
+          as={motion.div}
+          variants={messageVariants}
+          initial={"hidden"}
+          animate={"visible"}
+          exit={"exit"}
+        >
+          <SuccessMessage data={successMessage.signUp} />
+        </Box>
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}

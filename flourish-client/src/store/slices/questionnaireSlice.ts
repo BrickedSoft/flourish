@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
+import _ from "lodash";
 
 import { Questionnaire } from "../../types/Questionnaire";
 import { Status } from "../../types/Status";
@@ -19,7 +20,12 @@ const questionnaireSlice = createSlice({
   name: "questionnaire",
   initialState,
   reducers: {
-    purgeQuestionnaire: () => {},
+    purgeQuestionnaire: (state) => {
+      _.mapKeys(initialState, (value, key) => {
+        //@ts-ignore
+        state[key] = value;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchQuestionnaire.pending, (state) => {
@@ -37,8 +43,10 @@ const questionnaireSlice = createSlice({
     /* ---------------------------------- PURGE --------------------------------- */
 
     builder.addCase(PURGE, (state) => {
-      state.questionnaires = [];
-      state.status = Status.IDLE;
+      _.mapKeys(initialState, (value, key) => {
+        //@ts-ignore
+        state[key] = value;
+      });
     });
   },
 });

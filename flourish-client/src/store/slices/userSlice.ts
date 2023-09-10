@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
+import _ from "lodash";
 
 import { Status } from "../../types/Status";
 import { User } from "../../types/User";
@@ -24,10 +25,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     purgeUser: (state) => {
-      state.email = "";
-      state.token = "";
-      state.name = "";
-      state.status = Status.IDLE;
+      _.mapKeys(initialState, (value, key) => {
+        state[key as keyof reducerType] =
+          value as keyof (typeof initialState)[keyof typeof initialState];
+      });
     },
   },
   extraReducers: (builder) => {
@@ -69,10 +70,10 @@ const userSlice = createSlice({
     /* ---------------------------------- PURGE --------------------------------- */
 
     builder.addCase(PURGE, (state) => {
-      state.email = "";
-      state.token = "";
-      state.name = "";
-      state.status = Status.IDLE;
+      _.mapKeys(initialState, (value, key) => {
+        state[key as keyof reducerType] =
+          value as keyof (typeof initialState)[keyof typeof initialState];
+      });
     });
   },
 });

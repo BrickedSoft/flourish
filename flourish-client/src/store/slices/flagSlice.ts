@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import _ from "lodash";
 
 import { Flags } from "../../types/Flags";
 import { PURGE } from "redux-persist";
@@ -17,7 +18,9 @@ const flagSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(PURGE, (state) => {
-      state = initialState;
+      _.mapKeys(initialState, (value, key) => {
+        state[key as keyof Flags] = value;
+      });
     });
   },
 });
