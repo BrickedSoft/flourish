@@ -15,6 +15,7 @@ export const useSignOut = () => {
     dispatch(purgeQuestionnaire());
     dispatch(setIsSignedIn(false));
     navigate(routes.home);
+    navigate(0);
   };
 
   return { signOut };

@@ -8,7 +8,7 @@ import {
   shouldForwardProp,
 } from "@chakra-ui/react";
 import { isValidMotionProp, motion } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { footerContent, headerContent } from "../../assets/data/auth";
 import { useAppSelector } from "../../hooks/useStore";
@@ -52,7 +52,6 @@ const Layout = ({
   footer: typeof footerContent.signIn;
   children: ReactNode;
 }) => {
-  useLocation();
   const status = useAppSelector(
     (state) => state.user.status === Status.FULFILLED
   );
@@ -97,12 +96,7 @@ const Layout = ({
         <Text fontSize={"lg"} color={"font.muted2"}>
           {footer.description}
         </Text>
-        <Box
-          fontSize={"xl"}
-          fontWeight={"medium"}
-          color={"font.primary"}
-          onClick={(e) => e.preventDefault()}
-        >
+        <Box fontSize={"xl"} fontWeight={"medium"} color={"font.primary"}>
           <Link to={footer.href}>{footer.title}</Link>
         </Box>
       </Flex>

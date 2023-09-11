@@ -5,6 +5,28 @@ import logo from "../../assets/img/logo.png";
 import SignInImage from "../../assets/svg/Auth";
 import Container from "../../components/common/Container";
 import { useAppSelector } from "../../hooks/useStore";
+import { motion } from "framer-motion";
+
+const fadeVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      type: "tween",
+      ease: "easeInOut",
+      duration: 0.5,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+    },
+  },
+};
 
 const Auth = () => {
   const token = useAppSelector((state) => state.user.token);
@@ -41,7 +63,9 @@ const Auth = () => {
           borderRadius={"xl"}
           boxShadow={`0 4.8rem 6.4rem rgba(28, 126, 214, 0.15)`}
         >
-          <SignInImage />
+          <Center as={motion.div} variants={fadeVariants} exit={"exit"}>
+            <SignInImage />
+          </Center>
 
           <Flex
             alignSelf={"stretch"}
@@ -55,12 +79,17 @@ const Auth = () => {
             overflow={"hidden"}
           >
             <Box
+              as={motion.div}
               alignSelf={"end"}
               flexGrow={0}
               _focus={{
                 boxShadow: "none",
               }}
               mb={"16"}
+              variants={fadeVariants}
+              initial={"hidden"}
+              animate={"visible"}
+              exit={"exit"}
             >
               <Link
                 to={"/"}

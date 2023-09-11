@@ -75,7 +75,7 @@ const Menu = () => {
       justifyContent={"space-between"}
     >
       <Flex flexDir={"column"} gap={8}>
-        {menu.adminCounselor.map(renderMenu)}
+        {menu.ADMIN.map(renderMenu)}
       </Flex>
       {renderMenu({
         ...signOutTitle,

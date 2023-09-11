@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { PURGE } from "redux-persist";
 import _ from "lodash";
 
@@ -29,6 +29,10 @@ const userSlice = createSlice({
         state[key as keyof reducerType] =
           value as keyof (typeof initialState)[keyof typeof initialState];
       });
+    },
+
+    setStatus: (state, action: PayloadAction<Status>) => {
+      state.status = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -79,5 +83,5 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { purgeUser } = userSlice.actions;
+export const { purgeUser, setStatus } = userSlice.actions;
 export const { name } = userSlice;

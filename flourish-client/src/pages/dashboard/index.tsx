@@ -33,7 +33,7 @@ const Dashboard = () => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          {[...navBar.adminCounselor, { href: nav.dashboard }].some(
+          {[...navBar.ADMIN, { href: nav.dashboard }].some(
             ({ href }) =>
               href.split("/").at(-1) ===
               ((pathname.split("/").at(-1) as string) ||

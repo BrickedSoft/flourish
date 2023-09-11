@@ -1,7 +1,7 @@
 export enum userTypes {
-  ADMIN = "adminCounselor",
-  CLIENT = "client",
-  COUNSELOR = "counselor",
+  ADMIN = "ADMIN",
+  CLIENT = "CLIENT",
+  COUNSELOR = "COUNSELOR",
 }
 
 export interface User {

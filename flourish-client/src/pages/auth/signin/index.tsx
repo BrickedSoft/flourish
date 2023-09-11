@@ -32,9 +32,11 @@ const SignInFormInit: SignInType = {
 
 const messageVariants = {
   hidden: {
+    x: "100vw",
     opacity: 0,
   },
   visible: {
+    x: 0,
     opacity: 1,
     transition: {
       delay: 0.25,

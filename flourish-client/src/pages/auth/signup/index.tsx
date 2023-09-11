@@ -9,9 +9,9 @@ import {
   Input,
   useRadioGroup,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
 import {
   footerContent,
@@ -19,14 +19,15 @@ import {
   successMessage,
 } from "../../../assets/data/auth";
 import { routes } from "../../../assets/data/routes";
+import Layout from "../../../components/auth/Layout";
+import SuccessMessage from "../../../components/auth/SuccessMessage";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
 import { signUp as signUpAction } from "../../../store/actions/authActions";
+import { setStatus } from "../../../store/slices/userSlice";
 import { SignUp as SignUpType } from "../../../types/Form";
 import { Status } from "../../../types/Status";
 import { userTypes } from "../../../types/User";
-import Layout from "../../../components/auth/Layout";
-import SuccessMessage from "../../../components/auth/SuccessMessage";
 import RadioCard from "./RadioUser";
 
 const SignUpFormInit: SignUpType = {
@@ -37,9 +38,11 @@ const SignUpFormInit: SignUpType = {
 
 const messageVariants = {
   hidden: {
+    x: "100vw",
     opacity: 0,
   },
   visible: {
+    x: 0,
     opacity: 1,
     transition: {
       delay: 0.25,
@@ -59,7 +62,9 @@ const SignUpForm = () => {
   const [isValid, setIsValid] = useState(true);
   const [isFulfilled, setIsFulfilled] = useState(false);
 
-  const prevState = useRef<number>(1);
+  const prevState = useRef<number>(
+    Object.keys(userTypes).indexOf(userTypes.CLIENT)
+  );
 
   const {
     control,
@@ -85,6 +90,10 @@ const SignUpForm = () => {
         setIsFulfilled(true);
         setTimeout(() => {
           navigate(routes.signIn);
+
+          setTimeout(() => {
+            dispatch(setStatus(Status.IDLE));
+          }, 500);
         }, 3000);
         break;
       case Status.REJECTED:
