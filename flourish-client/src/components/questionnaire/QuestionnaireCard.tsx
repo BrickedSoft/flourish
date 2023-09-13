@@ -4,7 +4,6 @@ import {
   Heading,
   CardBody,
   CardFooter,
-  Button,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -20,9 +19,11 @@ const QuestionnaireCard = ({
   questionnaire: Questionnaire;
 }) => {
   const renderedQuestionnaire = () => {
+    const maxQuestions = 3;
+
     const questions = questionnaire.questionnaireFields.map(
       ({ question }, index) => {
-        if (index >= 2) return null;
+        if (index >= maxQuestions) return null;
         return (
           <Text
             key={index}
@@ -30,8 +31,17 @@ const QuestionnaireCard = ({
             fontSize={"lg"}
             color={"font.muted"}
             textOverflow={"ellipsis"}
+            style={{
+              lineClamp: 1,
+            }}
           >
-            {question}
+            {index !== maxQuestions - 1 ? (
+              question
+            ) : (
+              <Text as={"span"} letterSpacing={"widest"}>
+                ...
+              </Text>
+            )}
           </Text>
         );
       }
@@ -45,7 +55,13 @@ const QuestionnaireCard = ({
   };
 
   return (
-    <Card px={16} py={8} borderRadius={"xl"}>
+    <Card
+      px={16}
+      py={8}
+      border={"2px solid #e9f2fd"}
+      borderRadius={"xl"}
+      boxShadow={"none"}
+    >
       <CardHeader pb={2}>
         <Heading
           size="2xl"
@@ -57,11 +73,15 @@ const QuestionnaireCard = ({
       </CardHeader>
       <CardBody>{renderedQuestionnaire()}</CardBody>
       <CardFooter>
-        <Link to={`${routes.questionnaire}/${questionnaire.id}`}>
-          <ButtonFull px={"12"} py={"16"} fontSize={"lg"}>
-            View Details
-          </ButtonFull>
-        </Link>
+        <ButtonFull
+          as={Link}
+          to={`${routes.questionnaire}/${questionnaire.id}`}
+          px={20}
+          py={18}
+          fontSize={"lg"}
+        >
+          View Details
+        </ButtonFull>
       </CardFooter>
     </Card>
   );

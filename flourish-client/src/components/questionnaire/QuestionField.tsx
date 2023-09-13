@@ -1,4 +1,5 @@
 import {
+  Button,
   Editable,
   EditableInput,
   EditablePreview,
@@ -9,6 +10,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
+  Control,
+  Controller,
   FieldArrayWithId,
   FieldErrors,
   UseFieldArrayRemove,
@@ -16,12 +19,12 @@ import {
 } from "react-hook-form";
 
 import { questionnaireData } from "../../assets/data/questionnaire/questionnaire";
-import ButtonFull from "../common/button/ButtonFull";
 import { Questionnaire } from "../../types/Questionnaire";
 
 const QuestionField = ({
   data,
   index,
+  control,
   errors,
   register,
   remove,
@@ -29,6 +32,7 @@ const QuestionField = ({
   data: FieldArrayWithId<Questionnaire, "questionnaireFields", "id">;
   errors: FieldErrors<Questionnaire>;
   index: number;
+  control: Control<Questionnaire>;
   remove: UseFieldArrayRemove;
   register: UseFormRegister<Questionnaire>;
 }) => (
@@ -41,42 +45,56 @@ const QuestionField = ({
     justifyContent={"space-between"}
     gap={"24"}
   >
-    <Flex alignItems={"baseline"} gap={"8"}>
+    <Flex alignItems={"center"} gap={16}>
       <FormLabel
         htmlFor="questionnaire"
+        m={0}
         fontSize={"xl"}
         color={"font.muted2"}
         fontWeight={"normal"}
         whiteSpace={"nowrap"}
       >
-        {questionnaireData.questionnaireField.title} &ndash; {index + 1}
+        {questionnaireData.questionField.title} &ndash; {index + 1}
         <Text as={"span"} fontSize={"2xl"} fontWeight={"medium"}>
           :
         </Text>
       </FormLabel>
-      <Editable
-        key={data.id}
-        id="questionnaire"
-        minW={"75%"}
-        fontSize={"xl"}
-        borderWidth={"2"}
-        borderColor={"transparent"}
-        borderRadius={"xl"}
-        defaultValue={
-          data.question || questionnaireData.questionnaireField.placeholder
-        }
-      >
-        <EditablePreview px={12} py={4} borderColor={"transparent"} />
-        <EditableInput
-          type="text"
-          px={12}
-          py={4}
-          key={data.id}
-          {...register(`questionnaireFields.${index}.question`, {
-            required: "This is required",
-          })}
-        />
-      </Editable>
+
+      <Controller
+        name={`questionnaireFields.${index}.question`}
+        control={control}
+        render={({ field }) => (
+          <Editable
+            key={data.id}
+            id="questionnaire"
+            minW={"75%"}
+            fontSize={"xl"}
+            value={field.value}
+            placeholder={questionnaireData.questionField.placeholder}
+          >
+            <>
+              <EditablePreview
+                h={"3.2rem"}
+                display={"flex"}
+                alignItems={"center"}
+                px={12}
+              />
+              <EditableInput
+                key={data.id}
+                type="text"
+                h={"3.2rem"}
+                px={12}
+                borderRadius={"xl"}
+                {...field}
+                {...register(`questionnaireFields.${index}.question`, {
+                  required: "This is required",
+                })}
+              />
+            </>
+          </Editable>
+        )}
+      />
+
       <FormErrorMessage fontSize={"md"} display={"block"}>
         {errors?.questionnaireFields?.[index] &&
           (errors?.questionnaireFields?.[index]?.question
@@ -84,14 +102,12 @@ const QuestionField = ({
       </FormErrorMessage>
     </Flex>
 
-    <ButtonFull
-      px={"8"}
-      py={"16"}
+    <Button
       fontSize={"lg"}
       justifySelf={"flex-end"}
       onClick={() => remove(index)}
-      bg={"transparent"}
-      _hover={{ bg: "transparent", transform: "scale(1.1)" }}
+      variant={"ghost"}
+      _hover={{ transform: "scale(1.1)" }}
     >
       <Flex gap={4} alignItems={"center"}>
         <Text as={"span"} fontSize={24} color={"error"}>
@@ -99,7 +115,7 @@ const QuestionField = ({
         </Text>
         {questionnaireData.button.question.remove.title}
       </Flex>
-    </ButtonFull>
+    </Button>
   </FormControl>
 );
 

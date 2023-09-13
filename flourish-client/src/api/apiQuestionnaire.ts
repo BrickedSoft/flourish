@@ -1,16 +1,25 @@
 import { api as apiData } from "../assets/data/server";
 import {
-  Questionnaire,
   PostQuestion,
   DeleteQuestion,
+  PostQuestionnaire,
+  ApiQuestionnaire,
 } from "../types/Questionnaire";
 import { userTypes } from "../types/User";
 import { api } from "./config/apiConfig";
 
-export const getQuestionnaire = async (): Promise<Questionnaire[]> => {
+export const getQuestionnaire = async (): Promise<ApiQuestionnaire[]> => {
   const response = await api.get(apiData.questionnaire[userTypes.ADMIN], {});
 
   return response.data;
+};
+
+export const putQuestionnaire = async (
+  data: PostQuestionnaire
+): Promise<void> => {
+  await api.put(apiData.questionnaire[userTypes.ADMIN], {
+    ...data,
+  });
 };
 
 export const postQuestion = async (data: PostQuestion): Promise<void> => {

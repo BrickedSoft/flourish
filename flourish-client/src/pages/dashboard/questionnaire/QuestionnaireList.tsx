@@ -34,6 +34,7 @@ const QuestionnaireList = () => {
             spacing={16}
             borderRadius={"xl"}
             templateRows="repeat(auto-fill)"
+            pb={32}
           >
             {questionnaires.map((questionnaire, index) => (
               <QuestionnaireCard key={index} questionnaire={questionnaire} />

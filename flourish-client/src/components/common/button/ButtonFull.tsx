@@ -18,8 +18,8 @@ const ButtonFull = (props: any) => {
     ...rest
   }: {
     children: ReactNode;
-    px?: string;
-    py?: string;
+    px?: string | number;
+    py?: string | number;
     bg?: string;
     fontSize?: string;
     fontWeight?: string;

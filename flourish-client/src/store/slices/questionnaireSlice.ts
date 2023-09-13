@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PURGE } from "redux-persist";
 import _ from "lodash";
+import { PURGE } from "redux-persist";
 
 import { Questionnaire } from "../../types/Questionnaire";
 import { Status } from "../../types/Status";
-import { fetchQuestionnaire } from "../actions/questionnaireActions";
+import {
+  editQuestionnaire,
+  fetchQuestionnaire,
+  removeQuestion,
+  setQuestion,
+} from "../actions/questionnaireActions";
 
 interface reducerType {
   questionnaires: Questionnaire[];
@@ -28,6 +33,7 @@ const questionnaireSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    /* --------------------------- Fetch Questionnaire -------------------------- */
     builder.addCase(fetchQuestionnaire.pending, (state) => {
       state.status = Status.PENDING;
     });
@@ -37,6 +43,39 @@ const questionnaireSlice = createSlice({
     });
     builder.addCase(fetchQuestionnaire.rejected, (state) => {
       state.questionnaires = [];
+      state.status = Status.REJECTED;
+    });
+
+    /* --------------------------- Edit Questionnaire --------------------------- */
+    builder.addCase(editQuestionnaire.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+    builder.addCase(editQuestionnaire.fulfilled, (state) => {
+      state.status = Status.FULFILLED;
+    });
+    builder.addCase(editQuestionnaire.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
+    /* ------------------------------ Set Question ------------------------------ */
+    builder.addCase(setQuestion.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+    builder.addCase(setQuestion.fulfilled, (state) => {
+      state.status = Status.FULFILLED;
+    });
+    builder.addCase(setQuestion.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
+    /* ----------------------------- Remove Question ---------------------------- */
+    builder.addCase(removeQuestion.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+    builder.addCase(removeQuestion.fulfilled, (state) => {
+      state.status = Status.FULFILLED;
+    });
+    builder.addCase(removeQuestion.rejected, (state) => {
       state.status = Status.REJECTED;
     });
 
