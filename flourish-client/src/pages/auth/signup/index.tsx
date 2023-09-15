@@ -1,5 +1,6 @@
 import { ReactNode, useRef, useState } from "react";
 import {
+  Box,
   Center,
   FormControl,
   FormErrorMessage,
@@ -8,6 +9,7 @@ import {
   Input,
   useRadioGroup,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -17,20 +19,41 @@ import {
   successMessage,
 } from "../../../assets/data/auth";
 import { routes } from "../../../assets/data/routes";
+import Layout from "../../../components/auth/Layout";
+import SuccessMessage from "../../../components/auth/SuccessMessage";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
 import { signUp as signUpAction } from "../../../store/actions/authActions";
+import { setStatus } from "../../../store/slices/userSlice";
 import { SignUp as SignUpType } from "../../../types/Form";
 import { Status } from "../../../types/Status";
 import { userTypes } from "../../../types/User";
-import Layout from "../component/Layout";
-import SuccessMessage from "../component/SuccessMessage";
-import RadioCard from "./RadioCard";
+import RadioCard from "./RadioUser";
 
 const SignUpFormInit: SignUpType = {
   type: userTypes.CLIENT,
   email: "",
   password: "",
+};
+
+const messageVariants = {
+  hidden: {
+    x: "100vw",
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      delay: 0.25,
+      type: "tween",
+      ease: "easeInOut",
+      duration: 0.5,
+    },
+  },
+  exit: {
+    x: "100vw",
+  },
 };
 
 const SignUpForm = () => {
@@ -52,7 +75,7 @@ const SignUpForm = () => {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "userType",
-    defaultValue: userTypes.CLIENT,
+    defaultValue: userTypes.CLIENT.toUpperCase(),
     onChange: (value) => {
       prevState.current = Object.keys(userTypes).indexOf(value);
     },
@@ -67,6 +90,10 @@ const SignUpForm = () => {
         setIsFulfilled(true);
         setTimeout(() => {
           navigate(routes.signIn);
+
+          setTimeout(() => {
+            dispatch(setStatus(Status.IDLE));
+          }, 500);
         }, 3000);
         break;
       case Status.REJECTED:
@@ -80,7 +107,15 @@ const SignUpForm = () => {
   return (
     <Layout header={headerContent.signUp} footer={footerContent.signUp}>
       {isFulfilled ? (
-        <SuccessMessage data={successMessage.signUp} />
+        <Box
+          as={motion.div}
+          variants={messageVariants}
+          initial={"hidden"}
+          animate={"visible"}
+          exit={"exit"}
+        >
+          <SuccessMessage data={successMessage.signUp} />
+        </Box>
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}

@@ -1,7 +1,7 @@
 import { Heading, Text, VStack } from "@chakra-ui/react";
 import { BsCheck2Circle } from "react-icons/bs";
 
-import { successMessage } from "../../../assets/data/auth";
+import { successMessage } from "../../assets/data/auth";
 
 const SuccessMessage = ({
   data: { title, description },

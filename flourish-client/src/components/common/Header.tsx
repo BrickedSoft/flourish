@@ -123,6 +123,10 @@ const Header = () => {
                 flexDir={"column"}
                 gap={4}
                 outline={"none"}
+                bg={"rgba(255,255,255,0.25)"}
+                boxShadow="0 4px 24px rgba(28,126,214,0.2)"
+                backdropFilter="auto"
+                backdropBlur="2px"
               >
                 <MenuItem
                   bg={"transparent"}

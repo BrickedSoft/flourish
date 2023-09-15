@@ -3,7 +3,7 @@ import { Flex, Grid, GridItem, Text, Box, Heading } from "@chakra-ui/react";
 import ButtonFull from "../../components/common/button/ButtonFull";
 import ButtonOutline from "../../components/common/button/ButtonOutline";
 import HeroImage from "../../assets/svg/Hero";
-import { heroButtonData, heroData } from "../../assets/data/hero";
+import { heroButtonData, heroData } from "../../assets/data/homepage/hero";
 
 const Hero = () => {
   return (

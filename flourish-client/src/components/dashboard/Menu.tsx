@@ -3,9 +3,9 @@ import { ReactNode } from "react";
 import { IoLogOutOutline } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 
-import { menu } from "../../../assets/data/dashboard/dashboard";
-import { signOut as signOutTitle } from "../../../assets/data/routes";
-import { useSignOut } from "../../../hooks/useSignOut";
+import { menu } from "../../assets/data/dashboard/dashboard";
+import { signOut as signOutTitle } from "../../assets/data/routes";
+import { useSignOut } from "../../hooks/useSignOut";
 
 const Menu = () => {
   const { signOut } = useSignOut();
@@ -75,7 +75,7 @@ const Menu = () => {
       justifyContent={"space-between"}
     >
       <Flex flexDir={"column"} gap={8}>
-        {menu.adminCounselor.map(renderMenu)}
+        {menu.ADMIN.map(renderMenu)}
       </Flex>
       {renderMenu({
         ...signOutTitle,

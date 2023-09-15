@@ -13,12 +13,13 @@ const ButtonFull = (props: any) => {
     bgHover,
     borderRadius,
     isLoading,
+    colorScheme,
     onClick,
     ...rest
   }: {
     children: ReactNode;
-    px?: string;
-    py?: string;
+    px?: string | number;
+    py?: string | number;
     bg?: string;
     fontSize?: string;
     fontWeight?: string;
@@ -26,15 +27,14 @@ const ButtonFull = (props: any) => {
     bgHover?: string;
     borderRadius?: string;
     isLoading?: boolean;
+    colorScheme: string;
     onClick: (e: MouseEvent) => void;
   } = props;
 
   return (
     <Button
       onClick={onClick}
-      colorScheme="none"
       isLoading={isLoading}
-      variant="none"
       textDecoration="none"
       fontSize={fontSize ?? "18"}
       fontWeight={fontWeight ?? "medium"}
@@ -44,10 +44,11 @@ const ButtonFull = (props: any) => {
       border="none"
       borderRadius={`${borderRadius ?? "xl"}`}
       transition="all 0.3s"
-      bg={bg ?? "primary.400"}
+      colorScheme={colorScheme ?? "none"}
+      bg={colorScheme || (bg ?? "primary.400")}
       _hover={{
         color: "#fff",
-        bg: `${bgHover ?? "primary.500"}`,
+        bg: `${colorScheme || (bgHover ?? "primary.500")}`,
         boxShadow: `inset 0 0 0 0.25rem rgba(28, 126, 214, 0.25),  0 0.8rem 1.6rem rgba(28, 126, 214, 0.5)`,
       }}
       {...rest}

@@ -61,6 +61,7 @@ const theme = extendTheme({
       general: "#555",
       muted: "#767676",
       muted2: "#aaa",
+      muted3: "#dadada",
       light: "#fff",
     },
   },

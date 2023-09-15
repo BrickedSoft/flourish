@@ -1,19 +1,22 @@
 import { Box } from "@chakra-ui/react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { setupInterceptors } from "./api/config/apiConfig";
 import { nav } from "./assets/data/routes";
 import { useAppSelector } from "./hooks/useStore";
+import NotFound from "./pages/404";
 import Auth from "./pages/auth";
 import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
 import Dashboard from "./pages/dashboard";
 import Questionnaire from "./pages/dashboard/questionnaire";
-import Homepage from "./pages/homepage";
 import QuestionnaireDetails from "./pages/dashboard/questionnaire/QuestionnaireDetails";
 import QuestionnaireList from "./pages/dashboard/questionnaire/QuestionnaireList";
+import Homepage from "./pages/homepage";
 
 const App = () => {
+  const location = useLocation();
   const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
   const token = useAppSelector((state) => state?.user?.token);
 
@@ -29,8 +32,8 @@ const App = () => {
       alignItems={"center"}
       justifyContent={"space-between"}
     >
-      <BrowserRouter>
-        <Routes>
+      <AnimatePresence>
+        <Routes location={location} key={location.key}>
           <Route index element={<Homepage />} />
           {!isSignedIn && (
             <Route path={nav.auth} element={<Auth />}>
@@ -55,9 +58,9 @@ const App = () => {
               <Route path={nav.overview} element={<h1>Overview</h1>} />
             </Route>
           )}
-          <Route path="*" element={<h1>404</h1>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </AnimatePresence>
     </Box>
   );
 };

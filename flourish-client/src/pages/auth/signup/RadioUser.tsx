@@ -2,7 +2,7 @@ import { Box, Text, keyframes, useRadio } from "@chakra-ui/react";
 import { useState } from "react";
 import { userTypes } from "../../../types/User";
 
-const RadioCard = (props: any) => {
+const RadioUser = (props: any) => {
   const { getInputProps, getRadioProps } = useRadio(props);
   const [prevState, setPrevState] = useState<number>(props.prevState);
 
@@ -88,4 +88,4 @@ const RadioCard = (props: any) => {
   );
 };
 
-export default RadioCard;
+export default RadioUser;

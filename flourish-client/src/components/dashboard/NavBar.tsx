@@ -2,8 +2,8 @@ import { ReactNode, useEffect, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
-import { navBar } from "../../../assets/data/dashboard/dashboard";
-import { nav } from "../../../assets/data/routes";
+import { navBar } from "../../assets/data/dashboard/dashboard";
+import { nav } from "../../assets/data/routes";
 
 const NavBar = () => {
   const { pathname } = useLocation();
@@ -16,8 +16,6 @@ const NavBar = () => {
 
     setCurrentRoute(newRoute === nav.dashboard ? nav.members : newRoute);
   }, [pathname]);
-
-  console.log(currentRoute)
 
   const renderLink = ({
     title,
@@ -65,8 +63,8 @@ const NavBar = () => {
   );
 
   return (
-    <Flex px={32} gap={48} alignItems={"center"}>
-      {navBar.adminCounselor.map(renderLink)}
+    <Flex gap={48} alignItems={"center"}>
+      {navBar.ADMIN.map(renderLink)}
     </Flex>
   );
 };

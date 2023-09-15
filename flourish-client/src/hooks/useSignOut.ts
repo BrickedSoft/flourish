@@ -4,6 +4,7 @@ import { routes } from "../assets/data/routes";
 import { setIsSignedIn } from "../store/slices/flagSlice";
 import { purgeUser } from "../store/slices/userSlice";
 import { useAppDispatch } from "./useStore";
+import { purgeQuestionnaire } from "../store/slices/questionnaireSlice";
 
 export const useSignOut = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ export const useSignOut = () => {
 
   const signOut = () => {
     dispatch(purgeUser());
+    dispatch(purgeQuestionnaire());
     dispatch(setIsSignedIn(false));
     navigate(routes.home);
   };
