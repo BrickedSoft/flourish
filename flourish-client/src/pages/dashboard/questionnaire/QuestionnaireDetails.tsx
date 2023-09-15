@@ -1,33 +1,13 @@
-import { ArrowBackIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  Center,
-  Divider,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  Heading,
-  List,
-  Text,
-} from "@chakra-ui/react";
-import _ from "lodash";
 import { useEffect, useState } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Center, Flex, FormControl, Heading } from "@chakra-ui/react";
+import _ from "lodash";
+import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { questionnaireData } from "../../../assets/data/questionnaire";
+import { routes } from "../../../assets/data/routes";
 import Container from "../../../components/common/Container";
 import Spinner from "../../../components/common/Spinner";
 import ButtonFull from "../../../components/common/button/ButtonFull";
-import EvaluationRangeField from "../../../components/questionnaire/EvaluationRangeField";
-import OptionField from "../../../components/questionnaire/OptionField";
-import QuestionField from "../../../components/questionnaire/QuestionField";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
 import {
   createQuestionnaire,
@@ -43,7 +23,11 @@ import {
   putQuestionnaireKeys,
 } from "../../../types/Questionnaire";
 import { Status } from "../../../types/Status";
-import { routes } from "../../../assets/data/routes";
+import { EvaluationFields } from "./EvaluationFields";
+import OptionFields from "./OptionFields";
+import QuestionFields from "./QuestionFields";
+import { QuestionnaireName } from "./QuestionnaireName";
+import Buttons from "./Buttons";
 
 const QuestionnaireDetails = () => {
   const { id } = useParams();
@@ -65,31 +49,6 @@ const QuestionnaireDetails = () => {
     reset,
     formState: { isDirty, errors, isSubmitting },
   } = useForm({ defaultValues: questionnaire });
-
-  const {
-    fields: questionFields,
-    append: questionAppend,
-    remove: questionRemove,
-  } = useFieldArray({
-    control,
-    name: "questionnaireFields",
-  });
-  const {
-    fields: optionFields,
-    append: optionAppend,
-    remove: optionRemove,
-  } = useFieldArray({
-    control,
-    name: "options",
-  });
-  const {
-    fields: evaluationFields,
-    append: evaluationAppend,
-    remove: evaluationRemove,
-  } = useFieldArray({
-    control,
-    name: "evaluation_range",
-  });
 
   useEffect(() => {
     reset(questionnaire);
@@ -201,271 +160,46 @@ const QuestionnaireDetails = () => {
               flexDirection={"column"}
               gap={36}
             >
-              <Flex
-                gap={16}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-              >
-                {/* ------------------------------- Back Button ------------------------------ */}
+              {/* --------------------------------- Buttons -------------------------------- */}
 
-                <Button
-                  isLoading={isSubmitting}
-                  px={"12"}
-                  py={"1.5rem"}
-                  fontSize={"lg"}
-                  leftIcon={<ArrowBackIcon />}
-                  colorScheme="linkedin"
-                  variant="outline"
-                  borderRadius={"xl"}
-                  onClick={() => navigate(-1)}
-                >
-                  Back
-                </Button>
-                <Flex gap={16} alignItems={"center"}>
-                  {/* ------------------------------ Reset Button ------------------------------ */}
-
-                  <Button
-                    isLoading={isSubmitting}
-                    px={"12"}
-                    py={"1.5rem"}
-                    fontSize={"lg"}
-                    variant={"outline"}
-                    borderRadius={"xl"}
-                    colorScheme={"linkedin"}
-                    isDisabled={!isDirty}
-                    onClick={() =>
-                      reset({
-                        ...questionnaire,
-                      })
-                    }
-                  >
-                    {questionnaireData.button.reset.title}
-                  </Button>
-
-                  {/* ------------------------------- Save Button ------------------------------ */}
-
-                  <ButtonFull
-                    isLoading={isSubmitting}
-                    px={"16"}
-                    py={"16"}
-                    fontSize={"lg"}
-                    type={"submit"}
-                    isDisabled={!isDirty}
-                  >
-                    {questionnaireData.button.save.title}
-                  </ButtonFull>
-                </Flex>
-              </Flex>
+              <Buttons
+                isSubmitting={isSubmitting}
+                isDirty={isDirty}
+                reset={reset}
+                questionnaire={questionnaire}
+              />
 
               {/* --------------------------- Questionnaire Name --------------------------- */}
 
-              <FormControl
-                as={Grid}
-                isInvalid={errors.name ? true : false}
-                gridTemplateColumns={"auto 1fr auto"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                gap={16}
-              >
-                <FormLabel
-                  htmlFor="name"
-                  m={0}
-                  fontSize={"xl"}
-                  color={"font.muted2"}
-                  fontWeight={"normal"}
-                  whiteSpace={"nowrap"}
-                >
-                  {questionnaireData.name.title}{" "}
-                  <Text as={"span"} fontSize={"2xl"} fontWeight={"medium"}>
-                    :
-                  </Text>
-                </FormLabel>
-                <Controller
-                  name={"name"}
-                  control={control}
-                  render={({ field }) => (
-                    <Editable
-                      id="name"
-                      w={"50%"}
-                      fontSize={"xl"}
-                      value={field.value}
-                      placeholder={questionnaireData.name.placeholder}
-                    >
-                      <>
-                        <EditablePreview
-                          h={"3.2rem"}
-                          display={"flex"}
-                          alignItems={"center"}
-                          px={12}
-                        />
-                        <EditableInput
-                          type="text"
-                          h={"3.2rem"}
-                          px={12}
-                          borderRadius={"xl"}
-                          {...field}
-                          {...register("name", {
-                            required: "This is required",
-                          })}
-                        />
-                      </>
-                    </Editable>
-                  )}
-                />
-
-                <FormErrorMessage fontSize={"md"}>
-                  {errors?.name && (errors?.name?.message as React.ReactNode)}
-                </FormErrorMessage>
-              </FormControl>
+              <QuestionnaireName
+                control={control}
+                errors={errors}
+                register={register}
+              />
 
               {/* ------------------------------ Questionnaire ----------------------------- */}
 
-              <Box>
-                <Heading
-                  mb={4}
-                  fontWeight={"semibold"}
-                  color={"font.primary"}
-                  letterSpacing={"tight"}
-                >
-                  {questionnaireData.questionnaires}
-                </Heading>
-                <Divider borderWidth={0.75} />
-              </Box>
-
-              <List display={"flex"} flexDir={"column"} gap={16}>
-                {questionFields.map((field, index) => (
-                  <QuestionField
-                    key={field.id}
-                    control={control}
-                    errors={errors}
-                    index={index}
-                    register={register}
-                    remove={questionRemove}
-                    data={field}
-                  />
-                ))}
-              </List>
-
-              <Button
-                px={"16"}
-                py={"20"}
-                fontSize={"lg"}
-                alignSelf={"center"}
-                colorScheme={"green"}
-                borderRadius={"xl"}
-                onClick={() => {
-                  questionAppend({
-                    question: "",
-                  });
-                }}
-              >
-                <Flex gap={8} alignItems={"center"}>
-                  <Text as={"span"} fontSize={20}>
-                    {questionnaireData.button.question.add.icon}
-                  </Text>
-                  {questionnaireData.button.question.add.title}
-                </Flex>
-              </Button>
+              <QuestionFields
+                control={control}
+                errors={errors}
+                register={register}
+              />
 
               {/* --------------------------------- Options -------------------------------- */}
 
-              <Box>
-                <Heading
-                  mb={4}
-                  fontWeight={"semibold"}
-                  color={"font.primary"}
-                  letterSpacing={"tight"}
-                >
-                  {questionnaireData.options}
-                </Heading>
-                <Divider borderWidth={0.75} />
-              </Box>
-
-              <List display={"flex"} flexDir={"column"} gap={16}>
-                {optionFields.map((field, index) => (
-                  <OptionField
-                    key={field.id}
-                    control={control}
-                    errors={errors}
-                    index={index}
-                    register={register}
-                    remove={optionRemove}
-                    data={field}
-                  />
-                ))}
-              </List>
-
-              <Button
-                px={"16"}
-                py={"20"}
-                fontSize={"lg"}
-                alignSelf={"center"}
-                colorScheme={"green"}
-                borderRadius={"xl"}
-                onClick={() => {
-                  optionAppend({
-                    name: "",
-                    points: 0,
-                  });
-                }}
-              >
-                <Flex gap={8} alignItems={"center"}>
-                  <Text as={"span"} fontSize={20}>
-                    {questionnaireData.button.option.add.icon}
-                  </Text>
-                  {questionnaireData.button.option.add.title}
-                </Flex>
-              </Button>
+              <OptionFields
+                control={control}
+                errors={errors}
+                register={register}
+              />
 
               {/* ---------------------------- Evaluation Range ---------------------------- */}
 
-              <Box>
-                <Heading
-                  mb={4}
-                  fontWeight={"semibold"}
-                  color={"font.primary"}
-                  letterSpacing={"tight"}
-                >
-                  {questionnaireData.evaluationRange}
-                </Heading>
-                <Divider borderWidth={0.75} />
-              </Box>
-
-              <List display={"flex"} flexDir={"column"} gap={16}>
-                {evaluationFields.map((field, index) => (
-                  <EvaluationRangeField
-                    key={field.id}
-                    control={control}
-                    errors={errors}
-                    index={index}
-                    register={register}
-                    remove={evaluationRemove}
-                    data={field}
-                  />
-                ))}
-              </List>
-
-              <Button
-                px={"16"}
-                py={"20"}
-                fontSize={"lg"}
-                alignSelf={"center"}
-                colorScheme={"green"}
-                borderRadius={"xl"}
-                onClick={() => {
-                  evaluationAppend({
-                    name: "",
-                    points: 0,
-                  });
-                }}
-              >
-                <Flex gap={8} alignItems={"center"}>
-                  <Text as={"span"} fontSize={20}>
-                    {questionnaireData.button.evaluationRange.add.icon}
-                  </Text>
-                  {questionnaireData.button.evaluationRange.add.title}
-                </Flex>
-              </Button>
+              <EvaluationFields
+                control={control}
+                errors={errors}
+                register={register}
+              />
             </FormControl>
           </Container>
         );

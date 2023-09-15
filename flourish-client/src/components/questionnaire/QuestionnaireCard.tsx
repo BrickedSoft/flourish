@@ -75,8 +75,10 @@ const QuestionnaireCard = ({
       <CardHeader pb={2}>
         <Heading
           size="2xl"
+          color={"font.general"}
           fontWeight={"semibold"}
           textTransform={"capitalize"}
+          letterSpacing={"tight"}
         >
           {questionnaire.name}
         </Heading>

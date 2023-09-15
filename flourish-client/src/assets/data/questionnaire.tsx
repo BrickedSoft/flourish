@@ -1,5 +1,15 @@
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 
+export const questionnaireList = {
+  title: "Questionnaires",
+  empty: {
+    title: "No Questionnaires",
+  },
+  error: {
+    title: "Try Again",
+  },
+};
+
 export const questionnaireData = {
   name: { title: "Questionnaire Name", placeholder: "Enter a name" },
   questionnaires: "Questionnaires",
@@ -52,6 +62,17 @@ export const questionnaireData = {
     },
     reset: {
       title: "Reset",
+    },
+  },
+  empty: {
+    questions: {
+      title: "No Questions Added",
+    },
+    options: {
+      title: "No Options Added",
+    },
+    evaluationRange: {
+      title: "No Evaluations Added",
     },
   },
 };

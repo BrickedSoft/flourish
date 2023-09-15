@@ -14,10 +14,8 @@ import { api } from "./config/apiConfig";
 export const postQuestionnaire = async (
   data: PostQuestionnaire
 ): Promise<void> => {
-  console.log(data);
   return await api.post(apiData.questionnaire[userTypes.ADMIN], {
     ...data,
-    questionnaireFields: [],
   });
 };
 

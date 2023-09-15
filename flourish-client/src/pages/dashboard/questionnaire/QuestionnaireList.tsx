@@ -1,14 +1,18 @@
+import { useEffect, useState } from "react";
 import {
   Button,
   Center,
   Flex,
+  Heading,
   SimpleGrid,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 
-import { questionnaireData } from "../../../assets/data/questionnaire";
+import {
+  questionnaireData,
+  questionnaireList,
+} from "../../../assets/data/questionnaire";
 import Spinner from "../../../components/common/Spinner";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import QuestionnaireCard from "../../../components/questionnaire/QuestionnaireCard";
@@ -43,8 +47,28 @@ const QuestionnaireList = () => {
           );
         }
 
+        const button = (
+          <Button
+            as={Link}
+            px={"16"}
+            py={"20"}
+            fontSize={"lg"}
+            alignSelf={"center"}
+            colorScheme={"green"}
+            borderRadius={"xl"}
+            to={`${routes.questionnaire}/new`}
+          >
+            <Flex gap={8} alignItems={"center"}>
+              <Text as={"span"} fontSize={20}>
+                {questionnaireData.button.questionnaire.add.icon}
+              </Text>
+              {questionnaireData.button.questionnaire.add.title}
+            </Flex>
+          </Button>
+        );
+
         return (
-          <VStack spacing={32} alignItems={"stretch"} pb={32}>
+          <VStack h={"full"} spacing={32} alignItems={"stretch"} pb={32}>
             <SimpleGrid
               spacing={16}
               borderRadius={"xl"}
@@ -55,23 +79,21 @@ const QuestionnaireList = () => {
               ))}
             </SimpleGrid>
 
-            <Button
-              as={Link}
-              px={"16"}
-              py={"20"}
-              fontSize={"lg"}
-              alignSelf={"center"}
-              colorScheme={"green"}
-              borderRadius={"xl"}
-              to={`${routes.questionnaire}/new`}
-            >
-              <Flex gap={8} alignItems={"center"}>
-                <Text as={"span"} fontSize={20}>
-                  {questionnaireData.button.questionnaire.add.icon}
-                </Text>
-                {questionnaireData.button.questionnaire.add.title}
-              </Flex>
-            </Button>
+            {questionnaires.length === 0 ? (
+              <VStack as={Center} h={"full"} spacing={24}>
+                <Heading
+                  fontSize={"5xl"}
+                  fontWeight={"semibold"}
+                  color={"font.muted3"}
+                  letterSpacing={"tight"}
+                >
+                  {questionnaireList.empty.title}
+                </Heading>
+                {button}
+              </VStack>
+            ) : (
+              button
+            )}
           </VStack>
         );
 
@@ -84,7 +106,7 @@ const QuestionnaireList = () => {
                 dispatch(fetchQuestionnaire());
               }}
             >
-              Try Again
+              {questionnaireList.error.title}
             </ButtonFull>
           </Center>
         );
