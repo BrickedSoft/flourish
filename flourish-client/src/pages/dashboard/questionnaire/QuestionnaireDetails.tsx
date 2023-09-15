@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Center, Flex, FormControl, Heading } from "@chakra-ui/react";
 import _ from "lodash";
 import { useForm } from "react-hook-form";
@@ -34,12 +34,12 @@ const QuestionnaireDetails = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector((state) => state.questionnaire.status);
-  const questionnaires = useAppSelector(
-    (state) => state.questionnaire.questionnaires
+  const questionnaire = useAppSelector(
+    (state) =>
+      _.filter(state.questionnaire.questionnaires, function (questionnaire) {
+        return questionnaire.id === id;
+      })[0]
   );
-  const questionnaire = _.filter(questionnaires, function (questionnaire) {
-    return questionnaire.id === id;
-  })[0];
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   const {
@@ -50,9 +50,9 @@ const QuestionnaireDetails = () => {
     formState: { isDirty, errors, isSubmitting },
   } = useForm({ defaultValues: questionnaire });
 
-  useEffect(() => {
-    reset(questionnaire);
-  }, [questionnaire, reset]);
+  // useEffect(() => {
+  //   reset(questionnaire);
+  // }, [questionnaire, reset]);
 
   /* -------------------------------- onSubmit -------------------------------- */
 

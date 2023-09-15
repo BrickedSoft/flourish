@@ -1,22 +1,41 @@
 import { Avatar, Box, Flex, Grid, Heading, Image } from "@chakra-ui/react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import _ from "lodash";
 
 import { navBar } from "../../assets/data/dashboard/dashboard";
+import { questionnaireHeader } from "../../assets/data/questionnaire";
 import { nav, routes } from "../../assets/data/routes";
 import logo from "../../assets/img/logo.png";
 import Container from "../../components/common/Container";
-import { useAppSelector } from "../../hooks/useStore";
 import Menu from "../../components/dashboard/Menu";
 import NavBar from "../../components/dashboard/NavBar";
-import { questionnaireHeader } from "../../assets/data/questionnaire";
+import { useAppSelector } from "../../hooks/useStore";
 
 const Dashboard = () => {
+  const { id } = useParams();
   const { pathname } = useLocation();
   const name = useAppSelector((state) => state.user.name);
+  const questionnaireName = useAppSelector(
+    (state) =>
+      _.filter(state.questionnaire.questionnaires, function (questionnaire) {
+        return questionnaire.id === id;
+      })[0]?.name
+  );
+
+  const headerTitle = (title: string) => (
+    <Heading
+      fontSize={"2xl"}
+      fontWeight={"semibold"}
+      letterSpacing={"tight"}
+      color={"font.primary"}
+    >
+      {title}
+    </Heading>
+  );
 
   const navBarData = () => {
-    const paths = pathname.split("/");
-    const path = (paths.at(-1) as string) || (paths.at(-2) as string);
+    const paths = pathname.split("/").filter((path) => path !== "");
+    const path = paths.at(-1);
 
     if (
       [...navBar.ADMIN, { href: nav.dashboard }].some(
@@ -24,17 +43,32 @@ const Dashboard = () => {
       )
     )
       return <NavBar />;
-    else if (path.includes(nav.questionnaire))
-      return (
-        <Heading
-          fontSize={"2xl"}
-          fontWeight={"semibold"}
-          letterSpacing={"tight"}
-          color={"font.primary"}
-        >
-          {questionnaireHeader}
-        </Heading>
-      );
+    else if (paths.includes(nav.questionnaire)) {
+      if (path === nav.questionnaire)
+        return (
+          <Heading
+            fontSize={"2xl"}
+            fontWeight={"semibold"}
+            letterSpacing={"tight"}
+            color={"font.primary"}
+          >
+            {headerTitle(questionnaireHeader.list)}
+          </Heading>
+        );
+
+      if (path === nav.create)
+        return (
+          <Heading
+            fontSize={"2xl"}
+            fontWeight={"semibold"}
+            letterSpacing={"tight"}
+            color={"font.primary"}
+          >
+            {headerTitle(questionnaireHeader.new)}
+          </Heading>
+        );
+      else return <Box>{headerTitle(questionnaireName)}</Box>;
+    } else return <Box></Box>;
   };
 
   return (
@@ -52,12 +86,12 @@ const Dashboard = () => {
         </Flex>
 
         <Flex
-          px={32}
+          px={36}
           gap={48}
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          <Box px={32}>{navBarData()}</Box>
+          {navBarData()}
           <Avatar name={name} boxSize={"3.2rem"}></Avatar>
         </Flex>
 

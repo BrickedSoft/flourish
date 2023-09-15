@@ -10,6 +10,7 @@ export const nav = {
   members: "members",
   sessionRequest: "session-request",
   overview: "overview",
+  create: "create",
 };
 
 export const routes = {
@@ -19,6 +20,7 @@ export const routes = {
   signUp: `/${nav.auth}/${nav.signUp}`,
   dashboard: `/${nav.dashboard}`,
   questionnaire: `/${nav.dashboard}/${nav.questionnaire}`,
+  createQuestionnaire: `/${nav.dashboard}/${nav.questionnaire}/${nav.create}`,
   resource: `/${nav.resource}`,
   support: `/${nav.support}`,
   members: `/${nav.dashboard}/${nav.members}`,

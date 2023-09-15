@@ -8,19 +8,19 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 import {
   questionnaireData,
   questionnaireList,
 } from "../../../assets/data/questionnaire";
+import { routes } from "../../../assets/data/routes";
 import Spinner from "../../../components/common/Spinner";
 import ButtonFull from "../../../components/common/button/ButtonFull";
 import QuestionnaireCard from "../../../components/questionnaire/QuestionnaireCard";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
 import { fetchQuestionnaire } from "../../../store/actions/questionnaireActions";
 import { Status } from "../../../types/Status";
-import { Link } from "react-router-dom";
-import { routes } from "../../../assets/data/routes";
 
 const QuestionnaireList = () => {
   const dispatch = useAppDispatch();
@@ -56,7 +56,7 @@ const QuestionnaireList = () => {
             alignSelf={"center"}
             colorScheme={"green"}
             borderRadius={"xl"}
-            to={`${routes.questionnaire}/new`}
+            to={routes.createQuestionnaire}
           >
             <Flex gap={8} alignItems={"center"}>
               <Text as={"span"} fontSize={20}>
