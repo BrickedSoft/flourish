@@ -63,7 +63,7 @@ const NavBar = () => {
   );
 
   return (
-    <Flex px={32} gap={48} alignItems={"center"}>
+    <Flex gap={48} alignItems={"center"}>
       {navBar.ADMIN.map(renderLink)}
     </Flex>
   );

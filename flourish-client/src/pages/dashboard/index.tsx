@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Grid, Image } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Grid, Heading, Image } from "@chakra-ui/react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
 import { navBar } from "../../assets/data/dashboard/dashboard";
@@ -8,10 +8,34 @@ import Container from "../../components/common/Container";
 import { useAppSelector } from "../../hooks/useStore";
 import Menu from "../../components/dashboard/Menu";
 import NavBar from "../../components/dashboard/NavBar";
+import { questionnaireHeader } from "../../assets/data/questionnaire";
 
 const Dashboard = () => {
   const { pathname } = useLocation();
   const name = useAppSelector((state) => state.user.name);
+
+  const navBarData = () => {
+    const paths = pathname.split("/");
+    const path = (paths.at(-1) as string) || (paths.at(-2) as string);
+
+    if (
+      [...navBar.ADMIN, { href: nav.dashboard }].some(
+        ({ href }) => href.split("/").at(-1) === path
+      )
+    )
+      return <NavBar />;
+    else if (path.includes(nav.questionnaire))
+      return (
+        <Heading
+          fontSize={"2xl"}
+          fontWeight={"semibold"}
+          letterSpacing={"tight"}
+          color={"font.primary"}
+        >
+          {questionnaireHeader}
+        </Heading>
+      );
+  };
 
   return (
     <Container pr={0} pt={"36"} h={"100vh"}>
@@ -33,17 +57,7 @@ const Dashboard = () => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          {[...navBar.ADMIN, { href: nav.dashboard }].some(
-            ({ href }) =>
-              href.split("/").at(-1) ===
-              ((pathname.split("/").at(-1) as string) ||
-                (pathname.split("/").at(-2) as string))
-          ) ? (
-            <NavBar />
-          ) : (
-            <Box></Box>
-          )}
-
+          <Box px={32}>{navBarData()}</Box>
           <Avatar name={name} boxSize={"3.2rem"}></Avatar>
         </Flex>
 
