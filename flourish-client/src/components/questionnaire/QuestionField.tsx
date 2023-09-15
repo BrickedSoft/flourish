@@ -18,7 +18,7 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 
-import { questionnaireData } from "../../assets/data/questionnaire/questionnaire";
+import { questionnaireData } from "../../assets/data/questionnaire";
 import { Questionnaire } from "../../types/Questionnaire";
 
 const QuestionField = ({

@@ -5,9 +5,11 @@ import { PURGE } from "redux-persist";
 import { Questionnaire } from "../../types/Questionnaire";
 import { Status } from "../../types/Status";
 import {
+  editQuestion,
   editQuestionnaire,
   fetchQuestionnaire,
   removeQuestion,
+  removeQuestionnaire,
   setQuestion,
 } from "../actions/questionnaireActions";
 
@@ -26,10 +28,7 @@ const questionnaireSlice = createSlice({
   initialState,
   reducers: {
     purgeQuestionnaire: (state) => {
-      _.mapKeys(initialState, (value, key) => {
-        //@ts-ignore
-        state[key] = value;
-      });
+      state.questionnaires = [];
     },
   },
   extraReducers: (builder) => {
@@ -57,6 +56,18 @@ const questionnaireSlice = createSlice({
       state.status = Status.REJECTED;
     });
 
+    /* --------------------------- Remove Questionnaire -------------------------- */
+
+    builder.addCase(removeQuestionnaire.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+    builder.addCase(removeQuestionnaire.fulfilled, (state) => {
+      state.status = Status.FULFILLED;
+    });
+    builder.addCase(removeQuestionnaire.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
     /* ------------------------------ Set Question ------------------------------ */
     builder.addCase(setQuestion.pending, (state) => {
       state.status = Status.PENDING;
@@ -65,6 +76,17 @@ const questionnaireSlice = createSlice({
       state.status = Status.FULFILLED;
     });
     builder.addCase(setQuestion.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
+    /* ----------------------------- Edit Question ----------------------------- */
+    builder.addCase(editQuestion.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+    builder.addCase(editQuestion.fulfilled, (state) => {
+      state.status = Status.FULFILLED;
+    });
+    builder.addCase(editQuestion.rejected, (state) => {
       state.status = Status.REJECTED;
     });
 

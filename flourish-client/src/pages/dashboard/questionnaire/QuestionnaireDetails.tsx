@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -18,10 +17,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import _ from "lodash";
+import { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { questionnaireData } from "../../../assets/data/questionnaire/questionnaire";
+import { questionnaireData } from "../../../assets/data/questionnaire";
 import Container from "../../../components/common/Container";
 import Spinner from "../../../components/common/Spinner";
 import ButtonFull from "../../../components/common/button/ButtonFull";
@@ -30,17 +30,20 @@ import OptionField from "../../../components/questionnaire/OptionField";
 import QuestionField from "../../../components/questionnaire/QuestionField";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
 import {
+  createQuestionnaire,
+  editQuestion,
   editQuestionnaire,
   fetchQuestionnaire,
   removeQuestion,
   setQuestion,
 } from "../../../store/actions/questionnaireActions";
 import {
+  PutQuestion,
   Questionnaire,
-  QuestionnaireKeys,
-  postQuestionnaireKeys,
+  putQuestionnaireKeys,
 } from "../../../types/Questionnaire";
 import { Status } from "../../../types/Status";
+import { routes } from "../../../assets/data/routes";
 
 const QuestionnaireDetails = () => {
   const { id } = useParams();
@@ -60,7 +63,7 @@ const QuestionnaireDetails = () => {
     control,
     register,
     reset,
-    formState: { isDirty, dirtyFields, errors, isSubmitting },
+    formState: { isDirty, errors, isSubmitting },
   } = useForm({ defaultValues: questionnaire });
 
   const {
@@ -92,46 +95,80 @@ const QuestionnaireDetails = () => {
     reset(questionnaire);
   }, [questionnaire, reset]);
 
+  /* -------------------------------- onSubmit -------------------------------- */
+
   const onSubmit = async (data: Questionnaire) => {
-    const keys = Object.keys(dirtyFields);
-    const modifiedData = _.pick(data, keys);
+    /* -------------------------- Create Questionnaire -------------------------- */
 
-    const modifiedQuestionnaire = _.pick(modifiedData, postQuestionnaireKeys);
-    modifiedQuestionnaire[QuestionnaireKeys.ID] = data.id as string;
+    if (!data.id) {
+      const response = (await dispatch(createQuestionnaire(data))) as any;
+      if (response?.payload?.data?.id)
+        navigate(`${routes.questionnaire}/${response.payload.data.id}`);
+    } else {
+      /* --------------------------- Edit Questionnaire --------------------------- */
 
-    if (!_.isEmpty(modifiedQuestionnaire))
-      dispatch(editQuestionnaire(modifiedQuestionnaire as Questionnaire));
+      const modifiedQuestionnaire = _.pick(
+        data,
+        putQuestionnaireKeys
+      ) as Questionnaire;
 
-    const newQuestions = _.reject(data.questionnaireFields, "id");
+      const prevQuestionnaire = _.pick(
+        questionnaire,
+        putQuestionnaireKeys
+      ) as Questionnaire;
 
-    if (newQuestions.length > 0)
-      _.map(
-        newQuestions,
-        async ({ question }) =>
-          await dispatch(
-            setQuestion({
-              question,
-              questionnaire: data.id as string,
-            })
-          )
+      if (!_.isEqual(modifiedQuestionnaire, prevQuestionnaire))
+        dispatch(editQuestionnaire(modifiedQuestionnaire));
+
+      /* ---------------------------- Create Questions ---------------------------- */
+
+      const newQuestions = _.reject(data.questionnaireFields, "id");
+      if (newQuestions.length > 0)
+        _.map(
+          newQuestions,
+          async ({ question }) =>
+            await dispatch(
+              setQuestion({
+                question,
+                questionnaire: data.id as string,
+              })
+            )
+        );
+
+      /* ----------------------------- Edit Questions ----------------------------- */
+
+      const editedQuestions = _.intersectionWith(
+        data.questionnaireFields,
+        questionnaire.questionnaireFields,
+        (question1, questions2) =>
+          question1.id === questions2.id &&
+          question1.question !== questions2.question
       );
 
-    const deletedQuestions = _.differenceWith(
-      questionnaire.questionnaireFields,
-      data.questionnaireFields,
-      _.isEqual
-    );
+      if (editedQuestions.length > 0)
+        _.map(
+          editedQuestions,
+          async (data) => await dispatch(editQuestion(data as PutQuestion))
+        );
 
-    if (deletedQuestions.length > 0)
-      _.map(
-        deletedQuestions,
-        async ({ id }) =>
-          await dispatch(
-            removeQuestion({
-              id: id as string,
-            })
-          )
+      /* ----------------------------- Delete Questions ---------------------------- */
+
+      const deletedQuestions = _.differenceBy(
+        questionnaire.questionnaireFields,
+        data.questionnaireFields,
+        "id"
       );
+      if (deletedQuestions.length > 0)
+        _.map(
+          deletedQuestions,
+          async ({ id }) =>
+            await dispatch(
+              removeQuestion({
+                id: id as string,
+              })
+            )
+        );
+    }
 
     await dispatch(fetchQuestionnaire());
     reset(data);

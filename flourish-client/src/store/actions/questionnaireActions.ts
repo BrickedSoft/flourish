@@ -3,14 +3,20 @@ import _ from "lodash";
 
 import {
   deleteQuestion,
+  deleteQuestionnaire,
   getQuestionnaire,
   postQuestion,
+  postQuestionnaire,
+  putQuestion,
   putQuestionnaire,
 } from "../../api/apiQuestionnaire";
 import {
   DeleteQuestion,
+  DeleteQuestionnaire,
   PostQuestion,
   PostQuestionnaire,
+  PutQuestion,
+  PutQuestionnaire,
   Questionnaire,
   QuestionnaireKeys,
 } from "../../types/Questionnaire";
@@ -19,6 +25,32 @@ import {
   objectToString,
   stringToObject,
 } from "../../utils/Questionnaire";
+
+export const createQuestionnaire = createAsyncThunk(
+  "questionnaire/postQuestionnaire",
+  async (data: Questionnaire) => {
+    const optionsAndEvaluationRange = _.chain(data)
+      .pick([QuestionnaireKeys.OPTIONS, QuestionnaireKeys.EVALUATION_RANGE])
+      .map((value, key) => {
+        return { [key]: value.length > 0 ? objectToString(value) : "" };
+      })
+      .value();
+
+    const omittedObject = _.omit(data, [
+      QuestionnaireKeys.OPTIONS,
+      QuestionnaireKeys.EVALUATION_RANGE,
+    ]) as PostQuestionnaire;
+
+    _.chain(optionsAndEvaluationRange)
+      .map((value) => _.merge(omittedObject, value))
+      .value();
+
+    if (_.isEmpty(omittedObject.questionnaireFields))
+      omittedObject.questionnaireFields = [];
+
+    return await postQuestionnaire(omittedObject);
+  }
+);
 
 export const fetchQuestionnaire = createAsyncThunk(
   "questionnaire/getQuestionnaire",
@@ -34,7 +66,7 @@ export const fetchQuestionnaire = createAsyncThunk(
             ])
           : []
       )
-      .map((value, index) => {
+      .map((value) => {
         return { options: value };
       })
       .value();
@@ -49,7 +81,7 @@ export const fetchQuestionnaire = createAsyncThunk(
             ])
           : []
       )
-      .map((value, index) => {
+      .map((value) => {
         return { evaluation_range: value };
       })
       .value();
@@ -63,9 +95,11 @@ export const fetchQuestionnaire = createAsyncThunk(
         ]) as unknown as Questionnaire
     );
 
-    return _.merge(omittedObject, options, evaluation_range) as Questionnaire[];
+    return _.merge(omittedObject, options, evaluation_range);
   }
 );
+
+/* --------------------------- Edit Questionnaire --------------------------- */
 
 export const editQuestionnaire = createAsyncThunk(
   "questionnaire/putQuestionnaire",
@@ -73,22 +107,27 @@ export const editQuestionnaire = createAsyncThunk(
     const optionsAndEvaluationRange = _.chain(data)
       .pick([QuestionnaireKeys.OPTIONS, QuestionnaireKeys.EVALUATION_RANGE])
       .map((value, key) => {
-        return { [key]: objectToString(value) };
+        return { [key]: value.length > 0 ? objectToString(value) : "" };
       })
       .value();
 
     const omittedObject = _.omit(data, [
-      "options",
-      "evaluation_range",
-    ]) as unknown as Questionnaire;
+      QuestionnaireKeys.OPTIONS,
+      QuestionnaireKeys.EVALUATION_RANGE,
+    ]) as PutQuestionnaire;
 
     _.chain(optionsAndEvaluationRange)
       .map((value) => _.merge(omittedObject, value))
       .value();
 
-    return await putQuestionnaire(
-      omittedObject as unknown as PostQuestionnaire
-    );
+    return await putQuestionnaire(omittedObject);
+  }
+);
+
+export const removeQuestionnaire = createAsyncThunk(
+  "questionnaire/deleteQuestionnaire",
+  async (data: DeleteQuestionnaire) => {
+    return await deleteQuestionnaire(data);
   }
 );
 
@@ -96,6 +135,13 @@ export const setQuestion = createAsyncThunk(
   "questionnaire/postQuestion",
   async (data: PostQuestion) => {
     return await postQuestion(data);
+  }
+);
+
+export const editQuestion = createAsyncThunk(
+  "questionnaire/editQuestion",
+  async (data: PutQuestion) => {
+    return await putQuestion(data);
   }
 );
 

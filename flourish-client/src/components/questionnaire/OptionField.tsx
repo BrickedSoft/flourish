@@ -24,7 +24,7 @@ import {
 } from "react-hook-form";
 import { IoChevronUpOutline, IoChevronDownOutline } from "react-icons/io5";
 
-import { questionnaireData } from "../../assets/data/questionnaire/questionnaire";
+import { questionnaireData } from "../../assets/data/questionnaire";
 import { Questionnaire } from "../../types/Questionnaire";
 
 const OptionField = ({

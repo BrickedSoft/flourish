@@ -1,23 +1,33 @@
+import { useState } from "react";
 import {
+  Button,
   Card,
-  CardHeader,
-  Heading,
   CardBody,
   CardFooter,
+  CardHeader,
+  Heading,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
-import { Questionnaire } from "../../types/Questionnaire";
-import ButtonFull from "../common/button/ButtonFull";
 import { Link } from "react-router-dom";
 import { routes } from "../../assets/data/routes";
+
+import { useAppDispatch } from "../../hooks/useStore";
+import {
+  fetchQuestionnaire,
+  removeQuestionnaire,
+} from "../../store/actions/questionnaireActions";
+import { Questionnaire, QuestionnaireKeys } from "../../types/Questionnaire";
+import ButtonFull from "../common/button/ButtonFull";
 
 const QuestionnaireCard = ({
   questionnaire,
 }: {
   questionnaire: Questionnaire;
 }) => {
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
   const renderedQuestionnaire = () => {
     const maxQuestions = 3;
 
@@ -72,7 +82,7 @@ const QuestionnaireCard = ({
         </Heading>
       </CardHeader>
       <CardBody>{renderedQuestionnaire()}</CardBody>
-      <CardFooter>
+      <CardFooter gap={24}>
         <ButtonFull
           as={Link}
           to={`${routes.questionnaire}/${questionnaire.id}`}
@@ -82,6 +92,29 @@ const QuestionnaireCard = ({
         >
           View Details
         </ButtonFull>
+        <Button
+          px={20}
+          py={17}
+          fontSize={"lg"}
+          variant={"outline"}
+          borderRadius={"xl"}
+          colorScheme={"red"}
+          isLoading={isLoading}
+          onClick={async () => {
+            setIsLoading(true);
+            const responseRemove = await dispatch(
+              removeQuestionnaire({
+                id: questionnaire[QuestionnaireKeys.ID] as string,
+              })
+            );
+            const responseFetch = await dispatch(fetchQuestionnaire());
+            if (responseRemove.payload && responseFetch.payload) {
+              setIsLoading(false);
+            }
+          }}
+        >
+          Delete
+        </Button>
       </CardFooter>
     </Card>
   );

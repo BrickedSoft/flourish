@@ -19,6 +19,16 @@ export const questionnaireData = {
   },
 
   button: {
+    questionnaire: {
+      add: {
+        title: "Add Questionnaire",
+        icon: <IoAddCircleOutline />,
+      },
+      remove: {
+        title: "",
+        icon: <IoRemoveCircleOutline />,
+      },
+    },
     question: {
       add: {
         title: "Add a Question",

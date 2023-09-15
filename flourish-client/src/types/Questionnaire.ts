@@ -23,18 +23,39 @@ export interface ApiQuestionnaire
 }
 
 export interface PostQuestionnaire {
+  [QuestionnaireKeys.NAME]: string;
+  [QuestionnaireKeys.QUESTIONNAIRE_FIELDS]?: Omit<
+    Question,
+    QuestionnaireKeys.ID
+  >[];
+  [QuestionnaireKeys.OPTIONS]?: string;
+  [QuestionnaireKeys.EVALUATION_RANGE]?: string;
+}
+
+export const postQuestionnaireKeys = [
+  QuestionnaireKeys.NAME,
+  QuestionnaireKeys.OPTIONS,
+  QuestionnaireKeys.EVALUATION_RANGE,
+  QuestionnaireKeys.QUESTIONNAIRE_FIELDS,
+];
+
+export interface PutQuestionnaire {
   [QuestionnaireKeys.ID]: string;
   [QuestionnaireKeys.NAME]?: string;
   [QuestionnaireKeys.OPTIONS]?: string;
   [QuestionnaireKeys.EVALUATION_RANGE]?: string;
 }
 
-export const postQuestionnaireKeys = [
-  QuestionnaireKeys.ID,
+export const putQuestionnaireKeys = [
+  [QuestionnaireKeys.ID],
   QuestionnaireKeys.NAME,
   QuestionnaireKeys.OPTIONS,
   QuestionnaireKeys.EVALUATION_RANGE,
 ];
+
+export interface DeleteQuestionnaire {
+  id: string;
+}
 
 export interface Question {
   id?: string;
@@ -44,6 +65,11 @@ export interface Question {
 export interface PostQuestion {
   question: string;
   questionnaire: string;
+}
+
+export interface PutQuestion {
+  id: string;
+  question: string;
 }
 
 export interface DeleteQuestion {
