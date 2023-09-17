@@ -16,10 +16,10 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 
-import { questionnaireData } from "../../../assets/data/questionnaire";
-import { Questionnaire } from "../../../types/Questionnaire";
+import { questionnaireData } from "../../../../assets/data/dashboard/questionnaire";
+import { Questionnaire } from "../../../../types/Questionnaire";
 
-export const QuestionnaireName = ({
+const QuestionnaireName = ({
   control,
   errors,
   register,
@@ -89,3 +89,5 @@ export const QuestionnaireName = ({
     </FormControl>
   );
 };
+
+export default QuestionnaireName;

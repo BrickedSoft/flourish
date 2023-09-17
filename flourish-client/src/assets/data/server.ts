@@ -12,4 +12,5 @@ export const api = {
     [userTypes.ADMIN]: "adminCounselor/questionnaire/",
   },
   question: "questionnaire/",
+  registrationForm: "registrationForm/",
 };

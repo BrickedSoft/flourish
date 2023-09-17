@@ -1,15 +1,15 @@
+import { api } from "./config/apiConfig";
 import { api as apiData } from "../assets/data/server";
 import {
-  PostQuestion,
-  DeleteQuestion,
-  PutQuestionnaire,
   ApiQuestionnaire,
+  DeleteQuestion,
   DeleteQuestionnaire,
+  PostQuestion,
   PostQuestionnaire,
   PutQuestion,
+  PutQuestionnaire,
 } from "../types/Questionnaire";
 import { userTypes } from "../types/User";
-import { api } from "./config/apiConfig";
 
 export const postQuestionnaire = async (
   data: PostQuestionnaire

@@ -4,11 +4,11 @@ import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { routes } from "../../../assets/data/routes";
-import Container from "../../../components/common/Container";
-import Spinner from "../../../components/common/Spinner";
-import ButtonFull from "../../../components/common/button/ButtonFull";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
+import { routes } from "../../../../assets/data/routes";
+import Container from "../../../../components/common/Container";
+import Spinner from "../../../../components/common/Spinner";
+import ButtonFull from "../../../../components/common/button/ButtonFull";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
 import {
   createQuestionnaire,
   editQuestion,
@@ -16,18 +16,18 @@ import {
   fetchQuestionnaire,
   removeQuestion,
   setQuestion,
-} from "../../../store/actions/questionnaireActions";
+} from "../../../../store/actions/questionnaireActions";
 import {
   PutQuestion,
   Questionnaire,
   putQuestionnaireKeys,
-} from "../../../types/Questionnaire";
-import { Status } from "../../../types/Status";
+} from "../../../../types/Questionnaire";
+import { Status } from "../../../../types/Status";
 import { EvaluationFields } from "./EvaluationFields";
 import OptionFields from "./OptionFields";
 import QuestionFields from "./QuestionFields";
-import { QuestionnaireName } from "./QuestionnaireName";
-import Buttons from "./Buttons";
+import  QuestionnaireName  from "./QuestionnaireName";
+import Buttons from "../../../../components/dashboard/Buttons";
 
 const QuestionnaireDetails = () => {
   const { id } = useParams();
@@ -47,7 +47,7 @@ const QuestionnaireDetails = () => {
     control,
     register,
     reset,
-    formState: { isDirty, errors, isSubmitting },
+    formState: { isDirty, errors, isSubmitting,isValid },
   } = useForm({ defaultValues: questionnaire });
 
   // useEffect(() => {
@@ -165,8 +165,9 @@ const QuestionnaireDetails = () => {
               <Buttons
                 isSubmitting={isSubmitting}
                 isDirty={isDirty}
+                isValid={isValid}
                 reset={reset}
-                questionnaire={questionnaire}
+                data={questionnaire}
               />
 
               {/* --------------------------- Questionnaire Name --------------------------- */}

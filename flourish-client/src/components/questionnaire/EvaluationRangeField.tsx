@@ -24,7 +24,7 @@ import {
 } from "react-hook-form";
 import { IoChevronUpOutline, IoChevronDownOutline } from "react-icons/io5";
 
-import { questionnaireData } from "../../assets/data/questionnaire";
+import { questionnaireData } from "../../assets/data/dashboard/questionnaire";
 import { Questionnaire } from "../../types/Questionnaire";
 
 const EvaluationRangeField = ({

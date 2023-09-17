@@ -11,6 +11,7 @@ export const nav = {
   sessionRequest: "session-request",
   overview: "overview",
   create: "create",
+  form: "form",
 };
 
 export const routes = {
@@ -26,6 +27,7 @@ export const routes = {
   members: `/${nav.dashboard}/${nav.members}`,
   sessionRequest: `/${nav.dashboard}/${nav.sessionRequest}`,
   overview: `/${nav.dashboard}/${nav.overview}`,
+  form: `/${nav.dashboard}/${nav.form}`,
 };
 
 export const header = [

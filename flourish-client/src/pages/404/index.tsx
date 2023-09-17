@@ -1,5 +1,6 @@
 import {
   Center,
+  Flex,
   Grid,
   Heading,
   Image,
@@ -8,7 +9,7 @@ import {
   shouldForwardProp,
 } from "@chakra-ui/react";
 import { isValidMotionProp, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../../assets/data/routes";
 import ghostImage from "../../assets/img/ghost.png";
 import { useEffect, useState } from "react";
@@ -59,6 +60,7 @@ const imageVariants = {
 };
 
 const NotFound = () => {
+  const navigate = useNavigate();
   const [firstAnimation, setFirstAnimation] = useState(true);
 
   useEffect(() => {
@@ -97,25 +99,46 @@ const NotFound = () => {
           <Text maxW={"25ch"}>
             We can't seem to find the page you are looking for.
           </Text>
-          <ChakraButton
-            mt={8}
-            borderRadius={"full"}
-            bg="black"
-            fontSize={"xl"}
-            color={"white"}
-            py={12}
-            px={24}
-            whileHover={{
-              scale: 1.05,
-              textShadow: "0px 0px 12px rgb(255,255,255)",
-              boxShadow: "0px 0px 12px 1px rgba(0,0,0,0.75)",
-            }}
-            transition={{
-              type: "spring",
-            }}
-          >
-            <Link to={routes.home}>Go Home</Link>
-          </ChakraButton>
+          <Flex gap={16} mt={12}>
+            <ChakraButton
+              borderRadius={"full"}
+              fontSize={"xl"}
+              border={"1px solid white"}
+              color={"white"}
+              py={12}
+              px={24}
+              whileHover={{
+                scale: 1.05,
+                textShadow: "0px 0px 12px rgb(255,255,255)",
+              }}
+              transition={{
+                type: "spring",
+              }}
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Go Back
+            </ChakraButton>
+            <ChakraButton
+              borderRadius={"full"}
+              bg={"black"}
+              fontSize={"xl"}
+              color={"white"}
+              py={12}
+              px={24}
+              whileHover={{
+                scale: 1.05,
+                textShadow: "0px 0px 12px rgb(255,255,255)",
+                boxShadow: "0px 0px 12px 1px rgba(0,0,0,0.75)",
+              }}
+              transition={{
+                type: "spring",
+              }}
+            >
+              <Link to={routes.home}>Go Home</Link>
+            </ChakraButton>
+          </Flex>
         </ChakraBox>
 
         <ChakraBox

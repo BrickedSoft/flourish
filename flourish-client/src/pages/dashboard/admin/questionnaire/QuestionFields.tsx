@@ -14,11 +14,11 @@ import {
   useFieldArray,
 } from "react-hook-form";
 
-import { questionnaireData } from "../../../assets/data/questionnaire";
-import OptionField from "../../../components/questionnaire/OptionField";
-import { Questionnaire } from "../../../types/Questionnaire";
+import { questionnaireData } from "../../../../assets/data/dashboard/questionnaire";
+import QuestionField from "../../../../components/questionnaire/QuestionField";
+import { Questionnaire } from "../../../../types/Questionnaire";
 
-const OptionFields = ({
+const QuestionFields = ({
   control,
   errors,
   register,
@@ -28,12 +28,12 @@ const OptionFields = ({
   register: UseFormRegister<Questionnaire>;
 }) => {
   const {
-    fields: optionFields,
-    append: optionAppend,
-    remove: optionRemove,
+    fields: questionFields,
+    append: questionAppend,
+    remove: questionRemove,
   } = useFieldArray({
     control,
-    name: "options",
+    name: "questionnaireFields",
   });
 
   return (
@@ -45,12 +45,12 @@ const OptionFields = ({
           color={"font.primary"}
           letterSpacing={"tight"}
         >
-          {questionnaireData.options}
+          {questionnaireData.questionnaires}
         </Heading>
         <Divider borderWidth={0.75} />
       </Box>
 
-      {optionFields.length === 0 ? (
+      {questionFields.length === 0 ? (
         <Heading
           mt={8}
           fontSize={"3xl"}
@@ -59,18 +59,18 @@ const OptionFields = ({
           color={"font.muted3"}
           textAlign={"center"}
         >
-          {questionnaireData.empty.options.title}
+          {questionnaireData.empty.questions.title}
         </Heading>
       ) : (
         <List display={"flex"} flexDir={"column"} gap={16}>
-          {optionFields.map((field, index) => (
-            <OptionField
+          {questionFields.map((field, index) => (
+            <QuestionField
               key={field.id}
               control={control}
               errors={errors}
               index={index}
               register={register}
-              remove={optionRemove}
+              remove={questionRemove}
               data={field}
             />
           ))}
@@ -85,21 +85,20 @@ const OptionFields = ({
         colorScheme={"green"}
         borderRadius={"xl"}
         onClick={() => {
-          optionAppend({
-            name: "",
-            points: 0,
+          questionAppend({
+            question: "",
           });
         }}
       >
         <Flex gap={8} alignItems={"center"}>
           <Text as={"span"} fontSize={20}>
-            {questionnaireData.button.option.add.icon}
+            {questionnaireData.button.question.add.icon}
           </Text>
-          {questionnaireData.button.option.add.title}
+          {questionnaireData.button.question.add.title}
         </Flex>
       </Button>
     </>
   );
 };
 
-export default OptionFields;
+export default QuestionFields;

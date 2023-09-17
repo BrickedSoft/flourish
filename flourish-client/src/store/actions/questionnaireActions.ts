@@ -24,7 +24,7 @@ import {
   KeyTypes,
   objectToString,
   stringToObject,
-} from "../../utils/Questionnaire";
+} from "../../utils/questionnaire";
 
 export const createQuestionnaire = createAsyncThunk(
   "questionnaire/postQuestionnaire",

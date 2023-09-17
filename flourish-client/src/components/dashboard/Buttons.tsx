@@ -3,20 +3,22 @@ import { UseFormReset } from "react-hook-form";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-import { questionnaireData } from "../../../assets/data/questionnaire";
-import ButtonFull from "../../../components/common/button/ButtonFull";
-import { Questionnaire } from "../../../types/Questionnaire";
+import ButtonFull from "../common/button/ButtonFull";
+import { Questionnaire } from "../../types/Questionnaire";
+import { RegistrationForm } from "../../types/RegistrationForm";
 
 const Buttons = ({
   isSubmitting,
   isDirty,
+  isValid,
   reset,
-  questionnaire,
+  data,
 }: {
   isSubmitting: boolean;
   isDirty: boolean;
-  reset: UseFormReset<Questionnaire>;
-  questionnaire: Questionnaire;
+  isValid: boolean;
+  reset: UseFormReset<Questionnaire | RegistrationForm | any>;
+  data: Questionnaire | RegistrationForm;
 }) => {
   const navigate = useNavigate();
 
@@ -51,11 +53,11 @@ const Buttons = ({
           isDisabled={!isDirty}
           onClick={() =>
             reset({
-              ...questionnaire,
+              ...data,
             })
           }
         >
-          {questionnaireData.button.reset.title}
+          Reset
         </Button>
 
         {/* ------------------------------- Save Button ------------------------------ */}
@@ -66,9 +68,9 @@ const Buttons = ({
           py={"16"}
           fontSize={"lg"}
           type={"submit"}
-          isDisabled={!isDirty}
+          isDisabled={!isDirty || !isValid}
         >
-          {questionnaireData.button.save.title}
+          Save
         </ButtonFull>
       </Flex>
     </Flex>
