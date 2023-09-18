@@ -15,6 +15,9 @@ import flagSlice, { name as flagSliceName } from "./slices/flagSlice";
 import questionnaireSlice, {
   name as questionnaireSliceName,
 } from "./slices/questionnaireSlice";
+import registrationFormSlice, {
+  name as registrationFormSliceName,
+} from "./slices/registrationFormSlice";
 import userSlice, { name as userSliceName } from "./slices/userSlice";
 
 const persistConfig = {
@@ -26,6 +29,7 @@ const rootReducer = combineReducers({
   [userSliceName]: userSlice,
   [flagSliceName]: flagSlice,
   [questionnaireSliceName]: questionnaireSlice,
+  [registrationFormSliceName]: registrationFormSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

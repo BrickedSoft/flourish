@@ -7,7 +7,7 @@ import { menu } from "../../assets/data/dashboard/dashboard";
 import { signOut as signOutTitle } from "../../assets/data/routes";
 import { useSignOut } from "../../hooks/useSignOut";
 
-const Menu = () => {
+const Menu = ({ data }: { data: typeof menu.ADMIN }) => {
   const { signOut } = useSignOut();
   const { pathname } = useLocation();
   const allPaths = pathname.split("/").filter((path) => path !== "");
@@ -75,7 +75,7 @@ const Menu = () => {
       justifyContent={"space-between"}
     >
       <Flex flexDir={"column"} gap={8}>
-        {menu.ADMIN.map(renderMenu)}
+        {data.map(renderMenu)}
       </Flex>
       {renderMenu({
         ...signOutTitle,

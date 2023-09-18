@@ -15,6 +15,21 @@ export const menu = {
       title: "Questionnaires",
       href: routes.questionnaire,
       icon: <RxQuestionMarkCircled fontSize={24} strokeWidth={0.1} />,
+      exclude: [],
+    },
+  ],
+  [userTypes.CLIENT]: [
+    {
+      title: "Dashboard",
+      href: routes.dashboard,
+      icon: <RxDashboard fontSize={24} strokeWidth={0.1} />,
+      exclude: [nav.form],
+    },
+    {
+      title: "Form",
+      href: routes.form,
+      icon: <RxDashboard fontSize={24} strokeWidth={0.1} />,
+      exclude: [],
     },
   ],
 };

@@ -2,16 +2,16 @@ import { Avatar, Box, Flex, Grid, Heading, Image } from "@chakra-ui/react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import _ from "lodash";
 
-import { navBar } from "../../assets/data/dashboard/dashboard";
-import { questionnaireHeader } from "../../assets/data/questionnaire";
-import { nav, routes } from "../../assets/data/routes";
-import logo from "../../assets/img/logo.png";
-import Container from "../../components/common/Container";
-import Menu from "../../components/dashboard/Menu";
-import NavBar from "../../components/dashboard/NavBar";
-import { useAppSelector } from "../../hooks/useStore";
+import { menu, navBar } from "../../../assets/data/dashboard/dashboard";
+import { questionnaireHeader } from "../../../assets/data/dashboard/questionnaire";
+import { nav, routes } from "../../../assets/data/routes";
+import logo from "../../../assets/img/logo.png";
+import Container from "../../../components/common/Container";
+import Menu from "../../../components/dashboard/Menu";
+import NavBar from "../../../components/dashboard/NavBar";
+import { useAppSelector } from "../../../hooks/useStore";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
   const name = useAppSelector((state) => state.user.name);
@@ -33,7 +33,7 @@ const Dashboard = () => {
     </Heading>
   );
 
-  const navBarData = () => {
+  const header = () => {
     const paths = pathname.split("/").filter((path) => path !== "");
     const path = paths.at(-1);
 
@@ -45,30 +45,12 @@ const Dashboard = () => {
       return <NavBar />;
     else if (paths.includes(nav.questionnaire)) {
       if (path === nav.questionnaire)
-        return (
-          <Heading
-            fontSize={"2xl"}
-            fontWeight={"semibold"}
-            letterSpacing={"tight"}
-            color={"font.primary"}
-          >
-            {headerTitle(questionnaireHeader.list)}
-          </Heading>
-        );
+        return headerTitle(questionnaireHeader.list);
 
-      if (path === nav.create)
-        return (
-          <Heading
-            fontSize={"2xl"}
-            fontWeight={"semibold"}
-            letterSpacing={"tight"}
-            color={"font.primary"}
-          >
-            {headerTitle(questionnaireHeader.new)}
-          </Heading>
-        );
-      else return <Box>{headerTitle(questionnaireName)}</Box>;
-    } else return <Box></Box>;
+      if (path === nav.create) return headerTitle(questionnaireHeader.new);
+      return <Box>{headerTitle(questionnaireName)}</Box>;
+    }
+    return <Box></Box>;
   };
 
   return (
@@ -91,11 +73,11 @@ const Dashboard = () => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          {navBarData()}
+          {header()}
           <Avatar name={name} boxSize={"3.2rem"}></Avatar>
         </Flex>
 
-        <Menu />
+        <Menu data={menu.ADMIN} />
 
         <Flex
           bg={"bg.tintsTransparent.1"}
@@ -120,4 +102,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

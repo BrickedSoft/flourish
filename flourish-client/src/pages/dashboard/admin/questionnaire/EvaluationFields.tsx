@@ -14,11 +14,11 @@ import {
   useFieldArray,
 } from "react-hook-form";
 
-import { questionnaireData } from "../../../assets/data/questionnaire";
-import QuestionField from "../../../components/questionnaire/QuestionField";
-import { Questionnaire } from "../../../types/Questionnaire";
+import { questionnaireData } from "../../../../assets/data/dashboard/questionnaire";
+import EvaluationRangeField from "../../../../components/questionnaire/EvaluationRangeField";
+import { Questionnaire } from "../../../../types/Questionnaire";
 
-const QuestionFields = ({
+export const EvaluationFields = ({
   control,
   errors,
   register,
@@ -28,12 +28,12 @@ const QuestionFields = ({
   register: UseFormRegister<Questionnaire>;
 }) => {
   const {
-    fields: questionFields,
-    append: questionAppend,
-    remove: questionRemove,
+    fields: evaluationFields,
+    append: evaluationAppend,
+    remove: evaluationRemove,
   } = useFieldArray({
     control,
-    name: "questionnaireFields",
+    name: "evaluation_range",
   });
 
   return (
@@ -45,12 +45,12 @@ const QuestionFields = ({
           color={"font.primary"}
           letterSpacing={"tight"}
         >
-          {questionnaireData.questionnaires}
+          {questionnaireData.evaluationRange}
         </Heading>
         <Divider borderWidth={0.75} />
       </Box>
 
-      {questionFields.length === 0 ? (
+      {evaluationFields.length === 0 ? (
         <Heading
           mt={8}
           fontSize={"3xl"}
@@ -59,18 +59,18 @@ const QuestionFields = ({
           color={"font.muted3"}
           textAlign={"center"}
         >
-          {questionnaireData.empty.questions.title}
+          {questionnaireData.empty.evaluationRange.title}
         </Heading>
       ) : (
         <List display={"flex"} flexDir={"column"} gap={16}>
-          {questionFields.map((field, index) => (
-            <QuestionField
+          {evaluationFields.map((field, index) => (
+            <EvaluationRangeField
               key={field.id}
               control={control}
               errors={errors}
               index={index}
               register={register}
-              remove={questionRemove}
+              remove={evaluationRemove}
               data={field}
             />
           ))}
@@ -85,20 +85,19 @@ const QuestionFields = ({
         colorScheme={"green"}
         borderRadius={"xl"}
         onClick={() => {
-          questionAppend({
-            question: "",
+          evaluationAppend({
+            name: "",
+            points: 0,
           });
         }}
       >
         <Flex gap={8} alignItems={"center"}>
           <Text as={"span"} fontSize={20}>
-            {questionnaireData.button.question.add.icon}
+            {questionnaireData.button.evaluationRange.add.icon}
           </Text>
-          {questionnaireData.button.question.add.title}
+          {questionnaireData.button.evaluationRange.add.title}
         </Flex>
       </Button>
     </>
   );
 };
-
-export default QuestionFields;

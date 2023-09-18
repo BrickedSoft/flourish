@@ -13,14 +13,14 @@ import { Link } from "react-router-dom";
 import {
   questionnaireData,
   questionnaireList,
-} from "../../../assets/data/questionnaire";
-import { routes } from "../../../assets/data/routes";
-import Spinner from "../../../components/common/Spinner";
-import ButtonFull from "../../../components/common/button/ButtonFull";
-import QuestionnaireCard from "../../../components/questionnaire/QuestionnaireCard";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
-import { fetchQuestionnaire } from "../../../store/actions/questionnaireActions";
-import { Status } from "../../../types/Status";
+} from "../../../../assets/data/dashboard/questionnaire";
+import { routes } from "../../../../assets/data/routes";
+import Spinner from "../../../../components/common/Spinner";
+import ButtonFull from "../../../../components/common/button/ButtonFull";
+import QuestionnaireCard from "../../../../components/questionnaire/QuestionnaireCard";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
+import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions";
+import { Status } from "../../../../types/Status";
 
 const QuestionnaireList = () => {
   const dispatch = useAppDispatch();
@@ -34,12 +34,16 @@ const QuestionnaireList = () => {
     dispatch(fetchQuestionnaire());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (status === Status.FULFILLED || status === Status.REJECTED)
+      setFirstRender(false);
+  }, [status]);
+
   const renderedElements = () => {
     switch (status) {
       case Status.PENDING:
       case Status.FULFILLED:
         if (firstRender) {
-          setFirstRender(false);
           return (
             <Center h={"full"}>
               <Spinner />

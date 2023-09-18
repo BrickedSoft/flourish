@@ -9,18 +9,58 @@ import NotFound from "./pages/404";
 import Auth from "./pages/auth";
 import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
-import Dashboard from "./pages/dashboard";
-import Questionnaire from "./pages/dashboard/questionnaire";
-import QuestionnaireDetails from "./pages/dashboard/questionnaire/QuestionnaireDetails";
-import QuestionnaireList from "./pages/dashboard/questionnaire/QuestionnaireList";
+import AdminDashboard from "./pages/dashboard/admin";
+import Questionnaire from "./pages/dashboard/admin/questionnaire";
+import QuestionnaireDetails from "./pages/dashboard/admin/questionnaire/QuestionnaireDetails";
+import QuestionnaireList from "./pages/dashboard/admin/questionnaire/QuestionnaireList";
 import Homepage from "./pages/homepage";
+import ClientDashboard from "./pages/dashboard/client";
+import CounselorDashboard from "./pages/dashboard/counselor";
+import Form from "./pages/dashboard/client/form";
+import { useEffect } from "react";
 
 const App = () => {
   const location = useLocation();
   const isSignedIn = useAppSelector((state) => state.flags.isSignedIn);
-  const token = useAppSelector((state) => state?.user?.token);
+  const token = useAppSelector((state) => state.user.token);
+  const [admin, client, counselor] = [
+    useAppSelector((state) => state.user.adminCounselor),
+    useAppSelector((state) => state.user.client),
+    useAppSelector((state) => state.user.counselor),
+  ];
 
-  if (token) setupInterceptors(token);
+  useEffect(() => {
+    if (token) setupInterceptors(token);
+  }, [token]);
+
+  const dashboardRoutes = () => {
+    if (admin)
+      return (
+        <Route path={`${nav.dashboard}`} element={<AdminDashboard />}>
+          <Route path={nav.questionnaire} element={<Questionnaire />}>
+            <Route index element={<QuestionnaireList />} />
+            <Route path=":id" element={<QuestionnaireDetails />} />
+          </Route>
+          <Route index element={<h1>Members</h1>} />
+          <Route path={nav.members} element={<h1>Members</h1>} />
+          <Route path={nav.sessionRequest} element={<h1>sessionRequest</h1>} />
+          <Route path={nav.overview} element={<h1>Overview</h1>} />
+        </Route>
+      );
+    else if (client)
+      return (
+        <Route path={`${nav.dashboard}`} element={<ClientDashboard />}>
+          <Route path={nav.form} element={<Form />} />
+        </Route>
+      );
+    else if (counselor)
+      return (
+        <Route
+          path={`${nav.dashboard}`}
+          element={<CounselorDashboard />}
+        ></Route>
+      );
+  };
 
   return (
     <Box
@@ -43,21 +83,7 @@ const App = () => {
             </Route>
           )}
 
-          {isSignedIn && (
-            <Route path={`${nav.dashboard}`} element={<Dashboard />}>
-              <Route path={nav.questionnaire} element={<Questionnaire />}>
-                <Route index element={<QuestionnaireList />} />
-                <Route path=":id" element={<QuestionnaireDetails />} />
-              </Route>
-              <Route index element={<h1>Members</h1>} />
-              <Route path={nav.members} element={<h1>Members</h1>} />
-              <Route
-                path={nav.sessionRequest}
-                element={<h1>sessionRequest</h1>}
-              />
-              <Route path={nav.overview} element={<h1>Overview</h1>} />
-            </Route>
-          )}
+          {isSignedIn && dashboardRoutes()}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AnimatePresence>

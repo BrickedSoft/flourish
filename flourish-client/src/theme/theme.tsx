@@ -1,5 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 
+import { selectTheme } from "./selectTheme";
+
 const theme = extendTheme({
   /* -------------------------------------------------------------------------- */
   /*                             Chakra Custom Theme                            */
@@ -207,6 +209,8 @@ const theme = extendTheme({
     toast: 1700,
     tooltip: 1800,
   },
+
+  components: { Select: selectTheme },
 });
 
 export default theme;
