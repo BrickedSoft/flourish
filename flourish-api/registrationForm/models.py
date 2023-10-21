@@ -7,6 +7,7 @@ class RegistrationForm(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     client = models.ForeignKey("client.Client", on_delete=models.CASCADE)
 
+    name = models.CharField(max_length=255, blank=True, default="")
     date_time = models.CharField(max_length=255, blank=True, default="")
     gender = models.CharField(max_length=255, blank=True, default="")
     marital_status = models.CharField(max_length=255, blank=True, default="")
