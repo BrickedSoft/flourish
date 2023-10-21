@@ -13,8 +13,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from client.serializers import SigninSerializer, SignupSerializer
-from questionnaire.models import FilledQuestionnaire
-from questionnaire.serializers import FilledQuestionnaireSerializer
+from questionnaire.models import FilledQuestionnaire, Questionnaire
+from questionnaire.serializers import FilledQuestionnaireSerializer, QuestionnaireViewSerializer
 
 
 @api_view(["POST"])
@@ -50,7 +50,17 @@ class FilledQuestionnaireView(APIView):
             questionnaires.filter(client_id = clientId)
         serializer = FilledQuestionnaireSerializer(questionnaires, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
-    
+
+class QuestionnaireView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        client = get_object_or_404(Counselor, user=request.user)
+        questionnaires = Questionnaire.objects.all()
+        serializer = QuestionnaireViewSerializer(questionnaires, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
     
 def get_or_none(classmodel, **kwargs):
     try:
