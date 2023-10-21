@@ -11,9 +11,6 @@ from .serializers import QuestionnaireFieldSerializer
 
 
 class QuestionnaireFieldView(APIView):
-    """
-    Authorized admin create , edit and update questionnairefields
-    """
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -70,4 +67,3 @@ class QuestionnaireFieldView(APIView):
         instance.delete()
 
         return Response(status=status.HTTP_200_OK)
-
