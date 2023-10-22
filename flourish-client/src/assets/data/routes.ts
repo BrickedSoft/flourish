@@ -12,7 +12,6 @@ export const nav = {
   overview: "overview",
   create: "create",
   form: "form",
-  404: "404",
 };
 
 export const routes = {
@@ -29,8 +28,6 @@ export const routes = {
   sessionRequest: `/${nav.dashboard}/${nav.sessionRequest}`,
   overview: `/${nav.dashboard}/${nav.overview}`,
   form: `/${nav.dashboard}/${nav.form}`,
-  fillRegistrationForm: `/${nav.dashboard}/${nav.form}/${nav.create}`,
-  404: `/${nav[404]}`,
 };
 
 export const header = [

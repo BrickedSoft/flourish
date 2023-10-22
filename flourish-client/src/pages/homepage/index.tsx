@@ -6,13 +6,15 @@ import Footer from "../../components/common/Footer";
 
 const Homepage = () => {
   return (
-    <Box w={"full"}>
+    <>
       <Header />
-      <Box bg="bg.container2" pt={"32"}>
-        <Hero />
+      <Box w={"full"}>
+        <Box bg="bg.container2" pt={"32"}>
+          <Hero />
+        </Box>
       </Box>
       <Footer />
-    </Box>
+    </>
   );
 };
 
