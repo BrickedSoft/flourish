@@ -1,29 +1,34 @@
 import { ReactNode } from "react";
 import {
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Grid,
-  Input,
+  Text,
+  Textarea,
 } from "@chakra-ui/react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
-import { RegistrationForm } from "../../../types/RegistrationForm";
+import { RegistrationForm } from "../../types/RegistrationForm";
 
 interface data {
   title: string;
+  secondaryTitle?: string;
   placeholder: string;
   fieldName: keyof RegistrationForm;
 }
 
-const InputField = ({
+const TextField = ({
   errors,
   register,
-  data: { title, placeholder, fieldName },
+  data: { title, secondaryTitle, placeholder, fieldName },
+  isReadOnly = false,
 }: {
   errors: FieldErrors<RegistrationForm>;
   register: UseFormRegister<RegistrationForm>;
   data: data;
+  isReadOnly?: boolean;
 }) => {
   return (
     <>
@@ -32,22 +37,30 @@ const InputField = ({
         m={0}
         fontSize={"xl"}
         color={"font.muted"}
-        fontWeight={"normal"}
+        fontWeight={"medium"}
         whiteSpace={"nowrap"}
+        alignSelf={"start"}
+        as={Flex}
+        gap={4}
       >
-        {title}
+        <Text>{title}</Text>
+        {secondaryTitle && (
+          <Text fontSize={"lg"} color={"font.muted2"}>
+            {secondaryTitle}
+          </Text>
+        )}
       </FormLabel>
       <FormControl
-        id={fieldName}
         as={Grid}
         isInvalid={errors[fieldName] ? true : false}
         gridTemplateColumns={"1fr auto"}
         alignItems={"center"}
         justifyContent={"space-between"}
         gap={16}
+        isReadOnly={isReadOnly}
       >
-        <Input
-          type={"text"}
+        <Textarea
+          id={fieldName}
           placeholder={placeholder}
           {...register(fieldName, {
             required: "This is required",
@@ -58,7 +71,10 @@ const InputField = ({
           borderWidth={"2"}
           borderRadius={"xl"}
           maxW={"4xl"}
-          _placeholder={{ color: "gray.300" }}
+          h={"3xs"}
+          _placeholder={{
+            color: "gray.300",
+          }}
         />
 
         <FormErrorMessage fontSize={"md"}>
@@ -69,4 +85,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default TextField;

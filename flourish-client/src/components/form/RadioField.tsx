@@ -1,20 +1,16 @@
 import { useRef } from "react";
-import {
-  FormControl,
-  FormLabel,
-  Grid,
-  useRadioGroup,
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, Grid, useRadioGroup } from "@chakra-ui/react";
 import { Control, Controller } from "react-hook-form";
 import _ from "lodash";
 
-import { RegistrationForm } from "../../../types/RegistrationForm";
+import { RegistrationForm } from "../../types/RegistrationForm";
 import RadioCard from "./RadioCard";
 
 const RadioField = ({
   control,
   data: { title, placeholder, fieldName },
   options,
+  isReadOnly = false,
 }: {
   control: Control<RegistrationForm, any>;
   data: {
@@ -23,6 +19,7 @@ const RadioField = ({
     fieldName: keyof RegistrationForm;
   };
   options: string[];
+  isReadOnly?: boolean;
 }) => {
   const prevState = useRef<number>(0);
 
@@ -43,10 +40,10 @@ const RadioField = ({
         m={0}
         fontSize={"xl"}
         color={"font.muted"}
-        fontWeight={"normal"}
+        fontWeight={"medium"}
         whiteSpace={"nowrap"}
       >
-        {title}{" "}
+        {title}
       </FormLabel>
       <FormControl>
         <Controller
@@ -71,6 +68,7 @@ const RadioField = ({
                     totalOptions={options.length}
                     index={index}
                     prevState={prevState.current}
+                    isReadOnly={isReadOnly}
                   >
                     {value}
                   </RadioCard>

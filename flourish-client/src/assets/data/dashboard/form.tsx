@@ -1,5 +1,16 @@
+import { IoAddCircleOutline } from "react-icons/io5";
+
 export const formHeader = {
   form: "Registration Form",
+};
+
+export const formData = {
+  button: {
+    add: {
+      title: "Fill a form",
+      icon: <IoAddCircleOutline />,
+    },
+  },
 };
 
 export const formFieldsData = {

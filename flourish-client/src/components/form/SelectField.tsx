@@ -9,7 +9,7 @@ import {
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-import { RegistrationForm } from "../../../types/RegistrationForm";
+import { RegistrationForm } from "../../types/RegistrationForm";
 
 const SelectField = ({
   register,
@@ -17,6 +17,7 @@ const SelectField = ({
   data: { title, placeholder, fieldName },
   options,
   currentValue,
+  isReadOnly = false,
 }: {
   register: UseFormRegister<RegistrationForm>;
   errors: FieldErrors<RegistrationForm>;
@@ -27,6 +28,7 @@ const SelectField = ({
   };
   options: string[];
   currentValue?: string;
+  isReadOnly?: boolean;
 }) => {
   return (
     <>
@@ -35,7 +37,7 @@ const SelectField = ({
         m={0}
         fontSize={"xl"}
         color={"font.muted"}
-        fontWeight={"normal"}
+        fontWeight={"medium"}
         whiteSpace={"nowrap"}
       >
         {title}
@@ -48,6 +50,8 @@ const SelectField = ({
         alignItems={"center"}
         justifyContent={"space-between"}
         gap={16}
+        isReadOnly={isReadOnly}
+        pointerEvents={isReadOnly ? "none" : "auto"}
       >
         <Select
           icon={<IoChevronDownOutline />}

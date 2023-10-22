@@ -5,7 +5,7 @@ const RadioCard = (props: any) => {
   const { getInputProps, getRadioProps } = useRadio(props);
   const [prevState, setPrevState] = useState<number>(props.prevState);
 
-  const index = props.index;
+  const { index, isReadOnly } = props;
   const input = getInputProps();
   const checkbox = getRadioProps();
 
@@ -26,7 +26,7 @@ const RadioCard = (props: any) => {
       <Box
         {...checkbox}
         position={"relative"}
-        cursor="pointer"
+        cursor={isReadOnly ? "not-allowed" : "pointer"}
         px={12}
         py={"0.6rem"}
         borderRadius={"xl"}
