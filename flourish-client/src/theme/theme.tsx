@@ -12,26 +12,6 @@ const theme = extendTheme({
     mono: "Menlo, monospace",
   },
 
-  borderRadius: {
-    none: "0",
-    sm: "0.2rem",
-    base: "0.4rem",
-    md: "0.5rem",
-    lg: "0.9rem",
-    xl: "1.1rem",
-    "2xl": "1.6rem",
-    "3xl": "2rem",
-    full: "9999px",
-  },
-
-  borderWidths: {
-    px: "1px",
-    0.5: "0.5rem",
-    1: "0.1rem",
-    2: "0.2rem",
-    4: "0.4rem",
-  },
-
   breakpoints: {
     sm: "30em", // 480px
     md: "48em", // 768px
@@ -73,17 +53,6 @@ const theme = extendTheme({
     success: "#40c057",
     error: "#f03e3e",
 
-    status: {
-      pending: "#ffa94d",
-      success: "#40c057",
-      competed: "#40c057",
-      error: "#f03e3e",
-      failed: "#f03e3e",
-      rejected: "#f03e3e",
-      ongoing: "#40c057",
-      unset: "grey.500",
-    },
-
     font: {
       // hero: "#204289",
       hero: "#064273",
@@ -97,14 +66,6 @@ const theme = extendTheme({
       muted3: "#dadada",
       light: "#fff",
     },
-  },
-
-  container: {
-    sm: "640px",
-    md: "768px",
-    lg: "1024px",
-    xl: "1280px",
-    "2xl": "130px",
   },
 
   fontSizes: {
@@ -203,6 +164,34 @@ const theme = extendTheme({
     "8xl": "90rem",
     "12xl": "120rem",
     "13xl": "130rem",
+  },
+
+  container: {
+    sm: "640px",
+    md: "768px",
+    lg: "1024px",
+    xl: "1280px",
+    "2xl": "130px",
+  },
+
+  borderRadius: {
+    none: "0",
+    sm: "0.2rem",
+    base: "0.4rem",
+    md: "0.5rem",
+    lg: "0.9rem",
+    xl: "1.1rem",
+    "2xl": "1.6rem",
+    "3xl": "2rem",
+    full: "9999px",
+  },
+
+  borderWidths: {
+    px: "1px",
+    0.5: "0.5rem",
+    1: "0.1rem",
+    2: "0.2rem",
+    4: "0.4rem",
   },
 
   zIndices: {

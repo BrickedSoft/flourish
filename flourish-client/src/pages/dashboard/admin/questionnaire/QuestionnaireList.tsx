@@ -51,7 +51,7 @@ const QuestionnaireList = () => {
           );
         }
 
-        const buttonFull = (
+        const button = (
           <Button
             as={Link}
             px={"16"}
@@ -71,31 +71,8 @@ const QuestionnaireList = () => {
           </Button>
         );
 
-        const buttonAdd = (
-          <Button
-            as={Link}
-            boxSize={"48px"}
-            fontSize={32}
-            borderRadius={"full"}
-            alignSelf={"center"}
-            variant={"solid"}
-            colorScheme="green"
-            to={routes.createQuestionnaire}
-            boxShadow={"0px 12px 24px rgba(0, 0, 0, 0.25)"}
-            transition={"all 0.3s ease-in-out"}
-          >
-            {questionnaireData.button.questionnaire.add.icon}
-          </Button>
-        );
-
         return (
-          <VStack
-            position={"relative"}
-            h={"full"}
-            spacing={32}
-            alignItems={"stretch"}
-            pb={32}
-          >
+          <VStack h={"full"} spacing={32} alignItems={"stretch"} pb={32}>
             <SimpleGrid
               spacing={16}
               borderRadius={"xl"}
@@ -116,12 +93,10 @@ const QuestionnaireList = () => {
                 >
                   {questionnaireList.empty.title}
                 </Heading>
-                {buttonFull}
+                {button}
               </VStack>
             ) : (
-              <Center position={"sticky"} bottom={0} left={"50%"}>
-                {buttonAdd}
-              </Center>
+              button
             )}
           </VStack>
         );
