@@ -26,7 +26,7 @@ import { Status } from "../../../../types/Status";
 import { EvaluationFields } from "./EvaluationFields";
 import OptionFields from "./OptionFields";
 import QuestionFields from "./QuestionFields";
-import QuestionnaireName from "./QuestionnaireName";
+import  QuestionnaireName  from "./QuestionnaireName";
 import Buttons from "../../../../components/dashboard/Buttons";
 
 const QuestionnaireDetails = () => {
@@ -36,7 +36,7 @@ const QuestionnaireDetails = () => {
   const status = useAppSelector((state) => state.questionnaire.status);
   const questionnaire = useAppSelector(
     (state) =>
-      _.filter(state.questionnaire.questionnaires, (questionnaire) => {
+      _.filter(state.questionnaire.questionnaires, function (questionnaire) {
         return questionnaire.id === id;
       })[0]
   );
@@ -47,7 +47,7 @@ const QuestionnaireDetails = () => {
     control,
     register,
     reset,
-    formState: { isDirty, errors, isSubmitting, isValid },
+    formState: { isDirty, errors, isSubmitting,isValid },
   } = useForm({ defaultValues: questionnaire });
 
   // useEffect(() => {

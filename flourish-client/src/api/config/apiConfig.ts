@@ -33,7 +33,3 @@ export const setupInterceptors = (token: string) => {
     return config;
   });
 };
-
-export const resetInterceptors = () => {
-  api.interceptors.request.clear();
-};
