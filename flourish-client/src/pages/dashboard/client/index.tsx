@@ -7,7 +7,7 @@ import Container from "../../../components/common/Container";
 import Menu from "../../../components/dashboard/Menu";
 import { useAppSelector } from "../../../hooks/useStore";
 import { menu } from "../../../assets/data/dashboard/dashboard";
-import { formHeader } from "../../../assets/data/dashboard/form";
+import { formHeader } from "../../../assets/data/dashboard/registrationForm";
 
 const ClientDashboard = () => {
   const { pathname } = useLocation();

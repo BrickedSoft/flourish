@@ -4,6 +4,16 @@ export const formHeader = {
   form: "Registration Form",
 };
 
+export const formList = {
+  title: "Registration Form",
+  empty: {
+    title: "No Filled Form",
+  },
+  error: {
+    title: "Try Again",
+  },
+};
+
 export const formData = {
   button: {
     add: {

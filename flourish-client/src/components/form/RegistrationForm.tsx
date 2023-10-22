@@ -4,7 +4,7 @@ import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { formFieldsData } from "../../assets/data/dashboard/form";
+import { formFieldsData } from "../../assets/data/dashboard/registrationForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { submitRegistrationForm } from "../../store/actions/formActions";
 import {

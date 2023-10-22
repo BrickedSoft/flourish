@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { Button, Center, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-import { formData } from "../../../../assets/data/dashboard/form";
-import { questionnaireList } from "../../../../assets/data/dashboard/questionnaire";
+import {
+  formData,
+  formList as formListData,
+} from "../../../../assets/data/dashboard/registrationForm";
 import { routes } from "../../../../assets/data/routes";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
 import { fetchRegistrationForm } from "../../../../store/actions/formActions";
@@ -11,13 +13,11 @@ import RegistrationFormCard from "./RegistrationFormCard";
 
 const RegistrationFormList = () => {
   const dispatch = useAppDispatch();
-  const fromList = useAppSelector(
-    (state) => state.registrationForm.forms
-  );
+  const fromList = useAppSelector((state) => state.registrationForm.forms);
 
   useEffect(() => {
     dispatch(fetchRegistrationForm());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const buttonFull = (
@@ -58,7 +58,7 @@ const RegistrationFormList = () => {
   );
 
   return (
-    <VStack w={"full"} h={"full"} spacing={32} alignItems={"stretch"} pb={32}>
+    <VStack w={"full"} h={"full"} spacing={24} alignItems={"stretch"} pb={32}>
       {fromList.map((data, index) => (
         <RegistrationFormCard key={index} data={data} />
       ))}
@@ -71,7 +71,7 @@ const RegistrationFormList = () => {
             color={"font.muted3"}
             letterSpacing={"tight"}
           >
-            {questionnaireList.empty.title}
+            {formListData.empty.title}
           </Heading>
           {buttonFull}
         </VStack>
