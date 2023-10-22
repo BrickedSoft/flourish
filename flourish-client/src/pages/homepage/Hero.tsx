@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem, Text, Heading } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Text, Box, Heading } from "@chakra-ui/react";
 
 import ButtonFull from "../../components/common/button/ButtonFull";
 import ButtonOutline from "../../components/common/button/ButtonOutline";
@@ -11,11 +11,9 @@ const Hero = () => {
       className="hero"
       templateColumns="45fr 55fr"
       justifyContent="space-between"
-      alignItems={"center"}
       maxW="13xl"
       mx="auto"
       pt="32"
-      h={"calc(100vh - 80px)"}
     >
       <GridItem pb="12.4rem" pt="32">
         <Text
@@ -63,9 +61,9 @@ const Hero = () => {
         </Text>
       </GridItem>
 
-      <GridItem width="85%" justifySelf="center">
+      <Box width="85%" justifySelf="center" alignSelf="end">
         <HeroImage />
-      </GridItem>
+      </Box>
     </Grid>
   );
 };
