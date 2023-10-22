@@ -22,6 +22,10 @@ import RegistrationFormFillUp from "./pages/dashboard/client/form/RegistrationFo
 import RegistrationFormList from "./pages/dashboard/client/form/RegistrationFormList";
 import CounselorDashboard from "./pages/dashboard/counselor";
 import Homepage from "./pages/homepage";
+import ClientDashboard from "./pages/dashboard/client";
+import CounselorDashboard from "./pages/dashboard/counselor";
+import Form from "./pages/dashboard/client/form";
+import { useEffect } from "react";
 
 const App = () => {
   const location = useLocation();
