@@ -4,38 +4,53 @@ import { PURGE } from "redux-persist";
 
 import { RegistrationForm } from "../../types/RegistrationForm";
 import { Status } from "../../types/Status";
-import { submitForm } from "../actions/registrationFormActions";
+import { fetchRegistrationForm, submitRegistrationForm } from "../actions/formActions";
 
 interface reducerType {
-  registrationForm: RegistrationForm[];
+  forms: RegistrationForm[];
   status: Status;
 }
 
 const initialState: reducerType = {
-  registrationForm: [],
+  forms: [],
   status: Status.IDLE,
 };
 
-const registrationFormSlice = createSlice({
+const formslice = createSlice({
   name: "registrationForm",
   initialState,
   reducers: {
     purgeQuestionnaire: (state) => {
-      state.registrationForm = [];
+      state.forms = [];
     },
   },
   extraReducers: (builder) => {
-    /* ------------------------------- Submit Form ------------------------------ */
+    /* ------------------------------- Fetch Form ------------------------------ */
 
-    builder.addCase(submitForm.pending, (state) => {
+    builder.addCase(fetchRegistrationForm.pending, (state) => {
       state.status = Status.PENDING;
     });
 
-    builder.addCase(submitForm.fulfilled, (state) => {
+    builder.addCase(fetchRegistrationForm.fulfilled, (state, action) => {
+      state.forms = action.payload;
       state.status = Status.FULFILLED;
     });
 
-    builder.addCase(submitForm.rejected, (state) => {
+    builder.addCase(fetchRegistrationForm.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
+    /* ------------------------------- Submit Form ------------------------------ */
+
+    builder.addCase(submitRegistrationForm.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+
+    builder.addCase(submitRegistrationForm.fulfilled, (state) => {
+      state.status = Status.FULFILLED;
+    });
+
+    builder.addCase(submitRegistrationForm.rejected, (state) => {
       state.status = Status.REJECTED;
     });
 
@@ -50,6 +65,6 @@ const registrationFormSlice = createSlice({
   },
 });
 
-export default registrationFormSlice.reducer;
-export const { purgeQuestionnaire } = registrationFormSlice.actions;
-export const { name } = registrationFormSlice;
+export default formslice.reducer;
+export const { purgeQuestionnaire } = formslice.actions;
+export const { name } = formslice;
