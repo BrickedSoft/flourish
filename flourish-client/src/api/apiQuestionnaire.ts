@@ -11,18 +11,18 @@ import {
 } from "../types/Questionnaire";
 import { userTypes } from "../types/User";
 
+export const getQuestionnaire = async (): Promise<ApiQuestionnaire[]> => {
+  const response = await api.get(apiData.questionnaire[userTypes.ADMIN], {});
+
+  return response.data;
+};
+
 export const postQuestionnaire = async (
   data: PostQuestionnaire
 ): Promise<void> => {
   return await api.post(apiData.questionnaire[userTypes.ADMIN], {
     ...data,
   });
-};
-
-export const getQuestionnaire = async (): Promise<ApiQuestionnaire[]> => {
-  const response = await api.get(apiData.questionnaire[userTypes.ADMIN], {});
-
-  return response.data;
 };
 
 export const putQuestionnaire = async (

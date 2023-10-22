@@ -1,4 +1,5 @@
 export enum FormFields {
+  ID = "id",
   NAME = "name",
   DATE_TIME = "date_time",
   GENDER = "gender",
@@ -13,9 +14,17 @@ export enum FormFields {
   REFERRED_BY = "referred_by",
   TYPE_OF_SERVICE = "type_of_service",
   OFFICIAL_COMMENT = "official_comment",
+  SUGGESTED_QUESTIONNAIRE = "suggested_questionnaire",
+  SESSION_STATUS = "session_status",
+  SESSION_TIME = "session_time",
+  SESSION_LOCATION = "session_location",
+  CREATED_AT = "created_at",
+  CLIENT = "client",
+  COUNSELOR = "counselor",
 }
 
 export interface RegistrationForm {
+  [FormFields.ID]: string;
   [FormFields.NAME]: string;
   [FormFields.DATE_TIME]: string;
   [FormFields.GENDER]: Gender;
@@ -30,6 +39,13 @@ export interface RegistrationForm {
   [FormFields.REFERRED_BY]: ReferredBy;
   [FormFields.TYPE_OF_SERVICE]: TypeOfService;
   [FormFields.OFFICIAL_COMMENT]: string;
+  [FormFields.SUGGESTED_QUESTIONNAIRE]: string;
+  [FormFields.SESSION_STATUS]: SessionStatus;
+  [FormFields.SESSION_TIME]: string;
+  [FormFields.SESSION_LOCATION]: string;
+  [FormFields.CREATED_AT]: string;
+  [FormFields.CLIENT]: string;
+  [FormFields.COUNSELOR]: string;
 }
 
 export enum Gender {
@@ -91,4 +107,11 @@ export enum Department {
   PHYSICS = "Physics",
   PUBLIC_HEALTH = "Public Health",
   SOCIOLOGY = "Sociology",
+}
+
+export enum SessionStatus {
+  PENDING = "pending",
+  ONGOING = "ongoing",
+  COMPLETED = "completed",
+  REJECTED = "rejected",
 }

@@ -1,15 +1,12 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions";
-import QuestionnaireCard from "../../../../components/questionnaire/QuestionnaireCard";
+import { Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
+
+import { useAppDispatch } from "../../../../hooks/useStore";
+import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions";
 
 const Questionnaire = () => {
   const dispatch = useAppDispatch();
-  const questionnaires = useAppSelector(
-    (state) => state.questionnaire.questionnaires
-  );
 
   useEffect(() => {
     dispatch(fetchQuestionnaire());
