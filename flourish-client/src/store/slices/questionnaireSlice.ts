@@ -11,7 +11,7 @@ import {
   removeQuestion,
   removeQuestionnaire,
   setQuestion,
-} from "../actions/questionnaireActions";
+} from "../actions/questionnaireActions/admin";
 
 interface reducerType {
   questionnaires: QuestionnaireTypes[];

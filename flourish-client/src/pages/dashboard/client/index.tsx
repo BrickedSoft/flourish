@@ -6,9 +6,10 @@ import logo from "../../../assets/img/logo.png";
 import Container from "../../../components/common/Container";
 import Menu from "../../../components/dashboard/Menu";
 import { useAppSelector } from "../../../hooks/useStore";
-import { menu } from "../../../assets/data/dashboard/dashboard";
+import { menu, navBar } from "../../../assets/data/dashboard/dashboard";
 import { formHeader } from "../../../assets/data/dashboard/registrationForm";
 import { questionnaireHeader } from "../../../assets/data/dashboard/questionnaire";
+import NavBar from "../../../components/dashboard/NavBar";
 
 const ClientDashboard = () => {
   const { pathname } = useLocation();
@@ -30,11 +31,15 @@ const ClientDashboard = () => {
     const path = paths.at(-1);
 
     if (
-      [{ href: nav.dashboard }].some(
-        ({ href }) => href.split("/").at(-1) === path
+      [...navBar.CLIENT, { href: nav.dashboard }].some(
+        ({ href }) =>
+          href
+            .split("/")
+            .filter((path) => path !== "")
+            .at(-1) === path
       )
     )
-      return <Box></Box>;
+      return <NavBar data={navBar.CLIENT} indexMenu={nav.overview} />;
     else if (paths.includes(nav.form)) {
       if (path === nav.form) return headerTitle(formHeader.form);
       return <Box>{headerTitle(formHeader.form)}</Box>;

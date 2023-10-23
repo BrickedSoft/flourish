@@ -23,7 +23,7 @@ import { useAppDispatch } from "../../hooks/useStore";
 import {
   fetchQuestionnaire,
   removeQuestionnaire,
-} from "../../store/actions/questionnaireActions";
+} from "../../store/actions/questionnaireActions/admin";
 import theme from "../../theme/theme";
 import {
   QuestionnaireTypes,

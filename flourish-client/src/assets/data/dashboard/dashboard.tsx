@@ -43,8 +43,13 @@ export const menu = {
 
 export const navBar = {
   [userTypes.ADMIN]: [
+    { title: "Overview", href: routes.overview },
     { title: "Members", href: routes.members },
     { title: "Session Request", href: routes.sessionRequest },
+  ],
+  [userTypes.CLIENT]: [
     { title: "Overview", href: routes.overview },
+    { title: "Form History", href: routes.formHistory },
+    { title: "Filled Questionnaires", href: routes.filledQuestionnaire },
   ],
 };

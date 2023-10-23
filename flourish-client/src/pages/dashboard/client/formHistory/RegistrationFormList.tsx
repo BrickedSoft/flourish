@@ -29,7 +29,7 @@ const RegistrationFormList = () => {
       alignSelf={"center"}
       colorScheme={"green"}
       borderRadius={"xl"}
-      to={routes.fillRegistrationForm}
+      to={routes.form}
     >
       <Flex gap={8} alignItems={"center"}>
         <Text as={"span"} fontSize={20}>
@@ -49,7 +49,7 @@ const RegistrationFormList = () => {
       alignSelf={"center"}
       variant={"solid"}
       colorScheme="green"
-      to={routes.fillRegistrationForm}
+      to={routes.form}
       boxShadow={"0px 12px 24px rgba(0, 0, 0, 0.25)"}
       transition={"all 0.3s ease-in-out"}
     >
@@ -58,7 +58,7 @@ const RegistrationFormList = () => {
   );
 
   return (
-    <VStack w={"full"} h={"full"} spacing={24} alignItems={"stretch"} pb={32}>
+    <VStack w={"full"} h={"full"} spacing={24} alignItems={"stretch"}>
       {fromList.map((data, index) => (
         <RegistrationFormCard key={index} data={data} />
       ))}
@@ -76,7 +76,12 @@ const RegistrationFormList = () => {
           {buttonFull}
         </VStack>
       ) : (
-        <Center position={"sticky"} bottom={0} left={"50%"}>
+        <Center
+          position={"sticky"}
+          bottom={0}
+          left={"50%"}
+          transform={"translateY(25%)"}
+        >
           {buttonAdd}
         </Center>
       )}

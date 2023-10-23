@@ -5,25 +5,27 @@ import { Route, Routes, useLocation } from "react-router-dom";
 
 import { setupInterceptors } from "./api/config/apiConfig";
 import { nav } from "./assets/data/routes";
+import RegistrationForm from "./components/form/RegistrationForm";
 import { useAppSelector } from "./hooks/useStore";
 import NotFound from "./pages/404";
 import Auth from "./pages/auth";
 import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
 import AdminDashboard from "./pages/dashboard/admin";
-import OverView from "./pages/dashboard/admin/overview";
+import OverViewAdmin from "./pages/dashboard/admin/overview";
 import QuestionnaireAdmin from "./pages/dashboard/admin/questionnaire";
 import QuestionnaireDetails from "./pages/dashboard/admin/questionnaire/QuestionnaireDetails";
 import QuestionnaireList from "./pages/dashboard/admin/questionnaire/QuestionnaireList";
+import SessionRequest from "./pages/dashboard/admin/sessionRequest";
 import ClientDashboard from "./pages/dashboard/client";
-import Forms from "./pages/dashboard/client/form";
-import RegistrationFormDetails from "./pages/dashboard/client/form/RegistrationFormDetails";
-import RegistrationFormFillUp from "./pages/dashboard/client/form/RegistrationFormFillUp";
-import RegistrationFormList from "./pages/dashboard/client/form/RegistrationFormList";
+import FilledQuestionnaire from "./pages/dashboard/client/filledQuestionnaire";
+import FormHistory from "./pages/dashboard/client/formHistory";
+import OverviewClient from "./pages/dashboard/client/overview";
+import QuestionnaireClient from "./pages/dashboard/client/questionnaire";
 import CounselorDashboard from "./pages/dashboard/counselor";
 import Homepage from "./pages/homepage";
-import QuestionnaireClient from "./pages/dashboard/client/questionnaire";
-import SessionRequest from "./pages/dashboard/admin/sessionRequest";
+import RegistrationFormDetails from "./pages/dashboard/client/formHistory/RegistrationFormDetails";
+import RegistrationFormList from "./pages/dashboard/client/formHistory/RegistrationFormList";
 
 const App = () => {
   const location = useLocation();
@@ -50,17 +52,24 @@ const App = () => {
           <Route index element={<h1>Members</h1>} />
           <Route path={nav.members} element={<h1>Members</h1>} />
           <Route path={nav.sessionRequest} element={<SessionRequest />} />
-          <Route path={nav.overview} element={<OverView />} />
+          <Route path={nav.overview} element={<OverViewAdmin />} />
         </Route>
       );
     else if (client)
       return (
         <Route path={`${nav.dashboard}`} element={<ClientDashboard />}>
-          <Route path={nav.form} element={<Forms />}>
+          <Route index element={<OverviewClient />} />
+          <Route path={nav.overview} element={<OverviewClient />} />
+          <Route path={nav.formHistory} element={<FormHistory />}>
             <Route index element={<RegistrationFormList />} />
-            <Route path="create" element={<RegistrationFormFillUp />} />
             <Route path=":id" element={<RegistrationFormDetails />} />
           </Route>
+          <Route
+            path={nav.filledQuestionnaire}
+            element={<FilledQuestionnaire />}
+          />
+          <Route path={nav.form} element={<RegistrationForm />} />
+
           <Route
             path={nav.questionnaire}
             element={<QuestionnaireClient />}

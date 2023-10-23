@@ -19,7 +19,7 @@ import Spinner from "../../../../components/common/Spinner";
 import ButtonFull from "../../../../components/common/button/ButtonFull";
 import QuestionnaireCard from "../../../../components/questionnaire/QuestionnaireCard";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions";
+import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions/admin";
 import { Status } from "../../../../types/Status";
 
 const QuestionnaireList = () => {
