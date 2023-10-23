@@ -29,7 +29,12 @@ const Menu = ({ data }: { data: typeof menu.ADMIN }) => {
   }): React.ReactNode => {
     const isActive =
       activeEffect &&
-      allPaths.includes(href.split("/").at(-1) as string) &&
+      allPaths.includes(
+        href
+          .split("/")
+          .filter((path) => path !== "")
+          .at(-1) as string
+      ) &&
       !allPaths?.some((path) => exclude?.includes(path));
 
     return (

@@ -11,13 +11,19 @@ import {
 } from "../types/Questionnaire";
 import { userTypes } from "../types/User";
 
-export const getQuestionnaire = async (): Promise<ApiQuestionnaireTypes[]> => {
+/* -------------------------------------------------------------------------- */
+/*                                    Admin                                   */
+/* -------------------------------------------------------------------------- */
+
+export const getQuestionnaireAdmin = async (): Promise<
+  ApiQuestionnaireTypes[]
+> => {
   const response = await api.get(apiData.questionnaire[userTypes.ADMIN], {});
 
   return response.data;
 };
 
-export const postQuestionnaire = async (
+export const postQuestionnaireAdmin = async (
   data: PostQuestionnaireTypes
 ): Promise<void> => {
   return await api.post(apiData.questionnaire[userTypes.ADMIN], {
@@ -25,7 +31,7 @@ export const postQuestionnaire = async (
   });
 };
 
-export const putQuestionnaire = async (
+export const putQuestionnaireAdmin = async (
   data: PutQuestionnaireTypes
 ): Promise<void> => {
   await api.put(apiData.questionnaire[userTypes.ADMIN], {
@@ -33,25 +39,29 @@ export const putQuestionnaire = async (
   });
 };
 
-export const deleteQuestionnaire = async (
+export const deleteQuestionnaireAdmin = async (
   data: DeleteQuestionnaireTypes
 ): Promise<void> => {
   await api.delete(`${apiData.questionnaire[userTypes.ADMIN]}${data.id}/`);
 };
 
-export const postQuestion = async (data: PostQuestionTypes): Promise<void> => {
+export const postQuestionAdmin = async (
+  data: PostQuestionTypes
+): Promise<void> => {
   await api.post(apiData.question, {
     ...data,
   });
 };
 
-export const putQuestion = async (data: PutQuestionTypes): Promise<void> => {
+export const putQuestionAdmin = async (
+  data: PutQuestionTypes
+): Promise<void> => {
   await api.put(apiData.question, {
     ...data,
   });
 };
 
-export const deleteQuestion = async (
+export const deleteQuestionAdmin = async (
   data: DeleteQuestionTypes
 ): Promise<void> => {
   await api.delete(`${apiData.question}${data.id}/`);

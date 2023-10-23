@@ -8,6 +8,7 @@ import Menu from "../../../components/dashboard/Menu";
 import { useAppSelector } from "../../../hooks/useStore";
 import { menu } from "../../../assets/data/dashboard/dashboard";
 import { formHeader } from "../../../assets/data/dashboard/registrationForm";
+import { questionnaireHeader } from "../../../assets/data/dashboard/questionnaire";
 
 const ClientDashboard = () => {
   const { pathname } = useLocation();
@@ -37,6 +38,10 @@ const ClientDashboard = () => {
     else if (paths.includes(nav.form)) {
       if (path === nav.form) return headerTitle(formHeader.form);
       return <Box>{headerTitle(formHeader.form)}</Box>;
+    } else if (paths.includes(nav.questionnaire)) {
+      if (path === nav.questionnaire)
+        return headerTitle(questionnaireHeader.list);
+      return <Box>{headerTitle(questionnaireHeader.fill)}</Box>;
     }
     return <Box></Box>;
   };

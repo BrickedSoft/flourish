@@ -2,13 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import _ from "lodash";
 
 import {
-  deleteQuestion,
-  deleteQuestionnaire,
-  getQuestionnaire,
-  postQuestion,
-  postQuestionnaire,
-  putQuestion,
-  putQuestionnaire,
+  deleteQuestionAdmin,
+  deleteQuestionnaireAdmin,
+  getQuestionnaireAdmin,
+  postQuestionAdmin,
+  postQuestionnaireAdmin,
+  putQuestionAdmin,
+  putQuestionnaireAdmin,
 } from "../../api/apiQuestionnaire";
 import {
   DeleteQuestionTypes,
@@ -48,14 +48,14 @@ export const createQuestionnaire = createAsyncThunk(
     if (_.isEmpty(omittedObject.questionnaireFields))
       omittedObject.questionnaireFields = [];
 
-    return await postQuestionnaire(omittedObject);
+    return await postQuestionnaireAdmin(omittedObject);
   }
 );
 
 export const fetchQuestionnaire = createAsyncThunk(
   "questionnaire/getQuestionnaire",
   async (): Promise<QuestionnaireTypes[]> => {
-    const data = await getQuestionnaire();
+    const data = await getQuestionnaireAdmin();
     const options = _.chain(data)
       .map("options")
       .map((value) =>
@@ -120,34 +120,34 @@ export const editQuestionnaire = createAsyncThunk(
       .map((value) => _.merge(omittedObject, value))
       .value();
 
-    return await putQuestionnaire(omittedObject);
+    return await putQuestionnaireAdmin(omittedObject);
   }
 );
 
 export const removeQuestionnaire = createAsyncThunk(
   "questionnaire/deleteQuestionnaire",
   async (data: DeleteQuestionnaireTypes) => {
-    return await deleteQuestionnaire(data);
+    return await deleteQuestionnaireAdmin(data);
   }
 );
 
 export const setQuestion = createAsyncThunk(
   "questionnaire/postQuestion",
   async (data: PostQuestionTypes) => {
-    return await postQuestion(data);
+    return await postQuestionAdmin(data);
   }
 );
 
 export const editQuestion = createAsyncThunk(
   "questionnaire/editQuestion",
   async (data: PutQuestionTypes) => {
-    return await putQuestion(data);
+    return await putQuestionAdmin(data);
   }
 );
 
 export const removeQuestion = createAsyncThunk(
   "questionnaire/deleteQuestion",
   async (data: DeleteQuestionTypes) => {
-    return await deleteQuestion(data);
+    return await deleteQuestionAdmin(data);
   }
 );

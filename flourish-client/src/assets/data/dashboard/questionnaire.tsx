@@ -3,6 +3,7 @@ import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 export const questionnaireHeader = {
   list: "See all Questionnaires",
   new: "Create a new Questionnaire",
+  fill: "Fill Questionnaire",
 };
 
 export const questionnaireList = {

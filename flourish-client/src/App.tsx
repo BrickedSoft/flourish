@@ -12,7 +12,7 @@ import SignIn from "./pages/auth/signin";
 import SignUp from "./pages/auth/signup";
 import AdminDashboard from "./pages/dashboard/admin";
 import OverView from "./pages/dashboard/admin/overview";
-import Questionnaire from "./pages/dashboard/admin/questionnaire";
+import QuestionnaireAdmin from "./pages/dashboard/admin/questionnaire";
 import QuestionnaireDetails from "./pages/dashboard/admin/questionnaire/QuestionnaireDetails";
 import QuestionnaireList from "./pages/dashboard/admin/questionnaire/QuestionnaireList";
 import ClientDashboard from "./pages/dashboard/client";
@@ -22,6 +22,7 @@ import RegistrationFormFillUp from "./pages/dashboard/client/form/RegistrationFo
 import RegistrationFormList from "./pages/dashboard/client/form/RegistrationFormList";
 import CounselorDashboard from "./pages/dashboard/counselor";
 import Homepage from "./pages/homepage";
+import QuestionnaireClient from "./pages/dashboard/client/questionnaire";
 import SessionRequest from "./pages/dashboard/admin/sessionRequest";
 
 const App = () => {
@@ -42,7 +43,7 @@ const App = () => {
     if (admin)
       return (
         <Route path={`${nav.dashboard}`} element={<AdminDashboard />}>
-          <Route path={nav.questionnaire} element={<Questionnaire />}>
+          <Route path={nav.questionnaire} element={<QuestionnaireAdmin />}>
             <Route index element={<QuestionnaireList />} />
             <Route path=":id" element={<QuestionnaireDetails />} />
           </Route>
@@ -60,6 +61,10 @@ const App = () => {
             <Route path="create" element={<RegistrationFormFillUp />} />
             <Route path=":id" element={<RegistrationFormDetails />} />
           </Route>
+          <Route
+            path={nav.questionnaire}
+            element={<QuestionnaireClient />}
+          ></Route>
         </Route>
       );
     else if (counselor)
