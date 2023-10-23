@@ -3,7 +3,7 @@ import { FormControl, FormLabel, Grid, useRadioGroup } from "@chakra-ui/react";
 import { Control, Controller } from "react-hook-form";
 import _ from "lodash";
 
-import { RegistrationForm } from "../../types/RegistrationForm";
+import { RegistrationFormTypes } from "../../types/RegistrationForm";
 import RadioCard from "./RadioCard";
 
 const RadioField = ({
@@ -12,11 +12,11 @@ const RadioField = ({
   options,
   isReadOnly = false,
 }: {
-  control: Control<RegistrationForm, any>;
+  control: Control<RegistrationFormTypes, any>;
   data: {
     title: string;
     placeholder: string;
-    fieldName: keyof RegistrationForm;
+    fieldName: keyof RegistrationFormTypes;
   };
   options: string[];
   isReadOnly?: boolean;

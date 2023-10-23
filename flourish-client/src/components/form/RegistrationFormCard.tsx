@@ -9,12 +9,12 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-import Badge from "../../../../components/common/Badge";
-import { RegistrationForm } from "../../../../types/RegistrationForm";
-import { stringToDate } from "../../../../utils/date";
+import Badge from "../common/Badge";
+import { RegistrationFormTypes } from "../../types/RegistrationForm";
+import { stringToDate } from "../../utils/date";
 
 type PropsType = {
-  data: RegistrationForm;
+  data: RegistrationFormTypes;
 };
 
 const RegistrationFormCard: FC<PropsType> = ({ data }) => {

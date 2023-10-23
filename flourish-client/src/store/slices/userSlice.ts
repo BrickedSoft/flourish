@@ -3,10 +3,10 @@ import { PURGE } from "redux-persist";
 import _ from "lodash";
 
 import { Status } from "../../types/Status";
-import { User } from "../../types/User";
+import { UserTypes } from "../../types/User";
 import { signIn, signUp } from "../actions/authActions";
 
-interface reducerType extends User {
+interface reducerType extends UserTypes {
   status: Status;
 }
 

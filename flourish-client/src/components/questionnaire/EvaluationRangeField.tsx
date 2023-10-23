@@ -25,7 +25,7 @@ import {
 import { IoChevronUpOutline, IoChevronDownOutline } from "react-icons/io5";
 
 import { questionnaireData } from "../../assets/data/dashboard/questionnaire";
-import { Questionnaire } from "../../types/Questionnaire";
+import { QuestionnaireTypes } from "../../types/Questionnaire";
 
 const EvaluationRangeField = ({
   data,
@@ -35,12 +35,12 @@ const EvaluationRangeField = ({
   register,
   remove,
 }: {
-  data: FieldArrayWithId<Questionnaire, "evaluation_range", "id">;
-  errors: FieldErrors<Questionnaire>;
+  data: FieldArrayWithId<QuestionnaireTypes, "evaluation_range", "id">;
+  errors: FieldErrors<QuestionnaireTypes>;
   index: number;
-  control: Control<Questionnaire>;
+  control: Control<QuestionnaireTypes>;
   remove: UseFieldArrayRemove;
-  register: UseFormRegister<Questionnaire>;
+  register: UseFormRegister<QuestionnaireTypes>;
 }) => (
   <FormControl
     w={"full"}

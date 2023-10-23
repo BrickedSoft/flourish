@@ -16,16 +16,16 @@ import {
 
 import { questionnaireData } from "../../../../assets/data/dashboard/questionnaire";
 import EvaluationRangeField from "../../../../components/questionnaire/EvaluationRangeField";
-import { Questionnaire } from "../../../../types/Questionnaire";
+import { QuestionnaireTypes } from "../../../../types/Questionnaire";
 
 export const EvaluationFields = ({
   control,
   errors,
   register,
 }: {
-  control: Control<Questionnaire>;
-  errors: FieldErrors<Questionnaire>;
-  register: UseFormRegister<Questionnaire>;
+  control: Control<QuestionnaireTypes>;
+  errors: FieldErrors<QuestionnaireTypes>;
+  register: UseFormRegister<QuestionnaireTypes>;
 }) => {
   const {
     fields: evaluationFields,

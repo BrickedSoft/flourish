@@ -22,6 +22,7 @@ import RegistrationFormFillUp from "./pages/dashboard/client/form/RegistrationFo
 import RegistrationFormList from "./pages/dashboard/client/form/RegistrationFormList";
 import CounselorDashboard from "./pages/dashboard/counselor";
 import Homepage from "./pages/homepage";
+import SessionRequest from "./pages/dashboard/admin/sessionRequest";
 
 const App = () => {
   const location = useLocation();
@@ -47,7 +48,7 @@ const App = () => {
           </Route>
           <Route index element={<h1>Members</h1>} />
           <Route path={nav.members} element={<h1>Members</h1>} />
-          <Route path={nav.sessionRequest} element={<h1>sessionRequest</h1>} />
+          <Route path={nav.sessionRequest} element={<SessionRequest />} />
           <Route path={nav.overview} element={<OverView />} />
         </Route>
       );

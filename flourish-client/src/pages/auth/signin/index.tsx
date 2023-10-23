@@ -20,12 +20,12 @@ import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
 import { signIn as signInAction } from "../../../store/actions/authActions";
 import { setIsSignedIn } from "../../../store/slices/flagSlice";
-import { SignIn as SignInType } from "../../../types/Form";
+import { SignInTypes } from "../../../types/Form";
 import { Status } from "../../../types/Status";
 import Layout from "../../../components/auth/Layout";
 import SuccessMessage from "../../../components/auth/SuccessMessage";
 
-const SignInFormInit: SignInType = {
+const SignInFormInit: SignInTypes = {
   email: "",
   password: "",
 };
@@ -63,7 +63,7 @@ const SignInForm = () => {
     formState: { errors, isSubmitting },
   } = useForm({ defaultValues: SignInFormInit });
 
-  const onSubmit = async (data: SignInType) => {
+  const onSubmit = async (data: SignInTypes) => {
     const res = await dispatch(signInAction(data));
     switch (res.meta.requestStatus) {
       case Status.FULFILLED:

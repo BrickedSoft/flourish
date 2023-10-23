@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { getRegistrationForm, postRegistrationForm } from "../../api/apiForm";
-import { RegistrationForm } from "../../types/RegistrationForm";
+import { RegistrationFormTypes } from "../../types/RegistrationForm";
 
 export const fetchRegistrationForm = createAsyncThunk(
   "registrationForm/getRegistrationForm",
@@ -12,7 +12,7 @@ export const fetchRegistrationForm = createAsyncThunk(
 
 export const submitRegistrationForm = createAsyncThunk(
   "registrationForm/postRegistrationForm",
-  async (data: RegistrationForm) => {
+  async (data: RegistrationFormTypes) => {
     return await postRegistrationForm(data);
   }
 );

@@ -25,7 +25,10 @@ import {
   removeQuestionnaire,
 } from "../../store/actions/questionnaireActions";
 import theme from "../../theme/theme";
-import { Questionnaire, QuestionnaireKeys } from "../../types/Questionnaire";
+import {
+  QuestionnaireTypes,
+  QuestionnaireKeys,
+} from "../../types/Questionnaire";
 
 const ChakraBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
@@ -35,7 +38,7 @@ const ChakraBox = chakra(motion.div, {
 const QuestionnaireCard = ({
   questionnaire,
 }: {
-  questionnaire: Questionnaire;
+  questionnaire: QuestionnaireTypes;
 }) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);

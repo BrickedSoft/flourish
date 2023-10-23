@@ -19,7 +19,7 @@ import {
 } from "react-hook-form";
 
 import { questionnaireData } from "../../assets/data/dashboard/questionnaire";
-import { Questionnaire } from "../../types/Questionnaire";
+import { QuestionnaireTypes } from "../../types/Questionnaire";
 
 const QuestionField = ({
   data,
@@ -29,12 +29,12 @@ const QuestionField = ({
   register,
   remove,
 }: {
-  data: FieldArrayWithId<Questionnaire, "questionnaireFields", "id">;
-  errors: FieldErrors<Questionnaire>;
+  data: FieldArrayWithId<QuestionnaireTypes, "questionnaireFields", "id">;
+  errors: FieldErrors<QuestionnaireTypes>;
   index: number;
-  control: Control<Questionnaire>;
+  control: Control<QuestionnaireTypes>;
   remove: UseFieldArrayRemove;
-  register: UseFormRegister<Questionnaire>;
+  register: UseFormRegister<QuestionnaireTypes>;
 }) => (
   <FormControl
     w={"full"}

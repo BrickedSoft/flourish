@@ -1,9 +1,9 @@
 import { api as apiData } from "../assets/data/server";
-import { SignIn, SignUp } from "../types/Form";
-import { User } from "../types/User";
+import { SignInTypes, SignUpTypes } from "../types/Form";
+import { UserTypes } from "../types/User";
 import { api } from "./config/apiConfig";
 
-export const apiSignIn = async (data: SignIn): Promise<User> => {
+export const apiSignIn = async (data: SignInTypes): Promise<UserTypes> => {
   const response = await api.post(apiData.signIn, {
     ...data,
   });
@@ -11,8 +11,8 @@ export const apiSignIn = async (data: SignIn): Promise<User> => {
   return response.data;
 };
 
-export const apiSignUp = async (data: SignUp): Promise<void> => {
+export const apiSignUp = async (data: SignUpTypes): Promise<void> => {
   await api.post(apiData.signUp[data.type], {
-    ...(data as SignIn),
+    ...(data as SignInTypes),
   });
 };

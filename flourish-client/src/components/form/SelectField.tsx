@@ -9,7 +9,7 @@ import {
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-import { RegistrationForm } from "../../types/RegistrationForm";
+import { RegistrationFormTypes } from "../../types/RegistrationForm";
 
 const SelectField = ({
   register,
@@ -19,12 +19,12 @@ const SelectField = ({
   currentValue,
   isReadOnly = false,
 }: {
-  register: UseFormRegister<RegistrationForm>;
-  errors: FieldErrors<RegistrationForm>;
+  register: UseFormRegister<RegistrationFormTypes>;
+  errors: FieldErrors<RegistrationFormTypes>;
   data: {
     title: string;
     placeholder: string;
-    fieldName: keyof RegistrationForm;
+    fieldName: keyof RegistrationFormTypes;
   };
   options: string[];
   currentValue?: string;

@@ -9,7 +9,7 @@ import {
 import { routes } from "../../../../assets/data/routes";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
 import { fetchRegistrationForm } from "../../../../store/actions/formActions";
-import RegistrationFormCard from "./RegistrationFormCard";
+import RegistrationFormCard from "../../../../components/form/RegistrationFormCard";
 
 const RegistrationFormList = () => {
   const dispatch = useAppDispatch();

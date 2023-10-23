@@ -9,12 +9,12 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { submitRegistrationForm } from "../../store/actions/formActions";
 import {
   Department,
-  FormFields,
+  RegistrationFormFields,
   Gender,
   MaritalStatus,
   Occupation,
   ReferredBy,
-  RegistrationForm as RegistrationFormType,
+  RegistrationFormTypes,
   SessionStatus,
   TypeOfService,
 } from "../../types/RegistrationForm";
@@ -29,10 +29,10 @@ type PropsType = {
   showButtons?: boolean;
   showButtonEach?: boolean[];
   isReadOnly?: boolean;
-  formData?: RegistrationFormType;
+  formData?: RegistrationFormTypes;
 };
 
-const initialForm: RegistrationFormType = {
+const initialForm: RegistrationFormTypes = {
   id: "",
   name: "",
   date_time: new Date().toISOString(),
@@ -81,10 +81,15 @@ const RegistrationForm: FC<PropsType> = ({
     formState: { isDirty, errors, isSubmitting, isValid },
   } = useForm({ defaultValues: formData });
 
-  const occupation = watch(FormFields.OCCUPATION, initialForm.occupation);
+  const occupation = watch(
+    RegistrationFormFields.OCCUPATION,
+    initialForm.occupation
+  );
 
-  const onSubmit = async (data: RegistrationFormType) => {
-    const modifiedData = _.omit(data, [FormFields.OCCUPATION_OTHERS]);
+  const onSubmit = async (data: RegistrationFormTypes) => {
+    const modifiedData = _.omit(data, [
+      RegistrationFormFields.OCCUPATION_OTHERS,
+    ]);
 
     if (data.occupation_others !== "")
       modifiedData.occupation = data.occupation_others as Occupation;
@@ -131,7 +136,7 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.name.title,
               placeholder: formFieldsData.name.placeholder,
-              fieldName: FormFields.NAME,
+              fieldName: RegistrationFormFields.NAME,
             }}
             isReadOnly={isReadOnly}
           />
@@ -141,7 +146,7 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.gender.title,
               placeholder: formFieldsData.gender.placeholder,
-              fieldName: FormFields.GENDER,
+              fieldName: RegistrationFormFields.GENDER,
             }}
             options={Object.values(Gender) as Array<Gender>}
             isReadOnly={isReadOnly}
@@ -152,7 +157,7 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.occupation.title,
               placeholder: formFieldsData.occupation.placeholder,
-              fieldName: FormFields.OCCUPATION,
+              fieldName: RegistrationFormFields.OCCUPATION,
             }}
             options={Object.values(Occupation) as Array<Occupation>}
             isReadOnly={isReadOnly}
@@ -166,10 +171,10 @@ const RegistrationForm: FC<PropsType> = ({
               data={{
                 title: formFieldsData.department.title,
                 placeholder: formFieldsData.department.placeholder,
-                fieldName: FormFields.DEPARTMENT,
+                fieldName: RegistrationFormFields.DEPARTMENT,
               }}
               options={Object.values(Department) as Array<Department>}
-              currentValue={watch(FormFields.DEPARTMENT)}
+              currentValue={watch(RegistrationFormFields.DEPARTMENT)}
               isReadOnly={isReadOnly}
             />
           ) : (
@@ -179,7 +184,7 @@ const RegistrationForm: FC<PropsType> = ({
               data={{
                 title: formFieldsData.occupation_other.title,
                 placeholder: formFieldsData.occupation_other.placeholder,
-                fieldName: FormFields.OCCUPATION_OTHERS,
+                fieldName: RegistrationFormFields.OCCUPATION_OTHERS,
               }}
               isReadOnly={isReadOnly}
             />
@@ -191,10 +196,10 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.marital_status.title,
               placeholder: formFieldsData.marital_status.placeholder,
-              fieldName: FormFields.MARITAL_STATUS,
+              fieldName: RegistrationFormFields.MARITAL_STATUS,
             }}
             options={Object.values(MaritalStatus) as Array<MaritalStatus>}
-            currentValue={watch(FormFields.MARITAL_STATUS)}
+            currentValue={watch(RegistrationFormFields.MARITAL_STATUS)}
             isReadOnly={isReadOnly}
           />
 
@@ -204,7 +209,7 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.present_address.title,
               placeholder: formFieldsData.present_address.placeholder,
-              fieldName: FormFields.PRESENT_ADDRESS,
+              fieldName: RegistrationFormFields.PRESENT_ADDRESS,
             }}
             isReadOnly={isReadOnly}
           />
@@ -215,7 +220,7 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.home_district.title,
               placeholder: formFieldsData.home_district.placeholder,
-              fieldName: FormFields.HOME_DISTRICT,
+              fieldName: RegistrationFormFields.HOME_DISTRICT,
             }}
             isReadOnly={isReadOnly}
           />
@@ -226,7 +231,7 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.mobile_number.title,
               placeholder: formFieldsData.mobile_number.placeholder,
-              fieldName: FormFields.MOBILE_NUMBER,
+              fieldName: RegistrationFormFields.MOBILE_NUMBER,
             }}
             isReadOnly={isReadOnly}
           />
@@ -238,7 +243,7 @@ const RegistrationForm: FC<PropsType> = ({
               title: formFieldsData.your_problem.title,
               secondaryTitle: formFieldsData.your_problem.secondaryTitle,
               placeholder: formFieldsData.your_problem.placeholder,
-              fieldName: FormFields.YOUR_PROBLEM,
+              fieldName: RegistrationFormFields.YOUR_PROBLEM,
             }}
             isReadOnly={isReadOnly}
           />
@@ -249,10 +254,10 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.referred_by.title,
               placeholder: formFieldsData.referred_by.placeholder,
-              fieldName: FormFields.REFERRED_BY,
+              fieldName: RegistrationFormFields.REFERRED_BY,
             }}
             options={Object.values(ReferredBy) as Array<ReferredBy>}
-            currentValue={watch(FormFields.REFERRED_BY)}
+            currentValue={watch(RegistrationFormFields.REFERRED_BY)}
             isReadOnly={isReadOnly}
           />
 
@@ -262,10 +267,10 @@ const RegistrationForm: FC<PropsType> = ({
             data={{
               title: formFieldsData.type_of_service.title,
               placeholder: formFieldsData.type_of_service.placeholder,
-              fieldName: FormFields.TYPE_OF_SERVICE,
+              fieldName: RegistrationFormFields.TYPE_OF_SERVICE,
             }}
             options={Object.values(TypeOfService) as Array<TypeOfService>}
-            currentValue={watch(FormFields.TYPE_OF_SERVICE)}
+            currentValue={watch(RegistrationFormFields.TYPE_OF_SERVICE)}
             isReadOnly={isReadOnly}
           />
         </Grid>

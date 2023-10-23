@@ -1,10 +1,10 @@
 import { userTypes } from "../types/User";
 
-export interface SignIn {
+export interface SignInTypes {
   email: string;
   password: string;
 }
 
-export interface SignUp extends SignIn {
+export interface SignUpTypes extends SignInTypes {
   type: userTypes;
 }

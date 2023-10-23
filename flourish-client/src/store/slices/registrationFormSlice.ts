@@ -2,12 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
 import { PURGE } from "redux-persist";
 
-import { RegistrationForm } from "../../types/RegistrationForm";
+import { RegistrationFormTypes } from "../../types/RegistrationForm";
 import { Status } from "../../types/Status";
-import { fetchRegistrationForm, submitRegistrationForm } from "../actions/formActions";
+import {
+  fetchRegistrationForm,
+  submitRegistrationForm,
+} from "../actions/formActions";
 
 interface reducerType {
-  forms: RegistrationForm[];
+  forms: RegistrationFormTypes[];
   status: Status;
 }
 

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
 import { PURGE } from "redux-persist";
 
-import { Questionnaire } from "../../types/Questionnaire";
+import { QuestionnaireTypes } from "../../types/Questionnaire";
 import { Status } from "../../types/Status";
 import {
   editQuestion,
@@ -14,7 +14,7 @@ import {
 } from "../actions/questionnaireActions";
 
 interface reducerType {
-  questionnaires: Questionnaire[];
+  questionnaires: QuestionnaireTypes[];
   status: Status;
 }
 

@@ -25,12 +25,12 @@ import ButtonFull from "../../../components/common/button/ButtonFull";
 import { useAppDispatch } from "../../../hooks/useStore";
 import { signUp as signUpAction } from "../../../store/actions/authActions";
 import { setStatus } from "../../../store/slices/userSlice";
-import { SignUp as SignUpType } from "../../../types/Form";
+import { SignUpTypes } from "../../../types/Form";
 import { Status } from "../../../types/Status";
 import { userTypes } from "../../../types/User";
 import RadioCard from "./RadioUser";
 
-const SignUpFormInit: SignUpType = {
+const SignUpFormInit: SignUpTypes = {
   type: userTypes.CLIENT,
   email: "",
   password: "",
@@ -83,7 +83,7 @@ const SignUpForm = () => {
 
   const group = getRootProps();
 
-  const onSubmit = async (data: SignUpType) => {
+  const onSubmit = async (data: SignUpTypes) => {
     const res = await dispatch(signUpAction(data));
     switch (res.meta.requestStatus) {
       case Status.FULFILLED:

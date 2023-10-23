@@ -10,13 +10,13 @@ import {
 } from "@chakra-ui/react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
-import { RegistrationForm } from "../../types/RegistrationForm";
+import { RegistrationFormTypes } from "../../types/RegistrationForm";
 
 interface data {
   title: string;
   secondaryTitle?: string;
   placeholder: string;
-  fieldName: keyof RegistrationForm;
+  fieldName: keyof RegistrationFormTypes;
 }
 
 const TextField = ({
@@ -25,8 +25,8 @@ const TextField = ({
   data: { title, secondaryTitle, placeholder, fieldName },
   isReadOnly = false,
 }: {
-  errors: FieldErrors<RegistrationForm>;
-  register: UseFormRegister<RegistrationForm>;
+  errors: FieldErrors<RegistrationFormTypes>;
+  register: UseFormRegister<RegistrationFormTypes>;
   data: data;
   isReadOnly?: boolean;
 }) => {

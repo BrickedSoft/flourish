@@ -18,8 +18,8 @@ import {
   setQuestion,
 } from "../../../../store/actions/questionnaireActions";
 import {
-  PutQuestion,
-  Questionnaire,
+  PutQuestionTypes,
+  QuestionnaireTypes,
   putQuestionnaireKeys,
 } from "../../../../types/Questionnaire";
 import { Status } from "../../../../types/Status";
@@ -56,7 +56,7 @@ const QuestionnaireDetails = () => {
 
   /* -------------------------------- onSubmit -------------------------------- */
 
-  const onSubmit = async (data: Questionnaire) => {
+  const onSubmit = async (data: QuestionnaireTypes) => {
     /* -------------------------- Create Questionnaire -------------------------- */
 
     if (!data.id) {
@@ -69,12 +69,12 @@ const QuestionnaireDetails = () => {
       const modifiedQuestionnaire = _.pick(
         data,
         putQuestionnaireKeys
-      ) as Questionnaire;
+      ) as QuestionnaireTypes;
 
       const prevQuestionnaire = _.pick(
         questionnaire,
         putQuestionnaireKeys
-      ) as Questionnaire;
+      ) as QuestionnaireTypes;
 
       if (!_.isEqual(modifiedQuestionnaire, prevQuestionnaire))
         dispatch(editQuestionnaire(modifiedQuestionnaire));
@@ -107,7 +107,7 @@ const QuestionnaireDetails = () => {
       if (editedQuestions.length > 0)
         _.map(
           editedQuestions,
-          async (data) => await dispatch(editQuestion(data as PutQuestion))
+          async (data) => await dispatch(editQuestion(data as PutQuestionTypes))
         );
 
       /* ----------------------------- Delete Questions ---------------------------- */

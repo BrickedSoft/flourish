@@ -7,25 +7,25 @@ export enum QuestionnaireKeys {
   ADMIN_COUNSELOR = "adminCounselor",
 }
 
-export interface Questionnaire {
+export interface QuestionnaireTypes {
   [QuestionnaireKeys.ID]: string | null;
   [QuestionnaireKeys.NAME]: string;
-  [QuestionnaireKeys.QUESTIONNAIRE_FIELDS]: Question[];
-  [QuestionnaireKeys.OPTIONS]: OptionAndEvaluationRange[];
-  [QuestionnaireKeys.EVALUATION_RANGE]: OptionAndEvaluationRange[];
+  [QuestionnaireKeys.QUESTIONNAIRE_FIELDS]: QuestionTypes[];
+  [QuestionnaireKeys.OPTIONS]: OptionAndEvaluationRangeTypes[];
+  [QuestionnaireKeys.EVALUATION_RANGE]: OptionAndEvaluationRangeTypes[];
   [QuestionnaireKeys.ADMIN_COUNSELOR]: string;
 }
 
-export interface ApiQuestionnaire
-  extends Omit<Questionnaire, "options" | "evaluation_range"> {
+export interface ApiQuestionnaireTypes
+  extends Omit<QuestionnaireTypes, "options" | "evaluation_range"> {
   [QuestionnaireKeys.OPTIONS]: string;
   [QuestionnaireKeys.EVALUATION_RANGE]: string;
 }
 
-export interface PostQuestionnaire {
+export interface PostQuestionnaireTypes {
   [QuestionnaireKeys.NAME]: string;
   [QuestionnaireKeys.QUESTIONNAIRE_FIELDS]?: Omit<
-    Question,
+    QuestionTypes,
     QuestionnaireKeys.ID
   >[];
   [QuestionnaireKeys.OPTIONS]?: string;
@@ -39,7 +39,7 @@ export const postQuestionnaireKeys = [
   QuestionnaireKeys.QUESTIONNAIRE_FIELDS,
 ];
 
-export interface PutQuestionnaire {
+export interface PutQuestionnaireTypes {
   [QuestionnaireKeys.ID]: string;
   [QuestionnaireKeys.NAME]?: string;
   [QuestionnaireKeys.OPTIONS]?: string;
@@ -53,30 +53,30 @@ export const putQuestionnaireKeys = [
   QuestionnaireKeys.EVALUATION_RANGE,
 ];
 
-export interface DeleteQuestionnaire {
+export interface DeleteQuestionnaireTypes {
   id: string;
 }
 
-export interface Question {
+export interface QuestionTypes {
   id?: string;
   question: string;
 }
 
-export interface PostQuestion {
+export interface PostQuestionTypes {
   question: string;
   questionnaire: string;
 }
 
-export interface PutQuestion {
+export interface PutQuestionTypes {
   id: string;
   question: string;
 }
 
-export interface DeleteQuestion {
+export interface DeleteQuestionTypes {
   id: string;
 }
 
-export interface OptionAndEvaluationRange {
+export interface OptionAndEvaluationRangeTypes {
   name: string;
   points: number;
 }

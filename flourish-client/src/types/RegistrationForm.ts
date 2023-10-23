@@ -1,4 +1,4 @@
-export enum FormFields {
+export enum RegistrationFormFields {
   ID = "id",
   NAME = "name",
   DATE_TIME = "date_time",
@@ -23,29 +23,29 @@ export enum FormFields {
   COUNSELOR = "counselor",
 }
 
-export interface RegistrationForm {
-  [FormFields.ID]: string;
-  [FormFields.NAME]: string;
-  [FormFields.DATE_TIME]: string;
-  [FormFields.GENDER]: Gender;
-  [FormFields.MARITAL_STATUS]: MaritalStatus;
-  [FormFields.OCCUPATION]: Occupation;
-  [FormFields.OCCUPATION_OTHERS]?: string;
-  [FormFields.DEPARTMENT]?: Department;
-  [FormFields.PRESENT_ADDRESS]: string;
-  [FormFields.HOME_DISTRICT]: string;
-  [FormFields.MOBILE_NUMBER]: string;
-  [FormFields.YOUR_PROBLEM]: string;
-  [FormFields.REFERRED_BY]: ReferredBy;
-  [FormFields.TYPE_OF_SERVICE]: TypeOfService;
-  [FormFields.OFFICIAL_COMMENT]: string;
-  [FormFields.SUGGESTED_QUESTIONNAIRE]: string;
-  [FormFields.SESSION_STATUS]: SessionStatus;
-  [FormFields.SESSION_TIME]: string;
-  [FormFields.SESSION_LOCATION]: string;
-  [FormFields.CREATED_AT]: string;
-  [FormFields.CLIENT]: string;
-  [FormFields.COUNSELOR]: string;
+export interface RegistrationFormTypes {
+  [RegistrationFormFields.ID]: string;
+  [RegistrationFormFields.NAME]: string;
+  [RegistrationFormFields.DATE_TIME]: string;
+  [RegistrationFormFields.GENDER]: Gender;
+  [RegistrationFormFields.MARITAL_STATUS]: MaritalStatus;
+  [RegistrationFormFields.OCCUPATION]: Occupation;
+  [RegistrationFormFields.OCCUPATION_OTHERS]?: string;
+  [RegistrationFormFields.DEPARTMENT]?: Department;
+  [RegistrationFormFields.PRESENT_ADDRESS]: string;
+  [RegistrationFormFields.HOME_DISTRICT]: string;
+  [RegistrationFormFields.MOBILE_NUMBER]: string;
+  [RegistrationFormFields.YOUR_PROBLEM]: string;
+  [RegistrationFormFields.REFERRED_BY]: ReferredBy;
+  [RegistrationFormFields.TYPE_OF_SERVICE]: TypeOfService;
+  [RegistrationFormFields.OFFICIAL_COMMENT]: string;
+  [RegistrationFormFields.SUGGESTED_QUESTIONNAIRE]: string;
+  [RegistrationFormFields.SESSION_STATUS]: SessionStatus;
+  [RegistrationFormFields.SESSION_TIME]: string;
+  [RegistrationFormFields.SESSION_LOCATION]: string;
+  [RegistrationFormFields.CREATED_AT]: string;
+  [RegistrationFormFields.CLIENT]: string;
+  [RegistrationFormFields.COUNSELOR]: string;
 }
 
 export enum Gender {

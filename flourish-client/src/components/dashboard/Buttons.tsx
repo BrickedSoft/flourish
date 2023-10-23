@@ -4,8 +4,8 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 import ButtonFull from "../common/button/ButtonFull";
-import { Questionnaire } from "../../types/Questionnaire";
-import { RegistrationForm } from "../../types/RegistrationForm";
+import { QuestionnaireTypes } from "../../types/Questionnaire";
+import { RegistrationFormTypes } from "../../types/RegistrationForm";
 
 const Buttons = ({
   isSubmitting,
@@ -19,8 +19,8 @@ const Buttons = ({
   isSubmitting: boolean;
   isDirty: boolean;
   isValid: boolean;
-  reset: UseFormReset<Questionnaire | RegistrationForm | any>;
-  data: Questionnaire | RegistrationForm;
+  reset: UseFormReset<QuestionnaireTypes | RegistrationFormTypes | any>;
+  data: QuestionnaireTypes | RegistrationFormTypes;
   titles?: string[];
   showButtonEach?: boolean[];
 }) => {

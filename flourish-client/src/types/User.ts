@@ -4,7 +4,7 @@ export enum userTypes {
   COUNSELOR = "COUNSELOR",
 }
 
-export interface User {
+export interface UserTypes {
   token: string;
   email: string;
   name: string;
