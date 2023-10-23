@@ -13,8 +13,12 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from client.serializers import SigninSerializer, SignupSerializer
+from counselor.serializers import CounselorSerializer
 from questionnaire.models import FilledQuestionnaire, Questionnaire
-from questionnaire.serializers import FilledQuestionnaireSerializer, QuestionnaireViewSerializer
+from questionnaire.serializers import (
+    FilledQuestionnaireSerializer,
+    QuestionnaireViewSerializer,
+)
 
 
 @api_view(["POST"])
@@ -24,7 +28,7 @@ def signup(request):
     if not serializer.is_valid():
         return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
-    user = get_or_none(User, username = serializer.data["email"])
+    user = get_or_none(User, username=serializer.data["email"])
     if not user is None:
         return Response(status=status.HTTP_409_CONFLICT)
 
@@ -43,13 +47,14 @@ class FilledQuestionnaireView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get(self, request,clientId):
+    def get(self, request, clientId):
         counselor = get_object_or_404(Counselor, user=request.user)
         questionnaires = FilledQuestionnaire.objects.all()
         if clientId:
-            questionnaires.filter(client_id = clientId)
+            questionnaires.filter(client_id=clientId)
         serializer = FilledQuestionnaireSerializer(questionnaires, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
 
 class QuestionnaireView(APIView):
     authentication_classes = [TokenAuthentication]
@@ -61,7 +66,17 @@ class QuestionnaireView(APIView):
         serializer = QuestionnaireViewSerializer(questionnaires, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    
+
+class CounselorView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        counselors = Counselor.objects.all()
+        serializer = CounselorSerializer(counselors, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
 def get_or_none(classmodel, **kwargs):
     try:
         return classmodel.objects.get(**kwargs)
