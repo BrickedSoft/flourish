@@ -1,13 +1,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import _ from "lodash";
 
-import { getQuestionnaire } from "../../../../api/apiQuestionnaire/client";
-import { QuestionnaireTypes } from "../../../../types/Questionnaire";
-import { KeyTypes, stringToObject } from "../../../../utils/questionnaire";
+import {
+  getQuestionnaire,
+  postFilledQuestionnaire,
+} from "../../../../api/apiQuestionnaire/client";
+import {
+  PostFilledQuestionnaireTypes,
+  QuestionnaireKeys,
+  QuestionnaireTypes
+} from "../../../../types/Questionnaire";
+import {
+  KeyTypes,
+  objectToString,
+  stringToObject,
+} from "../../../../utils/conversion";
 
 export const fetchQuestionnaire = createAsyncThunk(
   "questionnaire/getQuestionnaire",
-  async (): Promise<QuestionnaireTypes[]> => {
+  async (): Promise<{ [key: string]: QuestionnaireTypes }> => {
     const data = await getQuestionnaire();
     const options = _.chain(data)
       .map("options")
@@ -48,6 +59,38 @@ export const fetchQuestionnaire = createAsyncThunk(
         ]) as unknown as QuestionnaireTypes
     );
 
-    return _.merge(omittedObject, options, evaluation_range);
+    return _.keyBy(
+      _.merge(omittedObject, options, evaluation_range),
+      QuestionnaireKeys.ID
+    );
+  }
+);
+
+/* -------------------------------------------------------------------------- */
+/*                            Filled Questionnaire                            */
+/* -------------------------------------------------------------------------- */
+
+export const submitFilledQuestionnaire = createAsyncThunk(
+  "questionnaire/postFilledQuestionnaire",
+  async (data: PostFilledQuestionnaireTypes) => {
+    const comment = objectToString([data.comment], ["name", "points"]);
+    const questions = _.keyBy(data.questionnaire.questionnaireFields, "id");
+    const answers = _.mapValues(data.filled, (value, key) => {
+      return {
+        answer: value,
+      };
+    });
+    const questionAndAnswers = _.values(_.merge(answers, questions));
+
+    const questionAndAnswersString = objectToString(questionAndAnswers, [
+      "question",
+      "answer",
+    ]);
+
+    return await postFilledQuestionnaire({
+      questionnaire: data.questionnaire!.id!,
+      filled: questionAndAnswersString,
+      comment: comment,
+    });
   }
 );

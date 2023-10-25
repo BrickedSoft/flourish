@@ -14,12 +14,12 @@ import {
 } from "../actions/questionnaireActions/admin";
 
 interface reducerType {
-  questionnaires: QuestionnaireTypes[];
+  questionnaires: { [key: string]: QuestionnaireTypes };
   status: Status;
 }
 
 const initialState: reducerType = {
-  questionnaires: [],
+  questionnaires: {},
   status: Status.IDLE,
 };
 
@@ -28,7 +28,7 @@ const questionnaireSlice = createSlice({
   initialState,
   reducers: {
     purgeQuestionnaire: (state) => {
-      state.questionnaires = [];
+      state.questionnaires = {};
     },
   },
   extraReducers: (builder) => {
@@ -41,7 +41,7 @@ const questionnaireSlice = createSlice({
       state.status = Status.FULFILLED;
     });
     builder.addCase(fetchQuestionnaire.rejected, (state) => {
-      state.questionnaires = [];
+      state.questionnaires = {};
       state.status = Status.REJECTED;
     });
 

@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { OptionAndEvaluationRangeTypes } from "../types/Questionnaire";
 
 export const enum KeyTypes {
   String = "String",
@@ -41,8 +40,8 @@ export const stringToObject = (
   return _.flatMap(result);
 };
 
-export const objectToString = (data: OptionAndEvaluationRangeTypes[]) => {
-  const keys = Object.keys(data[0]);
+export const objectToString = (data: Object[], keys?: string[]) => {
+  if (!keys) keys = Object.keys(data[0]);
 
   return _.chain(_.map(keys, (key) => _.chain(data).map(key).value()))
     .join(", ")

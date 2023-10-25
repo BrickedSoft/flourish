@@ -1,4 +1,10 @@
-import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
+import {
+  IoAddCircleOutline,
+  IoCreateOutline,
+  IoPieChartOutline,
+  IoRemoveCircleOutline,
+  IoTrashOutline,
+} from "react-icons/io5";
 
 export const questionnaireHeader = {
   list: "See all Questionnaires",
@@ -41,8 +47,12 @@ export const questionnaireData = {
         icon: <IoAddCircleOutline />,
       },
       remove: {
-        title: "",
-        icon: <IoRemoveCircleOutline />,
+        title: "Delete Questionnaire",
+        icon: <IoTrashOutline />,
+      },
+      edit: {
+        title: "Edit/View Questionnaire",
+        icon: <IoCreateOutline />,
       },
     },
     question: {
@@ -79,6 +89,15 @@ export const questionnaireData = {
     },
     evaluationRange: {
       title: "No Evaluations Added",
+    },
+  },
+};
+
+export const filledQuestionnaireData = {
+  button: {
+    evaluate: {
+      title: "Evaluate",
+      icon: <IoPieChartOutline fontSize={20} />,
     },
   },
 };

@@ -14,8 +14,9 @@ import SignUp from "./pages/auth/signup";
 import AdminDashboard from "./pages/dashboard/admin";
 import OverViewAdmin from "./pages/dashboard/admin/overview";
 import QuestionnaireAdmin from "./pages/dashboard/admin/questionnaire";
-import QuestionnaireDetails from "./pages/dashboard/admin/questionnaire/QuestionnaireDetails";
-import QuestionnaireList from "./pages/dashboard/admin/questionnaire/QuestionnaireList";
+import QuestionnaireDetailsAdmin from "./pages/dashboard/admin/questionnaire/QuestionnaireDetails";
+import QuestionnaireDetailsClient from "./pages/dashboard/client/questionnaire/QuestionnaireDetails";
+import QuestionnaireListAdmin from "./pages/dashboard/admin/questionnaire/QuestionnaireList";
 import SessionRequest from "./pages/dashboard/admin/sessionRequest";
 import ClientDashboard from "./pages/dashboard/client";
 import FilledQuestionnaire from "./pages/dashboard/client/filledQuestionnaire";
@@ -26,6 +27,7 @@ import CounselorDashboard from "./pages/dashboard/counselor";
 import Homepage from "./pages/homepage";
 import RegistrationFormDetails from "./pages/dashboard/client/formHistory/RegistrationFormDetails";
 import RegistrationFormList from "./pages/dashboard/client/formHistory/RegistrationFormList";
+import QuestionnaireListClient from "./pages/dashboard/client/questionnaire/QuestionnaireList";
 
 const App = () => {
   const location = useLocation();
@@ -46,8 +48,8 @@ const App = () => {
       return (
         <Route path={`${nav.dashboard}`} element={<AdminDashboard />}>
           <Route path={nav.questionnaire} element={<QuestionnaireAdmin />}>
-            <Route index element={<QuestionnaireList />} />
-            <Route path=":id" element={<QuestionnaireDetails />} />
+            <Route index element={<QuestionnaireListAdmin />} />
+            <Route path=":id" element={<QuestionnaireDetailsAdmin />} />
           </Route>
           <Route index element={<h1>Members</h1>} />
           <Route path={nav.members} element={<h1>Members</h1>} />
@@ -69,11 +71,10 @@ const App = () => {
             element={<FilledQuestionnaire />}
           />
           <Route path={nav.form} element={<RegistrationForm />} />
-
-          <Route
-            path={nav.questionnaire}
-            element={<QuestionnaireClient />}
-          ></Route>
+          <Route path={nav.questionnaire} element={<QuestionnaireClient />}>
+            <Route index element={<QuestionnaireListClient />} />
+            <Route path=":id" element={<QuestionnaireDetailsClient />} />
+          </Route>
         </Route>
       );
     else if (counselor)

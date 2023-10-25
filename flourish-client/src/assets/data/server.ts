@@ -14,4 +14,8 @@ export const api = {
   },
   question: "questionnaire/",
   registrationForm: "registrationForm/",
+  filledQuestionnaire: {
+    [userTypes.ADMIN]: "adminCounselor/filledQuestionnaire/",
+    [userTypes.CLIENT]: "client/filledQuestionnaire/",
+  },
 };

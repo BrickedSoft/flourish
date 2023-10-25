@@ -2,10 +2,16 @@ import { Button, Flex } from "@chakra-ui/react";
 import { UseFormReset } from "react-hook-form";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { LiaUndoAltSolid } from "react-icons/lia";
+import { IoSaveOutline } from "react-icons/io5";
 
 import ButtonFull from "../common/button/ButtonFull";
 import { QuestionnaireTypes } from "../../types/Questionnaire";
 import { RegistrationFormTypes } from "../../types/RegistrationForm";
+
+type FieldType = {
+  [key: string]: string;
+};
 
 const Buttons = ({
   isSubmitting,
@@ -20,7 +26,7 @@ const Buttons = ({
   isDirty: boolean;
   isValid: boolean;
   reset: UseFormReset<QuestionnaireTypes | RegistrationFormTypes | any>;
-  data: QuestionnaireTypes | RegistrationFormTypes;
+  data: QuestionnaireTypes | RegistrationFormTypes | FieldType;
   titles?: string[];
   showButtonEach?: boolean[];
 }) => {
@@ -59,6 +65,7 @@ const Buttons = ({
             borderRadius={"xl"}
             colorScheme={"linkedin"}
             isDisabled={!isDirty}
+            leftIcon={<LiaUndoAltSolid />}
             onClick={() =>
               reset({
                 ...data,
@@ -78,6 +85,7 @@ const Buttons = ({
             py={"16"}
             fontSize={"lg"}
             type={"submit"}
+            leftIcon={<IoSaveOutline />}
             isDisabled={!isDirty || !isValid}
           >
             {titles?.at(2) || "Save"}
