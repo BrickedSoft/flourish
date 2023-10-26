@@ -1,5 +1,5 @@
-import { api } from "./config/apiConfig";
-import { api as apiData } from "../assets/data/server";
+import { api } from "../../config/apiConfig";
+import { api as apiData } from "../../../assets/data/server";
 import {
   ApiQuestionnaireTypes,
   DeleteQuestionTypes,
@@ -8,8 +8,8 @@ import {
   PostQuestionnaireTypes,
   PutQuestionTypes,
   PutQuestionnaireTypes,
-} from "../types/Questionnaire";
-import { userTypes } from "../types/User";
+} from "../../../types/Questionnaire";
+import { userTypes } from "../../../types/User";
 
 export const getQuestionnaire = async (): Promise<ApiQuestionnaireTypes[]> => {
   const response = await api.get(apiData.questionnaire[userTypes.ADMIN], {});

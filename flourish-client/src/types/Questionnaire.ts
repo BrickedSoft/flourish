@@ -80,3 +80,30 @@ export interface OptionAndEvaluationRangeTypes {
   name: string;
   points: number;
 }
+
+export type FilledQuestionnaireTypes = {
+  id?: string;
+  filled: string;
+  comment: string;
+  questionnaire: string;
+  created_at?: string;
+};
+
+export type PostFilledQuestionnaireTypes = {
+  questionnaire: QuestionnaireTypes;
+  filled: {
+    [key: string]: string;
+  };
+  comment: OptionAndEvaluationRangeTypes;
+};
+
+export type GetFilledQuestionnaireTypes = {
+  id: string;
+  questionnaire: string;
+  filled: {
+    question: string;
+    answer: string;
+  }[];
+  comment: OptionAndEvaluationRangeTypes;
+  created_at: string;
+};

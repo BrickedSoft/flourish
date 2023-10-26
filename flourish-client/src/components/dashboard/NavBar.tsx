@@ -1,11 +1,17 @@
-import { ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 
-import { navBar } from "../../assets/data/dashboard/dashboard";
 import { nav } from "../../assets/data/routes";
 
-const NavBar = () => {
+type NavBarProps = {
+  // currentRoute: string;
+  // setCurrentRoute: (route: string) => void;
+  data: { title: string; href: string }[];
+  indexMenu?: string;
+};
+
+const NavBar: FC<NavBarProps> = ({ data, indexMenu }) => {
   const { pathname } = useLocation();
   const [currentRoute, setCurrentRoute] = useState<string>("#");
 
@@ -14,8 +20,10 @@ const NavBar = () => {
       (pathname.split("/").at(-1) as string) ||
       (pathname.split("/").at(-2) as string);
 
-    setCurrentRoute(newRoute === nav.dashboard ? nav.members : newRoute);
-  }, [pathname]);
+    setCurrentRoute(
+      newRoute === nav.dashboard && indexMenu ? indexMenu : newRoute
+    );
+  }, [indexMenu, pathname]);
 
   const renderLink = ({
     title,
@@ -64,7 +72,7 @@ const NavBar = () => {
 
   return (
     <Flex gap={48} alignItems={"center"}>
-      {navBar.ADMIN.map(renderLink)}
+      {data.map(renderLink)}
     </Flex>
   );
 };

@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
 import { PURGE } from "redux-persist";
 
-import { QuestionnaireTypes } from "../../types/Questionnaire";
+import {
+  GetFilledQuestionnaireTypes,
+  QuestionnaireTypes
+} from "../../types/Questionnaire";
 import { Status } from "../../types/Status";
 import {
   editQuestion,
@@ -11,15 +14,18 @@ import {
   removeQuestion,
   removeQuestionnaire,
   setQuestion,
-} from "../actions/questionnaireActions";
+} from "../actions/questionnaireActions/admin";
+import { fetchFilledQuestionnaire } from "../actions/questionnaireActions/client";
 
 interface reducerType {
-  questionnaires: QuestionnaireTypes[];
+  questionnaires: { [key: string]: QuestionnaireTypes };
+  filledQuestionnaire: { [key: string]: GetFilledQuestionnaireTypes };
   status: Status;
 }
 
 const initialState: reducerType = {
-  questionnaires: [],
+  questionnaires: {},
+  filledQuestionnaire: {},
   status: Status.IDLE,
 };
 
@@ -28,7 +34,7 @@ const questionnaireSlice = createSlice({
   initialState,
   reducers: {
     purgeQuestionnaire: (state) => {
-      state.questionnaires = [];
+      state.questionnaires = {};
     },
   },
   extraReducers: (builder) => {
@@ -41,7 +47,7 @@ const questionnaireSlice = createSlice({
       state.status = Status.FULFILLED;
     });
     builder.addCase(fetchQuestionnaire.rejected, (state) => {
-      state.questionnaires = [];
+      state.questionnaires = {};
       state.status = Status.REJECTED;
     });
 
@@ -98,6 +104,26 @@ const questionnaireSlice = createSlice({
       state.status = Status.FULFILLED;
     });
     builder.addCase(removeQuestion.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                            Filled QUestionnaire                            */
+    /* -------------------------------------------------------------------------- */
+
+    /* ----------------------- Fetch Filled Questionnaire ----------------------- */
+
+    builder.addCase(fetchFilledQuestionnaire.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+
+    builder.addCase(fetchFilledQuestionnaire.fulfilled, (state, action) => {
+      state.filledQuestionnaire = action.payload;
+      state.status = Status.FULFILLED;
+    });
+
+    builder.addCase(fetchFilledQuestionnaire.rejected, (state) => {
+      state.filledQuestionnaire = {};
       state.status = Status.REJECTED;
     });
 

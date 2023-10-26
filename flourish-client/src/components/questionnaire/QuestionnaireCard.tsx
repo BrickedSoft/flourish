@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import {
   Box,
   Button,
@@ -9,25 +9,25 @@ import {
   Flex,
   Heading,
   Text,
+  Tooltip,
   VStack,
   chakra,
   shouldForwardProp,
 } from "@chakra-ui/react";
 import { AnimatePresence, isValidMotionProp, motion } from "framer-motion";
-import { IoCreateOutline, IoTrashOutline } from "react-icons/io5";
 import { VscChevronDown } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { routes } from "../../assets/data/routes";
+import { questionnaireData } from "../../assets/data/dashboard/questionnaire";
 import { useAppDispatch } from "../../hooks/useStore";
 import {
   fetchQuestionnaire,
   removeQuestionnaire,
-} from "../../store/actions/questionnaireActions";
+} from "../../store/actions/questionnaireActions/admin";
 import theme from "../../theme/theme";
 import {
-  QuestionnaireTypes,
   QuestionnaireKeys,
+  QuestionnaireTypes,
 } from "../../types/Questionnaire";
 
 const ChakraBox = chakra(motion.div, {
@@ -35,11 +35,22 @@ const ChakraBox = chakra(motion.div, {
     isValidMotionProp(prop) || shouldForwardProp(prop),
 });
 
-const QuestionnaireCard = ({
-  questionnaire,
-}: {
+type QuestionnaireCardProps = {
   questionnaire: QuestionnaireTypes;
+  showEdit?: boolean;
+  showDelete?: boolean;
+  showButtons?: boolean;
+  isLink?: boolean;
+};
+
+const QuestionnaireCard: FC<QuestionnaireCardProps> = ({
+  questionnaire,
+  showEdit = true,
+  showDelete = true,
+  showButtons = true,
+  isLink = false,
 }) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -99,6 +110,14 @@ const QuestionnaireCard = ({
           border={"2px solid #e9f2fd"}
           borderRadius={"xl"}
           boxShadow={"none"}
+          onClick={() => {
+            if (isLink) navigate(questionnaire.id as string);
+          }}
+          cursor={isLink ? "pointer" : "default"}
+          transition={"all 0.15s ease-in-out"}
+          _hover={{
+            borderColor: isLink ? "primary.200" : "default",
+          }}
         >
           <CardHeader
             as={motion.div}
@@ -116,39 +135,72 @@ const QuestionnaireCard = ({
             >
               {questionnaire.name}
             </Heading>
-            <Flex gap={24}>
-              <Button
-                as={Link}
-                to={`${routes.questionnaire}/${questionnaire.id}`}
-                boxSize={"36px"}
-                borderRadius={"lg"}
-                variant={"outline"}
-                colorScheme={"linkedin"}
-              >
-                <IoCreateOutline fontSize={"20px"} />
-              </Button>
-              <Button
-                boxSize={"36px"}
-                borderRadius={"lg"}
-                variant={"outline"}
-                colorScheme={"red"}
-                isLoading={isLoading}
-                onClick={async () => {
-                  setIsLoading(true);
-                  const responseRemove = await dispatch(
-                    removeQuestionnaire({
-                      id: questionnaire[QuestionnaireKeys.ID] as string,
-                    })
-                  );
-                  const responseFetch = await dispatch(fetchQuestionnaire());
-                  if (responseRemove.payload && responseFetch.payload) {
-                    setIsLoading(false);
-                  }
-                }}
-              >
-                <IoTrashOutline fontSize={"20px"} />
-              </Button>
-            </Flex>
+            {showButtons && (
+              <Flex gap={24}>
+                {showEdit && (
+                  <Tooltip
+                    hasArrow
+                    label={questionnaireData.button.questionnaire.edit.title}
+                    bg={"bg.tintsTransparent.2"}
+                    fontSize={"md"}
+                    color={"font.heroLight"}
+                    px={8}
+                    py={4}
+                    borderRadius={"lg"}
+                  >
+                    <Button
+                      as={Link}
+                      to={questionnaire.id as string}
+                      boxSize={"36px"}
+                      borderRadius={"lg"}
+                      variant={"outline"}
+                      colorScheme={"linkedin"}
+                      fontSize={20}
+                    >
+                      {questionnaireData.button.questionnaire.edit.icon}
+                    </Button>
+                  </Tooltip>
+                )}
+
+                {showDelete && (
+                  <Tooltip
+                    hasArrow
+                    label={questionnaireData.button.questionnaire.remove.title}
+                    bg={"bg.tintsTransparent.2"}
+                    fontSize={"md"}
+                    color={"status.error"}
+                    px={8}
+                    py={4}
+                    borderRadius={"lg"}
+                  >
+                    <Button
+                      boxSize={"36px"}
+                      borderRadius={"lg"}
+                      variant={"outline"}
+                      colorScheme={"red"}
+                      fontSize={20}
+                      isLoading={isLoading}
+                      onClick={async () => {
+                        setIsLoading(true);
+                        const responseRemove = await dispatch(
+                          removeQuestionnaire({
+                            id: questionnaire[QuestionnaireKeys.ID] as string,
+                          })
+                        );
+                        const responseFetch = await dispatch(
+                          fetchQuestionnaire()
+                        );
+                        if (responseRemove.payload && responseFetch.payload) {
+                          setIsLoading(false);
+                        }
+                      }}
+                    >
+                      {questionnaireData.button.questionnaire.remove.icon}
+                    </Button>
+                  </Tooltip>
+                )}
+              </Flex>
+            )}
           </CardHeader>
 
           <CardBody>{renderedQuestionnaire()}</CardBody>
@@ -163,7 +215,10 @@ const QuestionnaireCard = ({
                 variants={downArrowVariants}
                 custom={isExpanded}
                 cursor={"pointer"}
-                onClick={() => setIsExpanded((prev) => !prev)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsExpanded((prev) => !prev);
+                }}
                 layout={"preserve-aspect"}
               >
                 <VscChevronDown />

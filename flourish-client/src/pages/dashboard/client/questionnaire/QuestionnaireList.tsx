@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import QuestionnaireListGeneric from "../../../../components/questionnaire/QuestionnaireListGeneric";
 import { useAppDispatch } from "../../../../hooks/useStore";
-import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions/admin";
+import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions/client";
 
 const QuestionnaireList = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ const QuestionnaireList = () => {
 
   return (
     <>
-      <QuestionnaireListGeneric />
+      <QuestionnaireListGeneric showButtons={false} isLink />
     </>
   );
 };

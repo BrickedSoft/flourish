@@ -10,7 +10,12 @@ export const api = {
   signIn: "login/",
   questionnaire: {
     [userTypes.ADMIN]: "adminCounselor/questionnaire/",
+    [userTypes.CLIENT]: "/client/questionnaire/",
   },
   question: "questionnaire/",
   registrationForm: "registrationForm/",
+  filledQuestionnaire: {
+    [userTypes.ADMIN]: "adminCounselor/filledQuestionnaire/",
+    [userTypes.CLIENT]: "client/filledQuestionnaire/",
+  },
 };

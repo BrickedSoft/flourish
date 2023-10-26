@@ -12,6 +12,8 @@ export const nav = {
   overview: "overview",
   create: "create",
   form: "form",
+  formHistory: "form-history",
+  filledQuestionnaire: "filled-questionnaire",
   404: "404",
 };
 
@@ -29,7 +31,8 @@ export const routes = {
   sessionRequest: `/${nav.dashboard}/${nav.sessionRequest}`,
   overview: `/${nav.dashboard}/${nav.overview}`,
   form: `/${nav.dashboard}/${nav.form}`,
-  fillRegistrationForm: `/${nav.dashboard}/${nav.form}/${nav.create}`,
+  formHistory: `/${nav.dashboard}/${nav.formHistory}`,
+  filledQuestionnaire: `/${nav.dashboard}/${nav.filledQuestionnaire}`,
   404: `/${nav[404]}`,
 };
 
