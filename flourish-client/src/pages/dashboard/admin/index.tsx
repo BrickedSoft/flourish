@@ -92,7 +92,7 @@ const AdminDashboard = () => {
             w={"full"}
             mx={24}
             my={24}
-            p={32}
+            px={32}
             bg={"white"}
             borderRadius={"xl"}
             overflowY={"scroll"}

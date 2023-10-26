@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Center, Flex, FormControl, Heading } from "@chakra-ui/react";
+import { Box, Center, Flex, FormControl, Heading } from "@chakra-ui/react";
 import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -152,7 +152,7 @@ const QuestionnaireDetails = () => {
         }
 
         return (
-          <Container w={"full"} py={32} borderRadius={"xl"}>
+          <Container w={"full"} pb={32} borderRadius={"xl"}>
             <FormControl
               as={"form"}
               onSubmit={handleSubmit(onSubmit)}
@@ -162,13 +162,23 @@ const QuestionnaireDetails = () => {
             >
               {/* --------------------------------- Buttons -------------------------------- */}
 
-              <Buttons
-                isSubmitting={isSubmitting}
-                isDirty={isDirty}
-                isValid={isValid}
-                reset={reset}
-                data={questionnaire}
-              />
+              <Box
+                position={"sticky"}
+                flexDir={"column"}
+                pt={32}
+                pb={16}
+                top={0}
+                zIndex={50}
+                bg={"white"}
+              >
+                <Buttons
+                  isSubmitting={isSubmitting}
+                  isDirty={isDirty}
+                  isValid={isValid}
+                  reset={reset}
+                  data={questionnaire}
+                />
+              </Box>
 
               {/* --------------------------- Questionnaire Name --------------------------- */}
 

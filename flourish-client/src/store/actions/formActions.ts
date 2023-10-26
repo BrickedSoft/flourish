@@ -6,7 +6,7 @@ import { RegistrationFormTypes } from "../../types/RegistrationForm";
 export const fetchRegistrationForm = createAsyncThunk(
   "registrationForm/getRegistrationForm",
   async () => {
-    return await getRegistrationForm();
+    return (await getRegistrationForm()).reverse();
   }
 );
 

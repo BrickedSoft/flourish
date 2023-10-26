@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { VStack } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import _ from "lodash";
 
 import RegistrationFormCard from "../../../../components/form/RegistrationFormCard";
@@ -71,10 +71,11 @@ const OverView = () => {
   // }, [forms]);
 
   return (
-    <VStack w={"full"} h={"full"} spacing={24} alignItems={"stretch"}>
+    <VStack w={"full"} py={32} spacing={24} alignItems={"stretch"}>
       {forms.map((item, index) => (
         <RegistrationFormCard key={index} data={item} />
       ))}
+      <Box pt={32}></Box>
     </VStack>
   );
 };

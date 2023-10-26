@@ -4,6 +4,7 @@ import _ from "lodash";
 import {
   deleteQuestion,
   deleteQuestionnaire,
+  getFilledQuestionnaire,
   getQuestionnaire,
   postQuestion,
   postQuestionnaire,
@@ -19,6 +20,7 @@ import {
   PutQuestionnaireTypes,
   QuestionnaireTypes,
   QuestionnaireKeys,
+  GetFilledQuestionnaireTypes,
 } from "../../../../types/Questionnaire";
 import {
   KeyTypes,
@@ -158,5 +160,53 @@ export const removeQuestion = createAsyncThunk(
   "questionnaire/deleteQuestion",
   async (data: DeleteQuestionTypes) => {
     return await deleteQuestion(data);
+  }
+);
+
+/* -------------------------------------------------------------------------- */
+/*                            Filled Questionnaire                            */
+/* -------------------------------------------------------------------------- */
+
+export const fetchFilledQuestionnaire = createAsyncThunk(
+  "questionnaire/getFilledQuestionnaire",
+  async (): Promise<{ [key: string]: GetFilledQuestionnaireTypes }> => {
+    const data = (await getFilledQuestionnaire()).reverse();
+
+    const objects = _.map(data, (value) => {
+      const filled = stringToObject(value.filled, [
+        {
+          key: "question",
+          type: KeyTypes.String,
+        },
+        {
+          key: "answer",
+          type: KeyTypes.String,
+        },
+      ]);
+
+      const comment = stringToObject(value.comment, [
+        {
+          key: "name",
+          type: KeyTypes.String,
+        },
+        {
+          key: "points",
+          type: KeyTypes.Number,
+        },
+      ])[0];
+
+      return {
+        id: value.id,
+        questionnaire: value.questionnaire,
+        filled: filled,
+        comment: comment,
+        created_at: value.created_at,
+        client: value.client,
+      };
+    });
+
+    return _.keyBy(objects, "id") as unknown as {
+      [key: string]: GetFilledQuestionnaireTypes;
+    };
   }
 );

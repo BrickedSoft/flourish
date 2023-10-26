@@ -1,26 +1,27 @@
-import { useEffect } from "react";
+import { VStack } from "@chakra-ui/react";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchRegistrationForm } from "../../../../store/actions/formActions";
-import { RegistrationFormFields } from "../../../../types/RegistrationForm";
 import RegistrationForm from "../../../../components/form/RegistrationForm";
+import { useAppSelector } from "../../../../hooks/useStore";
+import { RegistrationFormFields } from "../../../../types/RegistrationForm";
+import FilledQuestionnaireList from "./FilledQuestionnaireList";
 
 const PendingFormDetails = () => {
   const { id } = useParams();
-  const dispatch = useAppDispatch();
   const form = useAppSelector((state) => {
     const forms = state.registrationForm.forms;
 
     return _.filter(forms, [RegistrationFormFields.ID, id])[0];
   });
 
-  useEffect(() => {
-    dispatch(fetchRegistrationForm());
-  }, [dispatch]);
+  return (
+    <VStack w={"full"} spacing={64} justifyContent={"stretch"} pb={32}>
+      <RegistrationForm formData={form} />
 
-  return <RegistrationForm formData={form} />;
+      <FilledQuestionnaireList clientId={form?.client} />
+    </VStack>
+  );
 };
 
 export default PendingFormDetails;

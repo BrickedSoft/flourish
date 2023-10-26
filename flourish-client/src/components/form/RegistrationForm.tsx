@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { Grid, VStack } from "@chakra-ui/react";
+import { Box, Grid, VStack } from "@chakra-ui/react";
 import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -99,7 +99,7 @@ const RegistrationForm: FC<PropsType> = ({
   };
 
   return (
-    <Container w={"full"} py={32} borderRadius={"xl"}>
+    <Container w={"full"} borderRadius={"xl"}>
       <VStack
         as={"form"}
         onSubmit={handleSubmit(onSubmit)}
@@ -110,15 +110,24 @@ const RegistrationForm: FC<PropsType> = ({
         {/* --------------------------------- Buttons -------------------------------- */}
 
         {showButtons && (
-          <Buttons
-            isSubmitting={isSubmitting}
-            isDirty={isDirty}
-            isValid={isValid}
-            reset={reset}
-            data={initialForm}
-            titles={["", "", "Submit"]}
-            showButtonEach={showButtonEach}
-          />
+          <Box
+            position={"sticky"}
+            pt={32}
+            pb={16}
+            top={0}
+            zIndex={50}
+            bg={"white"}
+          >
+            <Buttons
+              isSubmitting={isSubmitting}
+              isDirty={isDirty}
+              isValid={isValid}
+              reset={reset}
+              data={initialForm}
+              titles={["", "", "Submit"]}
+              showButtonEach={showButtonEach}
+            />
+          </Box>
         )}
 
         {/* --------------------------------- Fields --------------------------------- */}

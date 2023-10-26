@@ -95,6 +95,7 @@ export const questionnaireData = {
 
 export const filledQuestionnaireData = {
   fieldNames: { question: "Question" },
+  list: "All filled Questionnaires",
   empty: {
     title: "No Questionnaire Filled",
   },
