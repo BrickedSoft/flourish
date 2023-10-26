@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Button, Flex } from "@chakra-ui/react";
 import { UseFormReset } from "react-hook-form";
 import { IoArrowBackOutline } from "react-icons/io5";
@@ -21,6 +22,7 @@ const Buttons = ({
   data,
   titles,
   showButtonEach = [true, true, true],
+  children,
 }: {
   isSubmitting: boolean;
   isDirty: boolean;
@@ -29,6 +31,7 @@ const Buttons = ({
   data: QuestionnaireTypes | RegistrationFormTypes | FieldType;
   titles?: string[];
   showButtonEach?: boolean[];
+  children?: ReactNode;
 }) => {
   const navigate = useNavigate();
 
@@ -51,6 +54,8 @@ const Buttons = ({
           {titles?.at(0) || "Back"}
         </Button>
       )}
+
+      {children}
 
       <Flex gap={16} alignItems={"center"}>
         {/* ------------------------------ Reset Button ------------------------------ */}

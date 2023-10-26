@@ -13,12 +13,13 @@ export const getQuestionnaire = async (): Promise<ApiQuestionnaireTypes[]> =>
 /*                            Filled Questionnaire                            */
 /* -------------------------------------------------------------------------- */
 
-// export const getFilledQuestionnaire = async (): Promise<ApiQuestionnaireTypes[]> =>{}
+export const getFilledQuestionnaire = async (): Promise<
+  FilledQuestionnaireTypes[]
+> => (await api.get(apiData.filledQuestionnaire.CLIENT, {})).data;
 
 export const postFilledQuestionnaire = async (
   data: FilledQuestionnaireTypes
-): Promise<void> => {
+): Promise<void> =>
   await api.post(apiData.filledQuestionnaire.CLIENT, {
     ...data,
   });
-};

@@ -2,13 +2,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import _ from "lodash";
 
 import {
+  getFilledQuestionnaire,
   getQuestionnaire,
   postFilledQuestionnaire,
 } from "../../../../api/apiQuestionnaire/client";
 import {
+  GetFilledQuestionnaireTypes,
   PostFilledQuestionnaireTypes,
   QuestionnaireKeys,
-  QuestionnaireTypes
+  QuestionnaireTypes,
 } from "../../../../types/Questionnaire";
 import {
   KeyTypes,
@@ -70,6 +72,49 @@ export const fetchQuestionnaire = createAsyncThunk(
 /*                            Filled Questionnaire                            */
 /* -------------------------------------------------------------------------- */
 
+export const fetchFilledQuestionnaire = createAsyncThunk(
+  "questionnaire/getFilledQuestionnaire",
+  async (): Promise<{ [key: string]: GetFilledQuestionnaireTypes }> => {
+    const data = await getFilledQuestionnaire();
+
+    const objects = _.map(data, (value) => {
+      const filled = stringToObject(value.filled, [
+        {
+          key: "question",
+          type: KeyTypes.String,
+        },
+        {
+          key: "answer",
+          type: KeyTypes.String,
+        },
+      ]);
+
+      const comment = stringToObject(value.comment, [
+        {
+          key: "name",
+          type: KeyTypes.String,
+        },
+        {
+          key: "points",
+          type: KeyTypes.Number,
+        },
+      ])[0];
+
+      return {
+        id: value.id,
+        questionnaire: value.questionnaire,
+        filled: filled,
+        comment: comment,
+        created_at: value.created_at,
+      };
+    });
+
+    return _.keyBy(objects, "id") as unknown as {
+      [key: string]: GetFilledQuestionnaireTypes;
+    };
+  }
+);
+
 export const submitFilledQuestionnaire = createAsyncThunk(
   "questionnaire/postFilledQuestionnaire",
   async (data: PostFilledQuestionnaireTypes) => {
@@ -90,7 +135,7 @@ export const submitFilledQuestionnaire = createAsyncThunk(
     return await postFilledQuestionnaire({
       questionnaire: data.questionnaire!.id!,
       filled: questionAndAnswersString,
-      comment: comment,
+      comment,
     });
   }
 );

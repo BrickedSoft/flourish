@@ -1,38 +1,67 @@
-import { useEffect, useState } from "react";
-import { Center, Flex, FormControl, Grid, Text } from "@chakra-ui/react";
+import { FC, useEffect, useState } from "react";
+import {
+  Box,
+  Center,
+  Flex,
+  FormControl,
+  Grid,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  VStack,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import _ from "lodash";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 
-import { filledQuestionnaireData } from "../../../../assets/data/dashboard/questionnaire";
-import { routes } from "../../../../assets/data/routes";
-import Container from "../../../../components/common/Container";
-import ButtonFull from "../../../../components/common/button/ButtonFull";
-import Buttons from "../../../../components/dashboard/Buttons";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { QuestionnaireKeys } from "../../../../types/Questionnaire";
-import { Status } from "../../../../types/Status";
-import RadioField from "./RadioField";
-import { submitFilledQuestionnaire } from "../../../../store/actions/questionnaireActions/client";
+import { filledQuestionnaireData } from "../../assets/data/dashboard/questionnaire";
+import { routes } from "../../assets/data/routes";
+import Container from "../common/Container";
+import ButtonFull from "../common/button/ButtonFull";
+import Buttons from "../dashboard/Buttons";
+import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
+import { submitFilledQuestionnaire } from "../../store/actions/questionnaireActions/client";
+import { QuestionnaireKeys } from "../../types/Questionnaire";
+import { Status } from "../../types/Status";
+import RadioField from "../../pages/dashboard/client/questionnaire/RadioField";
 
 type FieldType = {
   [key: string]: string;
 };
 
+type PropsType = {
+  id: string;
+  filled?: FieldType;
+  questionOptions: string[];
+};
+
 const initialForm: FieldType = {};
 
-const QuestionnaireDetails = () => {
-  const { id } = useParams();
+const QuestionnaireDetails: FC<PropsType> = ({
+  id,
+  filled = initialForm,
+  questionOptions = [],
+}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const questionnaire = useAppSelector(
     (state) => state.questionnaire.questionnaires[id as string]
   );
   const status = useAppSelector((state) => state.questionnaire.status);
-  const [options, setOptions] = useState<string[]>([]);
+  const [options, setOptions] = useState<string[]>(questionOptions);
   const [isValid, setIsValid] = useState<boolean>(false);
+  const [totalPoints, setTotalPoints] = useState<number>(0);
+  const [comment, setComment] = useState<string>("");
   const [showEvaluate, setShowEvaluate] = useState<boolean>(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (status === Status.FULFILLED && !questionnaire) navigate(routes[404]);
@@ -73,11 +102,8 @@ const QuestionnaireDetails = () => {
       totalPoints += questionnaireOptions[value as string].points;
     });
 
-    return totalPoints;
-  };
+    setTotalPoints(totalPoints);
 
-  const onSubmit = async (data: FieldType) => {
-    const totalPoints = onEvaluate(data) + 30;
     let comment: string = "";
     for (let i = 0; i < questionnaire.evaluation_range.length; i++) {
       if (totalPoints < questionnaire.evaluation_range[i].points) {
@@ -85,6 +111,17 @@ const QuestionnaireDetails = () => {
         break;
       }
     }
+
+    setComment(comment);
+
+    return {
+      totalPoints,
+      comment,
+    };
+  };
+
+  const onSubmit = async (data: FieldType) => {
+    const { totalPoints, comment } = onEvaluate();
 
     dispatch(
       submitFilledQuestionnaire({
@@ -96,10 +133,12 @@ const QuestionnaireDetails = () => {
         },
       })
     );
+
+    navigate(-1);
   };
 
   return (
-    <Container w={"full"} py={32} borderRadius={"xl"}>
+    <Container w={"full"} pb={32} borderRadius={"xl"}>
       <FormControl
         as={"form"}
         onSubmit={handleSubmit(onSubmit)}
@@ -109,14 +148,44 @@ const QuestionnaireDetails = () => {
       >
         {/* --------------------------------- Buttons -------------------------------- */}
 
-        <Buttons
-          isSubmitting={isSubmitting}
-          isDirty={isDirty}
-          isValid={isValid}
-          reset={reset}
-          data={initialForm}
-          showButtonEach={[true, false, true]}
-        />
+        <Box
+          position={"sticky"}
+          pt={32}
+          pb={16}
+          top={0}
+          zIndex={50}
+          bg={"white"}
+        >
+          <Buttons
+            isSubmitting={isSubmitting}
+            isDirty={isDirty}
+            isValid={isValid}
+            reset={reset}
+            data={initialForm}
+            showButtonEach={[true, false, true]}
+          >
+            {totalPoints !== 0 && (
+              <Text
+                fontSize={"lg"}
+                color={"font.heroLight"}
+                fontWeight={"medium"}
+                textShadow={"0 0.2rem 0.4rem rgba(28, 126, 214, 0.25)"}
+              >
+                Your score is{" "}
+                <Text as={"span"} fontWeight={"bold"}>
+                  {totalPoints}
+                </Text>
+                <Text as={"span"}>
+                  {" "}
+                  which is{" "}
+                  <Text as={"span"} fontWeight={"bold"}>
+                    {comment}
+                  </Text>
+                </Text>
+              </Text>
+            )}
+          </Buttons>
+        </Box>
 
         {questionnaire && (
           <Grid
@@ -163,6 +232,7 @@ const QuestionnaireDetails = () => {
             <ButtonFull
               onClick={() => {
                 onEvaluate();
+                onOpen();
                 setShowEvaluate(false);
               }}
             >
@@ -174,6 +244,38 @@ const QuestionnaireDetails = () => {
           </Center>
         )}
       </AnimatePresence>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xl"}>
+        <ModalOverlay />
+        <ModalContent py={24} as={VStack} spacing={16} borderRadius={"lg"}>
+          <ModalHeader>
+            <Heading>{filledQuestionnaireData.evaluation.title}</Heading>
+          </ModalHeader>
+          <ModalCloseButton size={"lg"} />
+          <ModalBody>
+            <VStack fontSize={"xl"}>
+              <Text>
+                Your score is:{" "}
+                <Text as={"span"} fontWeight={"medium"}>
+                  {totalPoints}
+                </Text>
+              </Text>
+              <Text>
+                Your symptoms are{" "}
+                <Text as={"span"} fontWeight={"medium"}>
+                  {comment}
+                </Text>
+              </Text>
+            </VStack>
+          </ModalBody>
+
+          <ModalFooter>
+            <ButtonFull fontSize={"lg"} py={16} px={16} onClick={onClose}>
+              Close
+            </ButtonFull>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Container>
   );
 };

@@ -98,13 +98,7 @@ const QuestionnaireListGeneric: FC<PropsTypes> = ({
         );
 
         return (
-          <VStack
-            position={"relative"}
-            h={"full"}
-            spacing={32}
-            alignItems={"stretch"}
-            pb={32}
-          >
+          <VStack spacing={32} alignItems={"stretch"} py={32}>
             <SimpleGrid
               spacing={16}
               borderRadius={"xl"}

@@ -94,10 +94,20 @@ export const questionnaireData = {
 };
 
 export const filledQuestionnaireData = {
+  empty: {
+    title: "No Questionnaires Filled",
+  },
+  evaluation: {
+    title: "Evaluation",
+  },
   button: {
     evaluate: {
       title: "Evaluate",
       icon: <IoPieChartOutline fontSize={20} />,
+    },
+    fill: {
+      title: "Fill questionnaire",
+      icon: <IoAddCircleOutline />,
     },
   },
 };

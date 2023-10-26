@@ -82,9 +82,11 @@ export interface OptionAndEvaluationRangeTypes {
 }
 
 export type FilledQuestionnaireTypes = {
+  id?: string;
   filled: string;
   comment: string;
   questionnaire: string;
+  created_at?: string;
 };
 
 export type PostFilledQuestionnaireTypes = {
@@ -93,4 +95,15 @@ export type PostFilledQuestionnaireTypes = {
     [key: string]: string;
   };
   comment: OptionAndEvaluationRangeTypes;
+};
+
+export type GetFilledQuestionnaireTypes = {
+  id: string;
+  questionnaire: string;
+  filled: {
+    question: string;
+    answer: string;
+  }[];
+  comment: OptionAndEvaluationRangeTypes;
+  created_at: string;
 };
