@@ -1,12 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
-const Questionnaire = () => {
+const FormHistory = () => {
   return (
-    <Box w={"full"} px={0} borderRadius={"xl"}>
+    <Box w={"full"} h={"full"} borderRadius={"xl"}>
       <Outlet />
     </Box>
   );
 };
 
-export default Questionnaire;
+export default FormHistory;

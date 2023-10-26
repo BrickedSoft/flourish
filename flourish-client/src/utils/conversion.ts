@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { OptionAndEvaluationRangeTypes } from "../types/Questionnaire";
 
 export const enum KeyTypes {
   String = "String",
@@ -13,6 +12,7 @@ export const stringToObject = (
   const splits = _.chain(data)
     .replace(/\s*,\s*/g, ",")
     .split(",")
+    .map((value) => _.replace(value, /@comma/g, ","))
     .value();
 
   const length = splits.length / keys.length;
@@ -41,10 +41,15 @@ export const stringToObject = (
   return _.flatMap(result);
 };
 
-export const objectToString = (data: OptionAndEvaluationRangeTypes[]) => {
-  const keys = Object.keys(data[0]);
+export const objectToString = (data: Object[], keys?: string[]) => {
+  if (!keys) keys = Object.keys(data[0]);
 
   return _.chain(_.map(keys, (key) => _.chain(data).map(key).value()))
+    .map((values) => {
+      return _.map(values, (value) => {
+        return _.replace(value, /,/g, "@comma");
+      });
+    })
     .join(", ")
     .value();
 };

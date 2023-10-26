@@ -15,9 +15,9 @@ const errorHandler = (error: AxiosError) => {
   const statusCode = response?.status;
 
   if (statusCode && statusCode === 401) {
-    console.log("auth Error");
+    console.error("auth Error");
   } else if (statusCode && statusCode >= 500) {
-    console.log("Server Error");
+    console.error("Server Error");
   }
 
   return Promise.reject(error);

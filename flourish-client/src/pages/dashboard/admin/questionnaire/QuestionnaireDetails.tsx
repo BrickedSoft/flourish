@@ -16,7 +16,7 @@ import {
   fetchQuestionnaire,
   removeQuestion,
   setQuestion,
-} from "../../../../store/actions/questionnaireActions";
+} from "../../../../store/actions/questionnaireActions/admin";
 import {
   PutQuestionTypes,
   QuestionnaireTypes,

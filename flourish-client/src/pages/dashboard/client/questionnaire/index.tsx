@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
 import { useAppDispatch } from "../../../../hooks/useStore";
-import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions/admin";
+import { fetchQuestionnaire } from "../../../../store/actions/questionnaireActions/client";
 
 const Questionnaire = () => {
   const dispatch = useAppDispatch();

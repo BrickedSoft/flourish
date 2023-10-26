@@ -18,8 +18,6 @@ const RegistrationFormDetails = () => {
       })[0]
   );
 
-  console.log(form);
-
   useEffect(() => {
     if (!form) navigate(routes[404]);
   }, [form, navigate]);

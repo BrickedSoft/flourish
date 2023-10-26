@@ -9,7 +9,7 @@ import {
   postQuestionnaire,
   putQuestion,
   putQuestionnaire,
-} from "../../api/apiQuestionnaire";
+} from "../../../../api/apiQuestionnaire/admin";
 import {
   DeleteQuestionTypes,
   DeleteQuestionnaireTypes,
@@ -19,12 +19,12 @@ import {
   PutQuestionnaireTypes,
   QuestionnaireTypes,
   QuestionnaireKeys,
-} from "../../types/Questionnaire";
+} from "../../../../types/Questionnaire";
 import {
   KeyTypes,
   objectToString,
   stringToObject,
-} from "../../utils/questionnaire";
+} from "../../../../utils/conversion";
 
 export const createQuestionnaire = createAsyncThunk(
   "questionnaire/postQuestionnaire",
@@ -32,7 +32,10 @@ export const createQuestionnaire = createAsyncThunk(
     const optionsAndEvaluationRange = _.chain(data)
       .pick([QuestionnaireKeys.OPTIONS, QuestionnaireKeys.EVALUATION_RANGE])
       .map((value, key) => {
-        return { [key]: value.length > 0 ? objectToString(value) : "" };
+        return {
+          [key]:
+            value.length > 0 ? objectToString(value, ["name", "points"]) : "",
+        };
       })
       .value();
 
@@ -54,7 +57,7 @@ export const createQuestionnaire = createAsyncThunk(
 
 export const fetchQuestionnaire = createAsyncThunk(
   "questionnaire/getQuestionnaire",
-  async (): Promise<QuestionnaireTypes[]> => {
+  async (): Promise<{ [key: string]: QuestionnaireTypes }> => {
     const data = await getQuestionnaire();
     const options = _.chain(data)
       .map("options")
@@ -95,7 +98,10 @@ export const fetchQuestionnaire = createAsyncThunk(
         ]) as unknown as QuestionnaireTypes
     );
 
-    return _.merge(omittedObject, options, evaluation_range);
+    return _.keyBy(
+      _.merge(omittedObject, options, evaluation_range),
+      QuestionnaireKeys.ID
+    );
   }
 );
 
@@ -107,7 +113,10 @@ export const editQuestionnaire = createAsyncThunk(
     const optionsAndEvaluationRange = _.chain(data)
       .pick([QuestionnaireKeys.OPTIONS, QuestionnaireKeys.EVALUATION_RANGE])
       .map((value, key) => {
-        return { [key]: value.length > 0 ? objectToString(value) : "" };
+        return {
+          [key]:
+            value.length > 0 ? objectToString(value, ["name", "points"]) : "",
+        };
       })
       .value();
 

@@ -135,8 +135,10 @@ const NotFound = () => {
               transition={{
                 type: "spring",
               }}
+              as={Link}
+              to={routes.home}
             >
-              <Link to={routes.home}>Go Home</Link>
+              Go Home
             </ChakraButton>
           </Flex>
         </ChakraBox>

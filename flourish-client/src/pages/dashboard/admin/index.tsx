@@ -39,10 +39,14 @@ const AdminDashboard = () => {
 
     if (
       [...navBar.ADMIN, { href: nav.dashboard }].some(
-        ({ href }) => href.split("/").at(-1) === path
+        ({ href }) =>
+          href
+            .split("/")
+            .filter((path) => path !== "")
+            .at(-1) === path
       )
     )
-      return <NavBar />;
+      return <NavBar data={navBar.ADMIN} indexMenu={nav.overview} />;
     else if (paths.includes(nav.questionnaire)) {
       if (path === nav.questionnaire)
         return headerTitle(questionnaireHeader.list);
