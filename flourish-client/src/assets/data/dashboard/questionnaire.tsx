@@ -94,11 +94,14 @@ export const questionnaireData = {
 };
 
 export const filledQuestionnaireData = {
+  fieldNames: { question: "Question" },
   empty: {
-    title: "No Questionnaires Filled",
+    title: "No Questionnaire Filled",
   },
   evaluation: {
     title: "Evaluation",
+    score: "Your score is: ",
+    comment: "Severity is: ",
   },
   button: {
     evaluate: {

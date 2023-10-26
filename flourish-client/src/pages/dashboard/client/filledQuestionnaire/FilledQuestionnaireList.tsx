@@ -7,7 +7,7 @@ import { routes } from "../../../../assets/data/routes";
 import { useAppSelector } from "../../../../hooks/useStore";
 import FilledQuestionnaireCard from "./FilledQuestionnaireCard";
 
-const RegistrationFormList = () => {
+const FilledQuestionnaireList = () => {
   const filledQuestionnaires = useAppSelector(
     (state) => state.questionnaire.filledQuestionnaire
   );
@@ -57,7 +57,7 @@ const RegistrationFormList = () => {
       {Object.values(filledQuestionnaires).map((data, index) => (
         <FilledQuestionnaireCard
           key={index}
-          data={{ ...data, name: questionnaires[data.questionnaire].name }}
+          data={{ ...data, name: questionnaires[data.questionnaire]?.name }}
         />
       ))}
 
@@ -69,17 +69,12 @@ const RegistrationFormList = () => {
             color={"font.muted3"}
             letterSpacing={"tight"}
           >
-            {filledQuestionnaireData.button.fill.title}
+            {filledQuestionnaireData.empty.title}
           </Heading>
           {buttonFull}
         </VStack>
       ) : (
-        <Center
-          position={"sticky"}
-          bottom={0}
-          left={"50%"}
-          transform={"translateY(-50%)"}
-        >
+        <Center position={"sticky"} bottom={24} left={"50%"}>
           {buttonAdd}
         </Center>
       )}
@@ -87,4 +82,4 @@ const RegistrationFormList = () => {
   );
 };
 
-export default RegistrationFormList;
+export default FilledQuestionnaireList;

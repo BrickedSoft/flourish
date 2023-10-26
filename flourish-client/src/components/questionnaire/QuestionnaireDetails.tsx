@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import {
-  Box,
   Center,
   Flex,
   FormControl,
   Grid,
+  GridItem,
   Heading,
   Modal,
   ModalBody,
@@ -20,60 +20,87 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import _ from "lodash";
 import { useForm, useWatch } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { filledQuestionnaireData } from "../../assets/data/dashboard/questionnaire";
-import { routes } from "../../assets/data/routes";
+import { useAppDispatch } from "../../hooks/useStore";
+import { submitFilledQuestionnaire } from "../../store/actions/questionnaireActions/client";
+import {
+  OptionAndEvaluationRangeTypes,
+  QuestionnaireTypes,
+} from "../../types/Questionnaire";
 import Container from "../common/Container";
 import ButtonFull from "../common/button/ButtonFull";
 import Buttons from "../dashboard/Buttons";
-import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { submitFilledQuestionnaire } from "../../store/actions/questionnaireActions/client";
-import { QuestionnaireKeys } from "../../types/Questionnaire";
-import { Status } from "../../types/Status";
-import RadioField from "../../pages/dashboard/client/questionnaire/RadioField";
+import RadioField from "./RadioField";
 
 type FieldType = {
   [key: string]: string;
 };
 
-type PropsType = {
+type QuestionType = {
   id: string;
-  filled?: FieldType;
-  questionOptions: string[];
+  question: string;
+  answer?: string;
+};
+
+type PropsType = {
+  questions: QuestionType[];
+  questionnaire?: QuestionnaireTypes;
+  options: OptionAndEvaluationRangeTypes[];
+  evaluationRange?: OptionAndEvaluationRangeTypes[];
+  isReadOnly?: boolean;
+  totalPoints?: number;
+  comment?: string;
+  showButtonEach?: boolean[];
 };
 
 const initialForm: FieldType = {};
 
+type FieldHeadingType = {
+  title: string;
+  [key: string]: string | number;
+};
+
+const FieldHeading: FC<FieldHeadingType> = ({ title, ...rest }) => {
+  return (
+    <Heading
+      as={"h1"}
+      fontSize={"xl"}
+      color={"font.heroLight"}
+      fontWeight={"medium"}
+      textShadow={"0 0.2rem 0.4rem rgba(28, 126, 214, 0.25)"}
+      textAlign={"center"}
+      {...rest}
+    >
+      {title}
+    </Heading>
+  );
+};
+
 const QuestionnaireDetails: FC<PropsType> = ({
-  id,
-  filled = initialForm,
-  questionOptions = [],
+  questions = [],
+  questionnaire,
+  options = [],
+  evaluationRange = [],
+  isReadOnly = false,
+  totalPoints: totalPointsInitial = 0,
+  comment: commentInitial = "None",
+  showButtonEach = [true, false, true],
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const questionnaire = useAppSelector(
-    (state) => state.questionnaire.questionnaires[id as string]
-  );
-  const status = useAppSelector((state) => state.questionnaire.status);
-  const [options, setOptions] = useState<string[]>(questionOptions);
+  // const status = useAppSelector((state) => state.questionnaire.status);
   const [isValid, setIsValid] = useState<boolean>(false);
-  const [totalPoints, setTotalPoints] = useState<number>(0);
-  const [comment, setComment] = useState<string>("");
+  const [totalPoints, setTotalPoints] = useState<number>(totalPointsInitial);
+  const [comment, setComment] = useState<string>(commentInitial);
   const [showEvaluate, setShowEvaluate] = useState<boolean>(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  useEffect(() => {
-    if (status === Status.FULFILLED && !questionnaire) navigate(routes[404]);
-    if (questionnaire && questionnaire.options) {
-      setOptions(_.map(questionnaire.options, "name"));
-    }
-  }, [questionnaire, navigate, status]);
+  const fieldOptions = _.map(options, "name");
 
   const {
     handleSubmit,
     control,
-    register,
     reset,
     formState: { isDirty, errors, isSubmitting, dirtyFields },
   } = useForm({ defaultValues: initialForm });
@@ -82,20 +109,14 @@ const QuestionnaireDetails: FC<PropsType> = ({
   const totalDirtyFields = Object.keys(dirtyFields).length;
 
   useEffect(() => {
-    if (questionnaire) {
-      setIsValid(
-        questionnaire[QuestionnaireKeys.QUESTIONNAIRE_FIELDS].length ===
-          totalDirtyFields
-      );
-      setShowEvaluate(
-        questionnaire[QuestionnaireKeys.QUESTIONNAIRE_FIELDS].length ===
-          totalDirtyFields
-      );
+    if (questions.length > 0 && totalDirtyFields > 0) {
+      setIsValid(questions?.length === totalDirtyFields);
+      setShowEvaluate(questions?.length === totalDirtyFields);
     }
-  }, [questionnaire, totalDirtyFields, watchAllFields]);
+  }, [questions, totalDirtyFields, watchAllFields]);
 
   const onEvaluate = (data?: FieldType) => {
-    const questionnaireOptions = _.keyBy(questionnaire.options, "name");
+    const questionnaireOptions = _.keyBy(options, "name");
 
     let totalPoints = 0;
     _.map(data || watchAllFields, (value) => {
@@ -105,9 +126,9 @@ const QuestionnaireDetails: FC<PropsType> = ({
     setTotalPoints(totalPoints);
 
     let comment: string = "";
-    for (let i = 0; i < questionnaire.evaluation_range.length; i++) {
-      if (totalPoints < questionnaire.evaluation_range[i].points) {
-        comment = questionnaire.evaluation_range[i].name;
+    for (let i = 0; i < evaluationRange.length; i++) {
+      if (totalPoints < evaluationRange[i].points) {
+        comment = evaluationRange[i].name;
         break;
       }
     }
@@ -125,7 +146,7 @@ const QuestionnaireDetails: FC<PropsType> = ({
 
     dispatch(
       submitFilledQuestionnaire({
-        questionnaire,
+        questionnaire: questionnaire as QuestionnaireTypes,
         filled: data,
         comment: {
           points: totalPoints,
@@ -148,13 +169,15 @@ const QuestionnaireDetails: FC<PropsType> = ({
       >
         {/* --------------------------------- Buttons -------------------------------- */}
 
-        <Box
+        <Flex
           position={"sticky"}
+          flexDir={"column"}
           pt={32}
           pb={16}
           top={0}
           zIndex={50}
           bg={"white"}
+          gap={48}
         >
           <Buttons
             isSubmitting={isSubmitting}
@@ -162,11 +185,12 @@ const QuestionnaireDetails: FC<PropsType> = ({
             isValid={isValid}
             reset={reset}
             data={initialForm}
-            showButtonEach={[true, false, true]}
+            titles={["Back", "", "Submit"]}
+            showButtonEach={showButtonEach}
           >
             {totalPoints !== 0 && (
               <Text
-                fontSize={"lg"}
+                fontSize={"xl"}
                 color={"font.heroLight"}
                 fontWeight={"medium"}
                 textShadow={"0 0.2rem 0.4rem rgba(28, 126, 214, 0.25)"}
@@ -185,34 +209,58 @@ const QuestionnaireDetails: FC<PropsType> = ({
               </Text>
             )}
           </Buttons>
-        </Box>
 
-        {questionnaire && (
           <Grid
-            templateColumns={"auto 1fr"}
-            columnGap={64}
+            templateColumns={"minmax(auto, 1fr) minmax(auto, 2fr)"}
+            columnGap={128}
             rowGap={40}
             alignItems={"center"}
-            pb={32}
           >
-            {questionnaire[QuestionnaireKeys.QUESTIONNAIRE_FIELDS].map(
-              ({ question, id }) => (
-                <RadioField
-                  key={id}
-                  register={register}
-                  errors={errors}
-                  data={{
-                    title: question,
-                    placeholder: "select",
-                    fieldName: id as string,
-                  }}
-                  options={options}
-                  control={control}
-                />
-              )
-            )}
+            <GridItem justifySelf={"start"} alignSelf={"start"}>
+              <FieldHeading
+                title={filledQuestionnaireData.fieldNames.question}
+                fontSize={"2xl"}
+              />
+            </GridItem>
+
+            <GridItem
+              as={Grid}
+              gridTemplateColumns={`repeat(${fieldOptions.length}, 1fr)`}
+              gap={24}
+              justifyContent={"center"}
+              alignItems={"start"}
+            >
+              {fieldOptions.map((title, index) => (
+                <FieldHeading key={index} title={title} />
+              ))}
+            </GridItem>
           </Grid>
-        )}
+        </Flex>
+
+        <Grid
+          templateColumns={"minmax(auto, 1fr) minmax(auto, 2fr)"}
+          columnGap={128}
+          rowGap={40}
+          alignItems={"center"}
+          mt={-36}
+          pb={32}
+        >
+          {_.map(questions, ({ question, id, answer }) => (
+            <RadioField
+              key={id}
+              errors={errors}
+              data={{
+                title: question,
+                placeholder: "select",
+                fieldName: id as string,
+              }}
+              options={fieldOptions}
+              control={control}
+              value={answer}
+              isReadOnly={isReadOnly}
+            />
+          ))}
+        </Grid>
       </FormControl>
 
       <AnimatePresence>
@@ -255,14 +303,22 @@ const QuestionnaireDetails: FC<PropsType> = ({
           <ModalBody>
             <VStack fontSize={"xl"}>
               <Text>
-                Your score is:{" "}
-                <Text as={"span"} fontWeight={"medium"}>
+                {filledQuestionnaireData.evaluation.score}
+                <Text
+                  as={"span"}
+                  fontWeight={"medium"}
+                  color={"font.heroLight"}
+                >
                   {totalPoints}
                 </Text>
               </Text>
               <Text>
-                Your symptoms are{" "}
-                <Text as={"span"} fontWeight={"medium"}>
+                {filledQuestionnaireData.evaluation.comment}
+                <Text
+                  as={"span"}
+                  fontWeight={"medium"}
+                  color={"font.heroLight"}
+                >
                   {comment}
                 </Text>
               </Text>

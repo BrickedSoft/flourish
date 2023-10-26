@@ -75,7 +75,7 @@ export const fetchQuestionnaire = createAsyncThunk(
 export const fetchFilledQuestionnaire = createAsyncThunk(
   "questionnaire/getFilledQuestionnaire",
   async (): Promise<{ [key: string]: GetFilledQuestionnaireTypes }> => {
-    const data = await getFilledQuestionnaire();
+    const data = (await getFilledQuestionnaire()).reverse();
 
     const objects = _.map(data, (value) => {
       const filled = stringToObject(value.filled, [

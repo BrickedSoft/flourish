@@ -15,7 +15,6 @@ import AdminDashboard from "./pages/dashboard/admin";
 import OverViewAdmin from "./pages/dashboard/admin/overview";
 import QuestionnaireAdmin from "./pages/dashboard/admin/questionnaire";
 import QuestionnaireDetailsAdmin from "./pages/dashboard/admin/questionnaire/QuestionnaireDetails";
-import QuestionnaireDetailsClient from "./components/questionnaire/QuestionnaireDetails";
 import QuestionnaireListAdmin from "./pages/dashboard/admin/questionnaire/QuestionnaireList";
 import SessionRequest from "./pages/dashboard/admin/sessionRequest";
 import ClientDashboard from "./pages/dashboard/client";
@@ -28,6 +27,7 @@ import Homepage from "./pages/homepage";
 import RegistrationFormDetails from "./pages/dashboard/client/formHistory/RegistrationFormDetails";
 import RegistrationFormList from "./pages/dashboard/client/formHistory/RegistrationFormList";
 import QuestionnaireListClient from "./pages/dashboard/client/questionnaire/QuestionnaireList";
+import QuestionnaireFillUpClient from "./pages/dashboard/client/questionnaire/QuestionnaireFillUp";
 import FilledQuestionnaireListClient from "./pages/dashboard/client/filledQuestionnaire/FilledQuestionnaireList";
 import FilledQuestionnaireDetailsClient from "./pages/dashboard/client/filledQuestionnaire/FilledQuestionnaireDetails";
 
@@ -78,7 +78,7 @@ const App = () => {
           <Route path={nav.form} element={<RegistrationForm />} />
           <Route path={nav.questionnaire} element={<QuestionnaireClient />}>
             <Route index element={<QuestionnaireListClient />} />
-            <Route path=":id" element={<QuestionnaireDetailsClient />} />
+            <Route path=":id" element={<QuestionnaireFillUpClient />} />
           </Route>
         </Route>
       );
