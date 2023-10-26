@@ -30,6 +30,8 @@ import QuestionnaireListClient from "./pages/dashboard/client/questionnaire/Ques
 import QuestionnaireFillUpClient from "./pages/dashboard/client/questionnaire/QuestionnaireFillUp";
 import FilledQuestionnaireListClient from "./pages/dashboard/client/filledQuestionnaire/FilledQuestionnaireList";
 import FilledQuestionnaireDetailsClient from "./pages/dashboard/client/filledQuestionnaire/FilledQuestionnaireDetails";
+import PendingFormList from "./pages/dashboard/admin/sessionRequest/PendingFormList";
+import PendingFormDetails from "./pages/dashboard/admin/sessionRequest/PendingFormDetails";
 
 const App = () => {
   const location = useLocation();
@@ -55,7 +57,10 @@ const App = () => {
           </Route>
           <Route index element={<h1>Members</h1>} />
           <Route path={nav.members} element={<h1>Members</h1>} />
-          <Route path={nav.sessionRequest} element={<SessionRequest />} />
+          <Route path={nav.sessionRequest} element={<SessionRequest />}>
+            <Route index element={<PendingFormList />} />
+            <Route path=":id" element={<PendingFormDetails />} />
+          </Route>
           <Route path={nav.overview} element={<OverViewAdmin />} />
         </Route>
       );
