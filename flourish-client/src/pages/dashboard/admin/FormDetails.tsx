@@ -2,12 +2,12 @@ import { VStack } from "@chakra-ui/react";
 import _ from "lodash";
 import { useParams } from "react-router-dom";
 
-import RegistrationForm from "../../../../components/form/RegistrationForm";
-import { useAppSelector } from "../../../../hooks/useStore";
-import { RegistrationFormFields } from "../../../../types/RegistrationForm";
-import FilledQuestionnaireList from "./FilledQuestionnaireList";
+import RegistrationForm from "../../../components/form/RegistrationForm";
+import { useAppSelector } from "../../../hooks/useStore";
+import { RegistrationFormFields } from "../../../types/RegistrationForm";
+import FilledQuestionnaireList from "./sessionRequest/FilledQuestionnaireList";
 
-const PendingFormDetails = () => {
+const FormDetails = () => {
   const { id } = useParams();
   const form = useAppSelector((state) => {
     const forms = state.registrationForm.forms;
@@ -24,4 +24,4 @@ const PendingFormDetails = () => {
   );
 };
 
-export default PendingFormDetails;
+export default FormDetails;

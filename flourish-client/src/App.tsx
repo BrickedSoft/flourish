@@ -24,7 +24,7 @@ import OverviewClient from "./pages/dashboard/client/overview";
 import QuestionnaireClient from "./pages/dashboard/client/questionnaire";
 import CounselorDashboard from "./pages/dashboard/counselor";
 import Homepage from "./pages/homepage";
-import RegistrationFormDetails from "./pages/dashboard/client/formHistory/RegistrationFormDetails";
+import RegistrationFormDetailsClient from "./pages/dashboard/client/formHistory/RegistrationFormDetails";
 import RegistrationFormList from "./pages/dashboard/client/formHistory/RegistrationFormList";
 import QuestionnaireListClient from "./pages/dashboard/client/questionnaire/QuestionnaireList";
 import QuestionnaireFillUpClient from "./pages/dashboard/client/questionnaire/QuestionnaireFillUp";
@@ -32,8 +32,15 @@ import FilledQuestionnaireListClient from "./pages/dashboard/client/filledQuesti
 import FilledQuestionnaireDetailsClient from "./pages/dashboard/client/filledQuestionnaire/FilledQuestionnaireDetails";
 import PendingFormList from "./pages/dashboard/admin/sessionRequest/PendingFormList";
 import PendingForm from "./pages/dashboard/admin/sessionRequest/PendingForm";
-import PendingFormDetails from "./pages/dashboard/admin/sessionRequest/PendingFormDetails";
+import FormDetailsAdmin from "./pages/dashboard/admin/FormDetails";
 import FilledQuestionnaireDetailsAdmin from "./pages/dashboard/admin/sessionRequest/FilledQuestionnaireDetails";
+import OverviewCounselor from "./pages/dashboard/counselor/overview";
+import SessionRequestCounselor from "./pages/dashboard/counselor/sessionRequest";
+import PendingFormListCounselor from "./pages/dashboard/counselor/sessionRequest/PendingFormList";
+import FormDetailsCounselor from "./pages/dashboard/counselor/FormDetails";
+import OverviewFormListCounselor from "./pages/dashboard/admin/overview/OverviewFormList";
+import OverviewFormListAdmin from "./pages/dashboard/admin/overview/OverviewFormList";
+import OverviewFormListClient from "./pages/dashboard/client/overview/OverviewFormList";
 
 const App = () => {
   const location = useLocation();
@@ -53,33 +60,39 @@ const App = () => {
     if (admin)
       return (
         <Route path={`${nav.dashboard}`} element={<AdminDashboard />}>
+          <Route index element={<OverviewFormListAdmin />} />
+          <Route path={nav.overview} element={<OverViewAdmin />}>
+            <Route index element={<OverviewFormListAdmin />} />
+            <Route path=":id" element={<FormDetailsAdmin />} />
+          </Route>
           <Route path={nav.questionnaire} element={<QuestionnaireAdmin />}>
             <Route index element={<QuestionnaireListAdmin />} />
             <Route path=":id" element={<QuestionnaireDetailsAdmin />} />
           </Route>
-          <Route index element={<h1>Members</h1>} />
           <Route path={nav.members} element={<h1>Members</h1>} />
           <Route path={nav.sessionRequest} element={<SessionRequest />}>
             <Route index element={<PendingFormList />} />
             <Route path=":id" element={<PendingForm />}>
-              <Route index element={<PendingFormDetails />} />
+              <Route index element={<FormDetailsAdmin />} />
               <Route
                 path=":questionnaireId"
                 element={<FilledQuestionnaireDetailsAdmin />}
               />
             </Route>
           </Route>
-          <Route path={nav.overview} element={<OverViewAdmin />} />
         </Route>
       );
     else if (client)
       return (
         <Route path={`${nav.dashboard}`} element={<ClientDashboard />}>
-          <Route index element={<OverviewClient />} />
-          <Route path={nav.overview} element={<OverviewClient />} />
+          <Route index element={<OverviewFormListClient />} />
+          <Route path={nav.overview} element={<OverviewClient />}>
+            <Route index element={<OverviewFormListClient />} />
+            <Route path=":id" element={<RegistrationFormDetailsClient />} />
+          </Route>
           <Route path={nav.formHistory} element={<FormHistory />}>
             <Route index element={<RegistrationFormList />} />
-            <Route path=":id" element={<RegistrationFormDetails />} />
+            <Route path=":id" element={<RegistrationFormDetailsClient />} />
           </Route>
           <Route
             path={nav.filledQuestionnaire}
@@ -97,10 +110,20 @@ const App = () => {
       );
     else if (counselor)
       return (
-        <Route
-          path={`${nav.dashboard}`}
-          element={<CounselorDashboard />}
-        ></Route>
+        <Route path={`${nav.dashboard}`} element={<CounselorDashboard />}>
+          <Route index element={<OverviewFormListCounselor />} />
+          <Route path={nav.overview} element={<OverviewCounselor />}>
+            <Route index element={<OverviewFormListCounselor />} />
+            <Route path=":id" element={<FormDetailsCounselor />} />
+          </Route>
+          <Route
+            path={nav.sessionRequest}
+            element={<SessionRequestCounselor />}
+          >
+            <Route index element={<PendingFormListCounselor />} />
+            <Route path=":id" element={<FormDetailsCounselor />} />
+          </Route>
+        </Route>
       );
   };
 

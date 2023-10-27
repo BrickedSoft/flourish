@@ -6,7 +6,7 @@ import { routes } from "../../../../assets/data/routes";
 import RegistrationForm from "../../../../components/form/RegistrationForm";
 import { useAppSelector } from "../../../../hooks/useStore";
 
-const RegistrationFormDetails = () => {
+const OverviewFormDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const form = useAppSelector((state) => {
@@ -30,4 +30,4 @@ const RegistrationFormDetails = () => {
   );
 };
 
-export default RegistrationFormDetails;
+export default OverviewFormDetails;

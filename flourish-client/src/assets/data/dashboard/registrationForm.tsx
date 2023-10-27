@@ -82,6 +82,14 @@ export const formFieldsData = {
     title: "Suggest Questionnaire",
     placeholder: "Select the questionnaire",
   },
+  session_time: {
+    title: "Session Time",
+    placeholder: "Select the session time",
+  },
+  session_location: {
+    title: "Session Location",
+    placeholder: "Enter the location",
+  },
 };
 
 export const options = {

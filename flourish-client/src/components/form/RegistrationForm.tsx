@@ -4,7 +4,10 @@ import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { formFieldsData } from "../../assets/data/dashboard/registrationForm";
+import {
+  formFieldsData,
+  formData as registrationFormData,
+} from "../../assets/data/dashboard/registrationForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import {
   editRegistrationForm,
@@ -13,11 +16,11 @@ import {
 } from "../../store/actions/registrationFormActions";
 import {
   Department,
-  RegistrationFormFields,
   Gender,
   MaritalStatus,
   Occupation,
   ReferredBy,
+  RegistrationFormFields,
   RegistrationFormTypes,
   SessionStatus,
   TypeOfService,
@@ -28,7 +31,7 @@ import InputField from "./InputField";
 import RadioField from "./RadioField";
 import SelectField from "./SelectField";
 import TextField from "./TextField";
-import { formData as registrationFormData } from "../../assets/data/dashboard/registrationForm";
+import DateTimeField from "./DateTimeField";
 
 type PropsType = {
   showButtons?: boolean;
@@ -112,8 +115,6 @@ const RegistrationForm: FC<PropsType> = ({
       .value();
   });
 
-  // console.log(formData)
-
   useEffect(() => {
     if (name && !formData.name) formData.name = name;
     dispatch(fetchCounselorList());
@@ -134,6 +135,9 @@ const RegistrationForm: FC<PropsType> = ({
     initialForm.occupation
   );
 
+  // console.log(watch(RegistrationFormFields.SESSION_TIME));
+  // console.log(formData);
+
   const onSubmit = async (data: RegistrationFormTypes) => {
     const modifiedData = _.omit(data, [
       RegistrationFormFields.OCCUPATION_OTHERS,
@@ -145,8 +149,12 @@ const RegistrationForm: FC<PropsType> = ({
     if (!isAdmin && !isCounselor)
       await dispatch(submitRegistrationForm(modifiedData));
 
-    if (isAdmin || isCounselor)
+    if (isAdmin || isCounselor) {
+      if (isAdmin) modifiedData.session_status = SessionStatus.CONFIRMING;
+      if (isCounselor) modifiedData.session_status = SessionStatus.ONGOING;
+
       await dispatch(editRegistrationForm(modifiedData));
+    }
 
     navigate(-1);
   };
@@ -183,7 +191,9 @@ const RegistrationForm: FC<PropsType> = ({
           </Box>
         )}
 
-        {/* --------------------------------- Fields --------------------------------- */}
+        {/* -------------------------------------------------------------------------- */
+        /*                                   Fields                                   */
+        /* -------------------------------------------------------------------------- */}
 
         {/* ------------------------------- Admin Fields ------------------------------ */}
 
@@ -246,6 +256,44 @@ const RegistrationForm: FC<PropsType> = ({
         )}
 
         {/* ----------------------------- Counselor Fields ---------------------------- */}
+
+        {isCounselor && (
+          <>
+            <Heading color={"font.heroLight"} mb={0} textAlign={"center"}>
+              {registrationFormData.fieldsHeading.counselor}
+            </Heading>
+            <Grid
+              templateColumns={"auto 1fr"}
+              columnGap={128}
+              rowGap={40}
+              alignItems={"center"}
+              pb={32}
+            >
+              <DateTimeField
+                control={control}
+                errors={errors}
+                data={{
+                  title: formFieldsData.session_time.title,
+                  placeholder: formFieldsData.session_time.placeholder,
+                  fieldName: RegistrationFormFields.SESSION_TIME,
+                }}
+                currentValue={watch(RegistrationFormFields.SESSION_TIME)}
+              />
+
+              <InputField
+                errors={errors}
+                register={register}
+                data={{
+                  title: formFieldsData.session_location.title,
+                  placeholder: formFieldsData.session_location.placeholder,
+                  fieldName: RegistrationFormFields.SESSION_LOCATION,
+                }}
+              />
+            </Grid>
+
+            <Divider mb={16} />
+          </>
+        )}
 
         {/* ------------------------------ CLient Fields ------------------------------ */}
 

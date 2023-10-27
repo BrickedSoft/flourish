@@ -5,3 +5,10 @@ export const stringToDate = (date: string) => {
     day: "numeric",
   });
 };
+
+export const stringToTime = (date: string) => {
+  return new Date(date).toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
