@@ -172,17 +172,20 @@ const Header = () => {
           )}
 
           {/* ----------------------- TODO: Remove on production ---------------------- */}
-          <ButtonFull
-            px={"8"}
-            py={"4"}
-            onClick={async () => {
-              persistor.pause();
-              await persistor.flush();
-              await persistor.purge();
-            }}
-          >
-            Purge
-          </ButtonFull>
+          {!process.env.NODE_ENV ||
+            (process.env.NODE_ENV === "development" && (
+              <ButtonFull
+                px={"8"}
+                py={"4"}
+                onClick={async () => {
+                  persistor.pause();
+                  await persistor.flush();
+                  await persistor.purge();
+                }}
+              >
+                Purge
+              </ButtonFull>
+            ))}
         </List>
       </Box>
     </Container>
