@@ -1,11 +1,56 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import _ from "lodash";
 
-import { postRegistrationForm } from "../../api/apiForm";
-import { RegistrationFormTypes } from "../../types/RegistrationForm";
+import {
+  getCounselorList,
+  getRegistrationForm,
+  postRegistrationForm,
+  putRegistrationForm,
+} from "../../api/apiForm";
+import {
+  RegistrationFormFields,
+  RegistrationFormTypes,
+} from "../../types/RegistrationForm";
+import { options } from "../../assets/data/dashboard/registrationForm";
 
-export const submitForm = createAsyncThunk(
-  "registrationForm/postRegistrationForm",
-  async (data: RegistrationFormTypes) => {
-    return await postRegistrationForm(data);
+export const fetchRegistrationForm = createAsyncThunk(
+  "registrationForm/getRegistrationForm",
+  async () => {
+    const data = (await getRegistrationForm()).reverse();
+
+    const modifiedData = _.map(data, (item) => {
+      const isOthers = !_.some(
+        options.occupationWithoutOthers,
+        (o) => o === item.occupation
+      );
+      return {
+        ...item,
+        [RegistrationFormFields.OCCUPATION]: isOthers
+          ? "others"
+          : item.occupation,
+        [RegistrationFormFields.OCCUPATION_OTHERS]: isOthers
+          ? item.occupation
+          : "",
+      };
+    });
+
+    return modifiedData as RegistrationFormTypes[];
   }
+);
+
+export const submitRegistrationForm = createAsyncThunk(
+  "registrationForm/postRegistrationForm",
+  async (data: RegistrationFormTypes) => await postRegistrationForm(data)
+);
+
+export const editRegistrationForm = createAsyncThunk(
+  "registrationForm/putRegistrationForm",
+  async (data: RegistrationFormTypes) => await putRegistrationForm(data)
+);
+
+/* ----------------------------- Counselor List ----------------------------- */
+
+export const fetchCounselorList = createAsyncThunk(
+  "registrationForm/getCounselorList",
+  async () => (await getCounselorList()).reverse()
 );

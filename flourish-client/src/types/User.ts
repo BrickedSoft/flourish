@@ -12,3 +12,9 @@ export interface UserTypes {
   counselor: string | null;
   client: string | null;
 }
+
+export type CounselorTypes = {
+  id: string;
+  name: string;
+  user: string;
+};

@@ -18,4 +18,5 @@ export const api = {
     [userTypes.ADMIN]: "adminCounselor/filledQuestionnaire/",
     [userTypes.CLIENT]: "client/filledQuestionnaire/",
   },
+  counselorList: "counselor/",
 };

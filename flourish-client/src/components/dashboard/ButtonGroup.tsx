@@ -41,7 +41,7 @@ const Buttons = ({
 
       {showButtonEach[0] && (
         <Button
-          isLoading={isSubmitting}
+          disabled={isSubmitting}
           px={"12"}
           py={"1.5rem"}
           fontSize={"lg"}
@@ -62,7 +62,7 @@ const Buttons = ({
 
         {showButtonEach[1] && (
           <Button
-            isLoading={isSubmitting}
+            disabled={isSubmitting}
             px={"12"}
             py={"1.5rem"}
             fontSize={"lg"}

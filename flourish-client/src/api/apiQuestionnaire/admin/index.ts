@@ -4,6 +4,7 @@ import {
   ApiQuestionnaireTypes,
   DeleteQuestionTypes,
   DeleteQuestionnaireTypes,
+  FilledQuestionnaireTypes,
   PostQuestionTypes,
   PostQuestionnaireTypes,
   PutQuestionTypes,
@@ -56,3 +57,11 @@ export const deleteQuestion = async (
 ): Promise<void> => {
   await api.delete(`${apiData.question}${data.id}/`);
 };
+
+/* -------------------------------------------------------------------------- */
+/*                            Filled Questionnaire                            */
+/* -------------------------------------------------------------------------- */
+
+export const getFilledQuestionnaire = async (): Promise<
+  FilledQuestionnaireTypes[]
+> => (await api.get(apiData.filledQuestionnaire.ADMIN, {})).data;

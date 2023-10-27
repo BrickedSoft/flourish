@@ -15,12 +15,16 @@ const AdminDashboard = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
   const name = useAppSelector((state) => state.user.name);
-  const questionnaireName = useAppSelector(
-    (state) =>
-      _.filter(state.questionnaire.questionnaires, function (questionnaire) {
+  const questionnaireName = useAppSelector((state) => {
+    const questionnaires = state.questionnaire.questionnaires;
+    const filteredQuestionnaires = _.filter(
+      questionnaires,
+      function (questionnaire) {
         return questionnaire.id === id;
-      })[0]?.name
-  );
+      }
+    )[0]?.name;
+    return filteredQuestionnaires;
+  });
 
   const headerTitle = (title: string) => (
     <Heading
@@ -92,7 +96,7 @@ const AdminDashboard = () => {
             w={"full"}
             mx={24}
             my={24}
-            p={32}
+            px={32}
             bg={"white"}
             borderRadius={"xl"}
             overflowY={"scroll"}

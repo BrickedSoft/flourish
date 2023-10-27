@@ -10,6 +10,12 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { IoChevronDownOutline } from "react-icons/io5";
 
 import { RegistrationFormTypes } from "../../types/RegistrationForm";
+import _ from "lodash";
+
+type OptionType = {
+  value: string;
+  label: string;
+};
 
 const SelectField = ({
   register,
@@ -26,7 +32,7 @@ const SelectField = ({
     placeholder: string;
     fieldName: keyof RegistrationFormTypes;
   };
-  options: string[];
+  options: OptionType[];
   currentValue?: string;
   isReadOnly?: boolean;
 }) => {
@@ -83,11 +89,10 @@ const SelectField = ({
           >
             {placeholder}
           </option>
-          {options.map((value) => {
-            value = value.toLowerCase();
+          {_.map(options, (item) => {
             return (
-              <option key={value} value={value}>
-                {value}
+              <option key={item.value} value={item.value}>
+                {item.label}
               </option>
             );
           })}

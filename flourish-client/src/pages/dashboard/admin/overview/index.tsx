@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { VStack } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import _ from "lodash";
 
 import RegistrationFormCard from "../../../../components/form/RegistrationFormCard";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchRegistrationForm } from "../../../../store/actions/formActions";
+import { fetchRegistrationForm } from "../../../../store/actions/registrationFormActions";
 import {
   RegistrationFormFields,
   SessionStatus,
@@ -28,11 +28,12 @@ const OverView = () => {
   const dispatch = useAppDispatch();
   const forms = useAppSelector((state) => {
     const forms = state.registrationForm.forms;
-    return _.filter(
+    const filteredForms = _.filter(
       forms,
       (item) =>
         item[RegistrationFormFields.SESSION_STATUS] !== SessionStatus.PENDING
     );
+    return filteredForms;
   });
   // const [filteredForms, setFilteredForm] =
   //   useState<FilteredFormsType>(initialFilteredForms);
@@ -71,10 +72,11 @@ const OverView = () => {
   // }, [forms]);
 
   return (
-    <VStack w={"full"} h={"full"} spacing={24} alignItems={"stretch"}>
+    <VStack w={"full"} py={32} spacing={24} alignItems={"stretch"}>
       {forms.map((item, index) => (
         <RegistrationFormCard key={index} data={item} />
       ))}
+      <Box pt={32}></Box>
     </VStack>
   );
 };

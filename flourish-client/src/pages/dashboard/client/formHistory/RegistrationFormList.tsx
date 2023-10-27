@@ -8,7 +8,7 @@ import {
 } from "../../../../assets/data/dashboard/registrationForm";
 import { routes } from "../../../../assets/data/routes";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchRegistrationForm } from "../../../../store/actions/formActions";
+import { fetchRegistrationForm } from "../../../../store/actions/registrationFormActions";
 import RegistrationFormCard from "../../../../components/form/RegistrationFormCard";
 
 const RegistrationFormList = () => {

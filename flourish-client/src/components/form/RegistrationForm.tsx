@@ -1,12 +1,16 @@
 import { FC, useEffect } from "react";
-import { Grid, VStack } from "@chakra-ui/react";
+import { Box, Divider, Grid, Heading, VStack } from "@chakra-ui/react";
 import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { formFieldsData } from "../../assets/data/dashboard/registrationForm";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { submitRegistrationForm } from "../../store/actions/formActions";
+import {
+  editRegistrationForm,
+  fetchCounselorList,
+  submitRegistrationForm,
+} from "../../store/actions/registrationFormActions";
 import {
   Department,
   RegistrationFormFields,
@@ -19,17 +23,21 @@ import {
   TypeOfService,
 } from "../../types/RegistrationForm";
 import Container from "../common/Container";
-import Buttons from "../dashboard/Buttons";
+import Buttons from "../dashboard/ButtonGroup";
 import InputField from "./InputField";
 import RadioField from "./RadioField";
 import SelectField from "./SelectField";
 import TextField from "./TextField";
+import { formData as registrationFormData } from "../../assets/data/dashboard/registrationForm";
 
 type PropsType = {
   showButtons?: boolean;
   showButtonEach?: boolean[];
   isReadOnly?: boolean;
   formData?: RegistrationFormTypes;
+  isClient?: boolean;
+  isCounselor?: boolean;
+  isAdmin?: boolean;
 };
 
 const initialForm: RegistrationFormTypes = {
@@ -57,18 +65,58 @@ const initialForm: RegistrationFormTypes = {
   counselor: "",
 };
 
+type OptionType = {
+  value: string;
+  label: string;
+};
+
+const CreateOptions = (
+  labels: string[],
+  values: string[],
+  isValueLowercase = true
+): OptionType[] => {
+  const options: OptionType[] = [];
+  for (let i = 0; i < labels.length; i++) {
+    options.push({
+      label: labels[i],
+      value: isValueLowercase ? values[i].toLowerCase() : values[i],
+    });
+  }
+  return options;
+};
+
 const RegistrationForm: FC<PropsType> = ({
   showButtons = true,
   showButtonEach = [true, true, true],
   isReadOnly = false,
   formData = initialForm,
+  isClient = true,
+  isCounselor = false,
+  isAdmin = false,
 }) => {
+  isReadOnly = isAdmin || isCounselor ? true : isReadOnly;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const name = useAppSelector((state) => state.user.name);
+  const counselorList = useAppSelector(
+    (state) => state.registrationForm.counselorList
+  );
+  const questionnaireList = useAppSelector((state) => {
+    const questionnaires = state.questionnaire.questionnaires;
+    return _.chain(questionnaires)
+      .mapValues((item) => ({
+        value: item.id,
+        label: item.name,
+      }))
+      .map((item) => item)
+      .value();
+  });
+
+  // console.log(formData)
 
   useEffect(() => {
     if (name && !formData.name) formData.name = name;
+    dispatch(fetchCounselorList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,12 +142,17 @@ const RegistrationForm: FC<PropsType> = ({
     if (data.occupation_others !== "")
       modifiedData.occupation = data.occupation_others as Occupation;
 
-    await dispatch(submitRegistrationForm(modifiedData));
+    if (!isAdmin && !isCounselor)
+      await dispatch(submitRegistrationForm(modifiedData));
+
+    if (isAdmin || isCounselor)
+      await dispatch(editRegistrationForm(modifiedData));
+
     navigate(-1);
   };
 
   return (
-    <Container w={"full"} py={32} borderRadius={"xl"}>
+    <Container w={"full"} borderRadius={"xl"}>
       <VStack
         as={"form"}
         onSubmit={handleSubmit(onSubmit)}
@@ -110,18 +163,97 @@ const RegistrationForm: FC<PropsType> = ({
         {/* --------------------------------- Buttons -------------------------------- */}
 
         {showButtons && (
-          <Buttons
-            isSubmitting={isSubmitting}
-            isDirty={isDirty}
-            isValid={isValid}
-            reset={reset}
-            data={initialForm}
-            titles={["", "", "Submit"]}
-            showButtonEach={showButtonEach}
-          />
+          <Box
+            position={"sticky"}
+            pt={32}
+            pb={16}
+            top={0}
+            zIndex={50}
+            bg={"white"}
+          >
+            <Buttons
+              isSubmitting={isSubmitting}
+              isDirty={isDirty}
+              isValid={isValid}
+              reset={reset}
+              data={formData}
+              titles={["", "", "Submit"]}
+              showButtonEach={showButtonEach}
+            />
+          </Box>
         )}
 
         {/* --------------------------------- Fields --------------------------------- */}
+
+        {/* ------------------------------- Admin Fields ------------------------------ */}
+
+        {isAdmin && (
+          <>
+            <Heading color={"font.heroLight"} mb={0} textAlign={"center"}>
+              {registrationFormData.fieldsHeading.admin}
+            </Heading>
+            <Grid
+              templateColumns={"auto 1fr"}
+              columnGap={128}
+              rowGap={40}
+              alignItems={"center"}
+              pb={32}
+            >
+              <SelectField
+                register={register}
+                errors={errors}
+                data={{
+                  title: formFieldsData.assign_counselor.title,
+                  placeholder: formFieldsData.assign_counselor.placeholder,
+                  fieldName: RegistrationFormFields.COUNSELOR,
+                }}
+                options={CreateOptions(
+                  _.map(counselorList, "user"),
+                  _.map(counselorList, "id"),
+                  false
+                )}
+                currentValue={watch(RegistrationFormFields.COUNSELOR)}
+              />
+
+              <SelectField
+                register={register}
+                errors={errors}
+                data={{
+                  title: formFieldsData.suggested_questionnaire.title,
+                  placeholder:
+                    formFieldsData.suggested_questionnaire.placeholder,
+                  fieldName: RegistrationFormFields.SUGGESTED_QUESTIONNAIRE,
+                }}
+                options={questionnaireList as OptionType[]}
+                currentValue={watch(RegistrationFormFields.COUNSELOR)}
+              />
+
+              <TextField
+                errors={errors}
+                register={register}
+                data={{
+                  title: formFieldsData.official_comment.title,
+                  secondaryTitle:
+                    formFieldsData.official_comment.secondaryTitle,
+                  placeholder: formFieldsData.official_comment.placeholder,
+                  fieldName: RegistrationFormFields.OFFICIAL_COMMENT,
+                }}
+              />
+            </Grid>
+
+            <Divider mb={16} />
+          </>
+        )}
+
+        {/* ----------------------------- Counselor Fields ---------------------------- */}
+
+        {/* ------------------------------ CLient Fields ------------------------------ */}
+
+        {(isAdmin || isCounselor) && (
+          <Heading color={"font.heroLight"} mb={0} textAlign={"center"}>
+            {registrationFormData.fieldsHeading.client}
+          </Heading>
+        )}
 
         <Grid
           templateColumns={"auto 1fr"}
@@ -148,7 +280,11 @@ const RegistrationForm: FC<PropsType> = ({
               placeholder: formFieldsData.gender.placeholder,
               fieldName: RegistrationFormFields.GENDER,
             }}
-            options={Object.values(Gender) as Array<Gender>}
+            options={CreateOptions(
+              Object.values(Gender) as Array<Gender>,
+              Object.values(Gender) as Array<Gender>
+            )}
+            currentValue={watch(RegistrationFormFields.GENDER)}
             isReadOnly={isReadOnly}
           />
 
@@ -159,7 +295,11 @@ const RegistrationForm: FC<PropsType> = ({
               placeholder: formFieldsData.occupation.placeholder,
               fieldName: RegistrationFormFields.OCCUPATION,
             }}
-            options={Object.values(Occupation) as Array<Occupation>}
+            options={CreateOptions(
+              Object.values(Occupation) as Array<Occupation>,
+              Object.values(Occupation) as Array<Occupation>
+            )}
+            currentValue={watch(RegistrationFormFields.OCCUPATION)}
             isReadOnly={isReadOnly}
           />
 
@@ -173,7 +313,11 @@ const RegistrationForm: FC<PropsType> = ({
                 placeholder: formFieldsData.department.placeholder,
                 fieldName: RegistrationFormFields.DEPARTMENT,
               }}
-              options={Object.values(Department) as Array<Department>}
+              options={CreateOptions(
+                Object.values(Department) as Array<Department>,
+                Object.values(Department) as Array<Department>,
+                true
+              )}
               currentValue={watch(RegistrationFormFields.DEPARTMENT)}
               isReadOnly={isReadOnly}
             />
@@ -198,7 +342,10 @@ const RegistrationForm: FC<PropsType> = ({
               placeholder: formFieldsData.marital_status.placeholder,
               fieldName: RegistrationFormFields.MARITAL_STATUS,
             }}
-            options={Object.values(MaritalStatus) as Array<MaritalStatus>}
+            options={CreateOptions(
+              Object.values(MaritalStatus) as Array<MaritalStatus>,
+              Object.values(MaritalStatus) as Array<MaritalStatus>
+            )}
             currentValue={watch(RegistrationFormFields.MARITAL_STATUS)}
             isReadOnly={isReadOnly}
           />
@@ -256,7 +403,10 @@ const RegistrationForm: FC<PropsType> = ({
               placeholder: formFieldsData.referred_by.placeholder,
               fieldName: RegistrationFormFields.REFERRED_BY,
             }}
-            options={Object.values(ReferredBy) as Array<ReferredBy>}
+            options={CreateOptions(
+              Object.values(ReferredBy) as Array<ReferredBy>,
+              Object.values(ReferredBy) as Array<ReferredBy>
+            )}
             currentValue={watch(RegistrationFormFields.REFERRED_BY)}
             isReadOnly={isReadOnly}
           />
@@ -269,7 +419,10 @@ const RegistrationForm: FC<PropsType> = ({
               placeholder: formFieldsData.type_of_service.placeholder,
               fieldName: RegistrationFormFields.TYPE_OF_SERVICE,
             }}
-            options={Object.values(TypeOfService) as Array<TypeOfService>}
+            options={CreateOptions(
+              Object.values(TypeOfService) as Array<TypeOfService>,
+              Object.values(TypeOfService) as Array<TypeOfService>
+            )}
             currentValue={watch(RegistrationFormFields.TYPE_OF_SERVICE)}
             isReadOnly={isReadOnly}
           />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Center, Flex, FormControl, Heading } from "@chakra-ui/react";
+import { Box, Center, Flex, FormControl, Heading } from "@chakra-ui/react";
 import _ from "lodash";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -27,19 +27,20 @@ import { EvaluationFields } from "./EvaluationFields";
 import OptionFields from "./OptionFields";
 import QuestionFields from "./QuestionFields";
 import QuestionnaireName from "./QuestionnaireName";
-import Buttons from "../../../../components/dashboard/Buttons";
+import Buttons from "../../../../components/dashboard/ButtonGroup";
 
 const QuestionnaireDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector((state) => state.questionnaire.status);
-  const questionnaire = useAppSelector(
-    (state) =>
-      _.filter(state.questionnaire.questionnaires, (questionnaire) => {
-        return questionnaire.id === id;
-      })[0]
-  );
+  const questionnaire = useAppSelector((state) => {
+    const questionnaires = state.questionnaire.questionnaires;
+    const filteredQuestionnaires = _.filter(questionnaires, (questionnaire) => {
+      return questionnaire.id === id;
+    })[0];
+    return filteredQuestionnaires;
+  });
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   const {
@@ -152,7 +153,7 @@ const QuestionnaireDetails = () => {
         }
 
         return (
-          <Container w={"full"} py={32} borderRadius={"xl"}>
+          <Container w={"full"} pb={32} borderRadius={"xl"}>
             <FormControl
               as={"form"}
               onSubmit={handleSubmit(onSubmit)}
@@ -162,13 +163,23 @@ const QuestionnaireDetails = () => {
             >
               {/* --------------------------------- Buttons -------------------------------- */}
 
-              <Buttons
-                isSubmitting={isSubmitting}
-                isDirty={isDirty}
-                isValid={isValid}
-                reset={reset}
-                data={questionnaire}
-              />
+              <Box
+                position={"sticky"}
+                flexDir={"column"}
+                pt={32}
+                pb={16}
+                top={0}
+                zIndex={50}
+                bg={"white"}
+              >
+                <Buttons
+                  isSubmitting={isSubmitting}
+                  isDirty={isDirty}
+                  isValid={isValid}
+                  reset={reset}
+                  data={questionnaire}
+                />
+              </Box>
 
               {/* --------------------------- Questionnaire Name --------------------------- */}
 

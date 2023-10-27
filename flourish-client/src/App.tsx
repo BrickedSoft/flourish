@@ -30,6 +30,10 @@ import QuestionnaireListClient from "./pages/dashboard/client/questionnaire/Ques
 import QuestionnaireFillUpClient from "./pages/dashboard/client/questionnaire/QuestionnaireFillUp";
 import FilledQuestionnaireListClient from "./pages/dashboard/client/filledQuestionnaire/FilledQuestionnaireList";
 import FilledQuestionnaireDetailsClient from "./pages/dashboard/client/filledQuestionnaire/FilledQuestionnaireDetails";
+import PendingFormList from "./pages/dashboard/admin/sessionRequest/PendingFormList";
+import PendingForm from "./pages/dashboard/admin/sessionRequest/PendingForm";
+import PendingFormDetails from "./pages/dashboard/admin/sessionRequest/PendingFormDetails";
+import FilledQuestionnaireDetailsAdmin from "./pages/dashboard/admin/sessionRequest/FilledQuestionnaireDetails";
 
 const App = () => {
   const location = useLocation();
@@ -55,7 +59,16 @@ const App = () => {
           </Route>
           <Route index element={<h1>Members</h1>} />
           <Route path={nav.members} element={<h1>Members</h1>} />
-          <Route path={nav.sessionRequest} element={<SessionRequest />} />
+          <Route path={nav.sessionRequest} element={<SessionRequest />}>
+            <Route index element={<PendingFormList />} />
+            <Route path=":id" element={<PendingForm />}>
+              <Route index element={<PendingFormDetails />} />
+              <Route
+                path=":questionnaireId"
+                element={<FilledQuestionnaireDetailsAdmin />}
+              />
+            </Route>
+          </Route>
           <Route path={nav.overview} element={<OverViewAdmin />} />
         </Route>
       );

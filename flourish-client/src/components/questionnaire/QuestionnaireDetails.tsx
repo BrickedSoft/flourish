@@ -31,7 +31,7 @@ import {
 } from "../../types/Questionnaire";
 import Container from "../common/Container";
 import ButtonFull from "../common/button/ButtonFull";
-import Buttons from "../dashboard/Buttons";
+import Buttons from "../dashboard/ButtonGroup";
 import RadioField from "./RadioField";
 
 type FieldType = {
@@ -68,8 +68,7 @@ const FieldHeading: FC<FieldHeadingType> = ({ title, ...rest }) => {
       as={"h1"}
       fontSize={"xl"}
       color={"font.heroLight"}
-      fontWeight={"medium"}
-      textShadow={"0 0.2rem 0.4rem rgba(28, 126, 214, 0.25)"}
+      fontWeight={"semibold"}
       textAlign={"center"}
       {...rest}
     >
@@ -172,8 +171,7 @@ const QuestionnaireDetails: FC<PropsType> = ({
         <Flex
           position={"sticky"}
           flexDir={"column"}
-          pt={32}
-          pb={16}
+          py={32}
           top={0}
           zIndex={50}
           bg={"white"}

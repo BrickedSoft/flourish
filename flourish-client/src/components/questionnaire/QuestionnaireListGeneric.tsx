@@ -131,12 +131,7 @@ const QuestionnaireListGeneric: FC<PropsTypes> = ({
             ) : (
               showAddButton &&
               showButtons && (
-                <Center
-                  position={"sticky"}
-                  bottom={0}
-                  left={"50%"}
-                  transform={"translateY(25%)"}
-                >
+                <Center position={"sticky"} bottom={32} left={"50%"}>
                   <Tooltip
                     hasArrow
                     label={questionnaireData.button.questionnaire.add.title}

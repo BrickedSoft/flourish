@@ -87,6 +87,7 @@ export type FilledQuestionnaireTypes = {
   comment: string;
   questionnaire: string;
   created_at?: string;
+  client?: string;
 };
 
 export type PostFilledQuestionnaireTypes = {
@@ -106,4 +107,5 @@ export type GetFilledQuestionnaireTypes = {
   }[];
   comment: OptionAndEvaluationRangeTypes;
   created_at: string;
+  client: string;
 };

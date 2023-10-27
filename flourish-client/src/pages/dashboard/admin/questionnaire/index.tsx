@@ -13,7 +13,7 @@ const Questionnaire = () => {
   }, [dispatch]);
 
   return (
-    <Box w={"full"} px={0} borderRadius={"xl"}>
+    <Box w={"full"} borderRadius={"xl"}>
       <Outlet />
     </Box>
   );

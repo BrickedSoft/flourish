@@ -111,6 +111,7 @@ export enum Department {
 
 export enum SessionStatus {
   PENDING = "pending",
+  CONFIRMATION = "confirmation",
   ONGOING = "ongoing",
   COMPLETED = "completed",
   REJECTED = "rejected",

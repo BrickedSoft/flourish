@@ -5,21 +5,26 @@ import { PURGE } from "redux-persist";
 import { RegistrationFormTypes } from "../../types/RegistrationForm";
 import { Status } from "../../types/Status";
 import {
+  editRegistrationForm,
+  fetchCounselorList,
   fetchRegistrationForm,
   submitRegistrationForm,
-} from "../actions/formActions";
+} from "../actions/registrationFormActions";
+import { CounselorTypes } from "../../types/User";
 
 interface reducerType {
   forms: RegistrationFormTypes[];
+  counselorList: CounselorTypes[];
   status: Status;
 }
 
 const initialState: reducerType = {
   forms: [],
+  counselorList: [],
   status: Status.IDLE,
 };
 
-const formslice = createSlice({
+const formSlice = createSlice({
   name: "registrationForm",
   initialState,
   reducers: {
@@ -57,6 +62,35 @@ const formslice = createSlice({
       state.status = Status.REJECTED;
     });
 
+    /* -------------------------------- Edit Form ------------------------------- */
+
+    builder.addCase(editRegistrationForm.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+
+    builder.addCase(editRegistrationForm.fulfilled, (state) => {
+      state.status = Status.FULFILLED;
+    });
+
+    builder.addCase(editRegistrationForm.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
+    /* ----------------------------- Counselor List ----------------------------- */
+
+    builder.addCase(fetchCounselorList.pending, (state) => {
+      state.status = Status.PENDING;
+    });
+
+    builder.addCase(fetchCounselorList.fulfilled, (state, action) => {
+      state.counselorList = action.payload;
+      state.status = Status.FULFILLED;
+    });
+
+    builder.addCase(fetchCounselorList.rejected, (state) => {
+      state.status = Status.REJECTED;
+    });
+
     /* ---------------------------------- PURGE --------------------------------- */
 
     builder.addCase(PURGE, (state) => {
@@ -68,6 +102,6 @@ const formslice = createSlice({
   },
 });
 
-export default formslice.reducer;
-export const { purgeQuestionnaire } = formslice.actions;
-export const { name } = formslice;
+export default formSlice.reducer;
+export const { purgeQuestionnaire } = formSlice.actions;
+export const { name } = formSlice;
