@@ -6,10 +6,16 @@ import _ from "lodash";
 import { RegistrationFormTypes } from "../../types/RegistrationForm";
 import RadioCard from "./RadioCard";
 
+type OptionType = {
+  value: string;
+  label: string;
+};
+
 const RadioField = ({
   control,
   data: { title, placeholder, fieldName },
   options,
+  currentValue,
   isReadOnly = false,
 }: {
   control: Control<RegistrationFormTypes, any>;
@@ -18,16 +24,18 @@ const RadioField = ({
     placeholder: string;
     fieldName: keyof RegistrationFormTypes;
   };
-  options: string[];
+  options: OptionType[];
+  currentValue?: string;
   isReadOnly?: boolean;
 }) => {
   const prevState = useRef<number>(0);
+  const values = _.map(options, "value");
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "userType",
-    defaultValue: options[0],
+    defaultValue: currentValue ?? options[0].value,
     onChange: (value) => {
-      prevState.current = _.indexOf(options, value);
+      prevState.current = _.indexOf(values, value);
     },
   });
 
@@ -60,17 +68,17 @@ const RadioField = ({
               maxW={"4xl"}
             >
               {options.map((value, index) => {
-                const radio = getRadioProps({ value });
+                const radio = getRadioProps({ value: value.value });
                 return (
                   <RadioCard
-                    key={value}
+                    key={value.value}
                     {...radio}
                     totalOptions={options.length}
                     index={index}
                     prevState={prevState.current}
                     isReadOnly={isReadOnly}
                   >
-                    {value}
+                    {value.label}
                   </RadioCard>
                 );
               })}

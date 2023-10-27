@@ -11,13 +11,12 @@ import {
 const PendingFormList = () => {
   const forms = useAppSelector((state) => {
     const forms = state.registrationForm.forms;
-
-    return _.filter(forms, [
+    const filteredForms = _.filter(forms, [
       RegistrationFormFields.SESSION_STATUS,
       SessionStatus.PENDING,
     ]);
+    return filteredForms;
   });
-
 
   return (
     <VStack w={"full"} py={32} spacing={24} alignItems={"stretch"}>

@@ -31,7 +31,7 @@ import {
 } from "../../types/Questionnaire";
 import Container from "../common/Container";
 import ButtonFull from "../common/button/ButtonFull";
-import Buttons from "../dashboard/Buttons";
+import Buttons from "../dashboard/ButtonGroup";
 import RadioField from "./RadioField";
 
 type FieldType = {

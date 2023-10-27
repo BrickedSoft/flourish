@@ -27,19 +27,20 @@ import { EvaluationFields } from "./EvaluationFields";
 import OptionFields from "./OptionFields";
 import QuestionFields from "./QuestionFields";
 import QuestionnaireName from "./QuestionnaireName";
-import Buttons from "../../../../components/dashboard/Buttons";
+import Buttons from "../../../../components/dashboard/ButtonGroup";
 
 const QuestionnaireDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const status = useAppSelector((state) => state.questionnaire.status);
-  const questionnaire = useAppSelector(
-    (state) =>
-      _.filter(state.questionnaire.questionnaires, (questionnaire) => {
-        return questionnaire.id === id;
-      })[0]
-  );
+  const questionnaire = useAppSelector((state) => {
+    const questionnaires = state.questionnaire.questionnaires;
+    const filteredQuestionnaires = _.filter(questionnaires, (questionnaire) => {
+      return questionnaire.id === id;
+    })[0];
+    return filteredQuestionnaires;
+  });
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   const {

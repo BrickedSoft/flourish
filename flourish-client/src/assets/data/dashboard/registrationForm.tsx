@@ -21,6 +21,11 @@ export const formData = {
       icon: <IoAddCircleOutline />,
     },
   },
+  fieldsHeading: {
+    admin: "Admin Fields",
+    client: "Client Fields",
+    counselor: "Counselor Fields",
+  },
 };
 
 export const formFieldsData = {
@@ -64,4 +69,21 @@ export const formFieldsData = {
     title: "Type of service",
     placeholder: "Select the type of service you want",
   },
+  assign_counselor: {
+    title: "Assign Counselor",
+    placeholder: "Select the counselor",
+  },
+  official_comment: {
+    title: "Official Comment",
+    secondaryTitle: "Write in short",
+    placeholder: "Write official comment",
+  },
+  suggested_questionnaire: {
+    title: "Suggest Questionnaire",
+    placeholder: "Select the questionnaire",
+  },
+};
+
+export const options = {
+  occupationWithoutOthers: ["student", "teacher"],
 };

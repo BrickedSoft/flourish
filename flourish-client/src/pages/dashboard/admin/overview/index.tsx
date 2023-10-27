@@ -4,7 +4,7 @@ import _ from "lodash";
 
 import RegistrationFormCard from "../../../../components/form/RegistrationFormCard";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchRegistrationForm } from "../../../../store/actions/formActions";
+import { fetchRegistrationForm } from "../../../../store/actions/registrationFormActions";
 import {
   RegistrationFormFields,
   SessionStatus,
@@ -28,11 +28,12 @@ const OverView = () => {
   const dispatch = useAppDispatch();
   const forms = useAppSelector((state) => {
     const forms = state.registrationForm.forms;
-    return _.filter(
+    const filteredForms = _.filter(
       forms,
       (item) =>
         item[RegistrationFormFields.SESSION_STATUS] !== SessionStatus.PENDING
     );
+    return filteredForms;
   });
   // const [filteredForms, setFilteredForm] =
   //   useState<FilteredFormsType>(initialFilteredForms);

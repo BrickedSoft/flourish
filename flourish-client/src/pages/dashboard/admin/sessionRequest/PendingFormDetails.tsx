@@ -11,13 +11,13 @@ const PendingFormDetails = () => {
   const { id } = useParams();
   const form = useAppSelector((state) => {
     const forms = state.registrationForm.forms;
-
-    return _.filter(forms, [RegistrationFormFields.ID, id])[0];
+    const filteredForms = _.filter(forms, [RegistrationFormFields.ID, id])[0];
+    return filteredForms;
   });
 
   return (
     <VStack w={"full"} spacing={64} justifyContent={"stretch"} pb={32}>
-      <RegistrationForm formData={form} />
+      <RegistrationForm formData={form} isAdmin />
 
       <FilledQuestionnaireList clientId={form?.client} />
     </VStack>

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Heading, VStack } from "@chakra-ui/react";
+import { Divider, Heading, VStack } from "@chakra-ui/react";
 
 import _ from "lodash";
 import { filledQuestionnaireData } from "../../../../assets/data/dashboard/questionnaire";
@@ -18,7 +18,8 @@ type PropsType = {
 const FilledQuestionnaireList: FC<PropsType> = ({ clientId }) => {
   const filledQuestionnaires = useAppSelector((state) => {
     const list = state.questionnaire.filledQuestionnaire;
-    return _.filter(list, { client: clientId });
+    const filteredList = _.filter(list, { client: clientId });
+    return filteredList;
   });
   const questionnaires = useAppSelector(
     (state) => state.questionnaire.questionnaires
@@ -26,7 +27,11 @@ const FilledQuestionnaireList: FC<PropsType> = ({ clientId }) => {
 
   return (
     <VStack w={"full"} spacing={24} justifyContent={"stretch"}>
-      <Heading color={"font.heroLight"} mb={0}>{filledQuestionnaireData.list}</Heading>
+      <Divider mb={64} />
+
+      <Heading color={"font.heroLight"} mb={0}>
+        {filledQuestionnaireData.list}
+      </Heading>
 
       <FilledQuestionnaireListGeneric
         filledQuestionnaires={

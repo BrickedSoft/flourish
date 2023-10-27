@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { routes } from "../../../../assets/data/routes";
 import RegistrationForm from "../../../../components/form/RegistrationForm";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchRegistrationForm } from "../../../../store/actions/formActions";
+import { fetchRegistrationForm } from "../../../../store/actions/registrationFormActions";
 
 const RegistrationFormDetails = () => {
   const { id } = useParams();
