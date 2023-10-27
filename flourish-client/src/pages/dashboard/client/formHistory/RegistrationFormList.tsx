@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Button, Center, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -7,18 +6,11 @@ import {
   formList as formListData,
 } from "../../../../assets/data/dashboard/registrationForm";
 import { routes } from "../../../../assets/data/routes";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/useStore";
-import { fetchRegistrationForm } from "../../../../store/actions/registrationFormActions";
 import RegistrationFormCard from "../../../../components/form/RegistrationFormCard";
+import { useAppSelector } from "../../../../hooks/useStore";
 
 const RegistrationFormList = () => {
-  const dispatch = useAppDispatch();
   const fromList = useAppSelector((state) => state.registrationForm.forms);
-
-  useEffect(() => {
-    dispatch(fetchRegistrationForm());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const buttonFull = (
     <Button

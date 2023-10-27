@@ -76,7 +76,8 @@ const theme = extendTheme({
     status: {
       pending: "#ffa94d",
       create: "#2f9e44",
-      confirmation: "#339af0",
+      confirmation: "#2b8a3e",
+      confirming: "#2b8a3e",
       success: "#40c057",
       competed: "#40c057",
       error: "#f03e3e",

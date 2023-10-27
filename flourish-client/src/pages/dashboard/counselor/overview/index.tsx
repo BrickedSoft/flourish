@@ -11,8 +11,9 @@ const Overview = () => {
   useEffect(() => {
     dispatch(fetchRegistrationForm());
   }, [dispatch]);
+
   return (
-    <Box w={"full"} h={"full"} borderRadius={"xl"}>
+    <Box w={"full"} borderRadius={"xl"}>
       <Outlet />
     </Box>
   );

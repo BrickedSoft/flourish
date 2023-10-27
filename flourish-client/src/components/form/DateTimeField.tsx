@@ -4,9 +4,12 @@ import {
   FormErrorMessage,
   FormLabel,
   Grid,
-  Input,
 } from "@chakra-ui/react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+
+import { Control, Controller, FieldErrors } from "react-hook-form";
+//@ts-ignore
+import { DatePicker } from "rsuite";
+import "rsuite/dist/rsuite-no-reset.min.css";
 
 import { RegistrationFormTypes } from "../../types/RegistrationForm";
 
@@ -16,21 +19,24 @@ interface DataType {
   fieldName: keyof RegistrationFormTypes;
 }
 
-const InputField = ({
+const DateTimeField = ({
+  control,
   errors,
-  register,
   data: { title, placeholder, fieldName },
+  currentValue,
   isReadOnly = false,
 }: {
+  control: Control<RegistrationFormTypes, any>;
   errors: FieldErrors<RegistrationFormTypes>;
-  register: UseFormRegister<RegistrationFormTypes>;
   data: DataType;
+  currentValue?: string;
   isReadOnly?: boolean;
 }) => {
+  const initialValue = currentValue ? new Date(currentValue) : undefined;
+
   return (
     <>
       <FormLabel
-        htmlFor={fieldName}
         m={0}
         fontSize={"xl"}
         color={"font.muted"}
@@ -39,6 +45,7 @@ const InputField = ({
       >
         {title}
       </FormLabel>
+
       <FormControl
         id={fieldName}
         as={Grid}
@@ -49,21 +56,31 @@ const InputField = ({
         gap={16}
         isReadOnly={isReadOnly}
       >
-        <Input
-          type={"text"}
-          placeholder={placeholder}
-          {...register(fieldName, {
-            required: "This is required",
-          })}
-          px={"16"}
-          py={"18"}
-          fontSize={"xl"}
-          borderWidth={"2"}
-          borderRadius={"xl"}
-          maxW={"4xl"}
-          _placeholder={{ color: "gray.300" }}
+        <Controller
+          name={fieldName}
+          control={control}
+          render={({ field: { onChange } }) => (
+            <DatePicker
+              format="yyyy-MM-dd HH:mm:ss"
+              value={initialValue}
+              ranges={[
+                {
+                  label: "Now",
+                  value: new Date(),
+                },
+              ]}
+              style={{
+                width: "full",
+                maxWidth: "56rem",
+                backgroundColor: "white",
+                zIndex: 200,
+              }}
+              onChange={(value: Date | null) => onChange(value?.toISOString())}
+              placeholder={placeholder}
+              size="lg"
+            />
+          )}
         />
-
         <FormErrorMessage fontSize={"md"}>
           {errors[fieldName] && (errors[fieldName]?.message as ReactNode)}
         </FormErrorMessage>
@@ -72,4 +89,4 @@ const InputField = ({
   );
 };
 
-export default InputField;
+export default DateTimeField;

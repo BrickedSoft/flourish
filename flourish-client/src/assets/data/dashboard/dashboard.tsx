@@ -39,17 +39,28 @@ export const menu = {
       exclude: [],
     },
   ],
+  [userTypes.COUNSELOR]: [
+    {
+      title: "Dashboard",
+      href: routes.dashboard,
+      icon: <RxDashboard fontSize={24} strokeWidth={0.1} />,
+      exclude: [],
+    },
+  ],
 };
 
 export const navBar = {
   [userTypes.ADMIN]: [
     { title: "Overview", href: routes.overview },
-    { title: "Members", href: routes.members },
     { title: "Session Request", href: routes.sessionRequest },
   ],
   [userTypes.CLIENT]: [
     { title: "Overview", href: routes.overview },
     { title: "Form History", href: routes.formHistory },
     { title: "Filled Questionnaires", href: routes.filledQuestionnaire },
+  ],
+  [userTypes.COUNSELOR]: [
+    { title: "Overview", href: routes.overview },
+    { title: "Session Request", href: routes.sessionRequest },
   ],
 };
