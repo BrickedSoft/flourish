@@ -1,18 +1,20 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
-import Hero from "./Hero";
+import Hero from "./hero";
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
+import Services from "./services/Services";
 
 const Homepage = () => {
   return (
-    <Box w={"full"}>
-      <Header />
-      <Box bg="bg.container2" pt={"32"}>
+    <Flex flexDir={"column"} gap={96} w={"full"}>
+      <Box>
+        <Header />
         <Hero />
       </Box>
+      <Services />
       <Footer />
-    </Box>
+    </Flex>
   );
 };
 
