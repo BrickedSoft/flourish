@@ -61,7 +61,6 @@ const Header = () => {
   return (
     <Container
       id={"header"}
-      w={"full"}
       maxW={"full"}
       px={"32"}
       bg={"bg.container2"}
