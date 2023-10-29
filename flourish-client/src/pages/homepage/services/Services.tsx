@@ -21,7 +21,7 @@ const Services = () => {
   });
 
   return (
-    <Container id="services" py={64}>
+    <Container id="services" maxW={"container"} py={64}>
       <CustomHeading variant={HeadingVariant.primary}>
         {servicesData.title}
       </CustomHeading>
