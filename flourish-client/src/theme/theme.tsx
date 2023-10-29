@@ -206,6 +206,7 @@ const theme = extendTheme({
     "8xl": "90rem",
     "12xl": "120rem",
     "13xl": "130rem",
+    container: "130rem",
   },
 
   zIndices: {
