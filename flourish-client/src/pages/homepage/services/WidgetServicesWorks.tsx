@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { Box, Stack, Text } from "@chakra-ui/react";
 
 type DataType = {
@@ -27,6 +27,7 @@ const WidgetServicesWorks: FC<PropsType> = ({
       alignItems={alignItems ? alignItems : "start"}
       bg="bg"
       spacing={8}
+      boxShadow={isBoxShadow ? "8px 8px 24px rgba(0, 0, 0, 0.08)" : "none"}
     >
       <Box p={12} bg={data.bgColor} borderRadius={"full"}>
         {data.icon}
