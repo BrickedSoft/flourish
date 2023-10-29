@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 
 import { servicesData } from "../../../assets/data/homepage/services";
 import ServicesImage from "../../../assets/svg/Services";
@@ -13,7 +13,7 @@ const Services = () => {
       <GridItem key={index}>
         <WidgetServicesWorks
           data={item}
-          isBoxShadow={true}
+          isBoxShadow={false}
           alignItems="center"
         />
       </GridItem>
@@ -28,16 +28,14 @@ const Services = () => {
       <CustomHeading variant={HeadingVariant.secondary}>
         {servicesData.description}
       </CustomHeading>
-      <Grid templateColumns="4fr 3fr" alignItems="center">
-        <Grid templateColumns={"repeat(2, 1fr)"} columnGap={16} rowGap={32}>
+      <Grid templateColumns="3fr 4fr" alignItems="center" gap={64}>
+        <GridItem boxSize={"110%"}>
+          <ServicesImage />
+        </GridItem>
+
+        <Grid templateColumns={"repeat(2, 1fr)"} columnGap={16} rowGap={48}>
           {renderedServiceWidget}
         </Grid>
-
-        <GridItem>
-          <Box boxSize={"110%"}>
-            <ServicesImage />
-          </Box>
-        </GridItem>
       </Grid>
     </Container>
   );

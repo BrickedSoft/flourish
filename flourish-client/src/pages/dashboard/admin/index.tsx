@@ -62,7 +62,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <Container pr={0} pt={"36"} h={"100vh"}>
+    <Container pl={36} pr={0} pt={36} h={"100vh"}>
       <Grid
         h={"full"}
         templateColumns={"auto 1fr"}

@@ -4,9 +4,9 @@ import { Box } from "@chakra-ui/react";
 type PropsType = {
   children: ReactNode;
   id?: string | undefined | number;
-  w?: string;
-  maxW?: string;
-  px?: string;
+  w?: string | number;
+  maxW?: string | number;
+  px?: string | number;
   bg?: string;
   [key: string]: string | number | undefined | ReactNode;
 };
@@ -15,8 +15,8 @@ const Container: FC<PropsType> = ({
   children,
   id,
   w = "full",
-  maxW = "13xl",
-  px = "20px",
+  maxW = "full",
+  px = 20,
   bg = "white",
   ...props
 }) => {
