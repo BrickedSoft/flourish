@@ -15,6 +15,7 @@ export interface UserTypes {
 
 export type CounselorTypes = {
   id: string;
+  email: string;
   name: string;
   user: string;
 };

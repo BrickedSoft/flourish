@@ -5,8 +5,8 @@ import { Outlet } from "react-router-dom";
 import { useAppDispatch } from "../../../../hooks/useStore";
 import { fetchRegistrationForm } from "../../../../store/actions/registrationFormActions";
 import {
+  fetchAllQuestionnaire,
   fetchFilledQuestionnaire,
-  fetchQuestionnaire,
 } from "../../../../store/actions/questionnaireActions/admin";
 
 const SessionRequest = () => {
@@ -15,7 +15,7 @@ const SessionRequest = () => {
   useEffect(() => {
     dispatch(fetchRegistrationForm());
     dispatch(fetchFilledQuestionnaire());
-    dispatch(fetchQuestionnaire());
+    dispatch(fetchAllQuestionnaire());
   }, [dispatch]);
 
   return (

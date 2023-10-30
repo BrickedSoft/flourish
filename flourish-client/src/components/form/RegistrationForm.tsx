@@ -135,9 +135,6 @@ const RegistrationForm: FC<PropsType> = ({
     initialForm.occupation
   );
 
-  // console.log(watch(RegistrationFormFields.SESSION_TIME));
-  // console.log(formData);
-
   const onSubmit = async (data: RegistrationFormTypes) => {
     const modifiedData = _.omit(data, [
       RegistrationFormFields.OCCUPATION_OTHERS,
@@ -218,7 +215,7 @@ const RegistrationForm: FC<PropsType> = ({
                   fieldName: RegistrationFormFields.COUNSELOR,
                 }}
                 options={CreateOptions(
-                  _.map(counselorList, "user"),
+                  _.map(counselorList, "email"),
                   _.map(counselorList, "id"),
                   false
                 )}

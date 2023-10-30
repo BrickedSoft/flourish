@@ -90,7 +90,13 @@ const FilledQuestionnaireListGeneric: FC<PropsType> = ({
         </VStack>
       ) : (
         showAddButton && (
-          <Center position={"sticky"} bottom={24} left={"50%"}>
+          <Center
+            position={"sticky"}
+            bottom={0}
+            left={"50%"}
+            transform={"translateY(-50%)"}
+            pt={16}
+          >
             {buttonAdd}
           </Center>
         )

@@ -7,13 +7,11 @@ import {
   RegistrationFormFields,
   SessionStatus,
 } from "../../../../types/RegistrationForm";
+import { routes } from "../../../../assets/data/routes";
 
 const OverviewFormList = () => {
-  console.log("lol")
-
   const forms = useAppSelector((state) => {
     const forms = state.registrationForm.forms;
-    console.log(forms);
     const filteredForms = _.filter(
       forms,
       (item) =>
@@ -28,7 +26,7 @@ const OverviewFormList = () => {
   return (
     <VStack w={"full"} py={32} spacing={24} alignItems={"stretch"}>
       {forms.map((item, index) => (
-        <RegistrationFormCard key={index} data={item} />
+        <RegistrationFormCard key={index} data={item} route={routes.overview} />
       ))}
       <Box pt={32}></Box>
     </VStack>

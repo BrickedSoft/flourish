@@ -1,6 +1,9 @@
 import { api } from "./config/apiConfig";
 import { api as apiData } from "../assets/data/server";
-import { RegistrationFormTypes } from "../types/RegistrationForm";
+import {
+  PostRegistrationFormClientTypes,
+  RegistrationFormTypes,
+} from "../types/RegistrationForm";
 import { CounselorTypes } from "../types/User";
 
 export const getRegistrationForm = async (): Promise<
@@ -10,7 +13,7 @@ export const getRegistrationForm = async (): Promise<
 };
 
 export const postRegistrationForm = async (
-  data: RegistrationFormTypes
+  data: PostRegistrationFormClientTypes
 ): Promise<void> =>
   await api.post(apiData.registrationForm, {
     ...data,

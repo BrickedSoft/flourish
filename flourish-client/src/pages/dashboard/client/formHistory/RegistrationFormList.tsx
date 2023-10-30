@@ -73,6 +73,7 @@ const RegistrationFormList = () => {
           bottom={0}
           left={"50%"}
           transform={"translateY(-50%)"}
+          pt={16}
         >
           {buttonAdd}
         </Center>

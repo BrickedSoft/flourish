@@ -10,6 +10,7 @@ import {
 import {
   RegistrationFormFields,
   RegistrationFormTypes,
+  PostRegistrationFormClientTypes,
 } from "../../types/RegistrationForm";
 import { options } from "../../assets/data/dashboard/registrationForm";
 
@@ -40,7 +41,12 @@ export const fetchRegistrationForm = createAsyncThunk(
 
 export const submitRegistrationForm = createAsyncThunk(
   "registrationForm/postRegistrationForm",
-  async (data: RegistrationFormTypes) => await postRegistrationForm(data)
+  async (data: RegistrationFormTypes) => {
+    const modifiedData = _.pickBy(data, _.identity);
+    return await postRegistrationForm(
+      modifiedData as PostRegistrationFormClientTypes
+    );
+  }
 );
 
 export const editRegistrationForm = createAsyncThunk(

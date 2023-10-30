@@ -38,8 +38,6 @@ const FilledQuestionnaireDetails = () => {
     }))
     .value();
 
-  console.log(filledQuestionnaire);
-
   useEffect(() => {
     if (status === Status.FULFILLED && !filledQuestionnaire)
       navigate(routes[404]);

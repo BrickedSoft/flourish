@@ -23,7 +23,7 @@ export enum RegistrationFormFields {
   COUNSELOR = "counselor",
 }
 
-export interface RegistrationFormTypes {
+export type RegistrationFormTypes = {
   [RegistrationFormFields.ID]: string;
   [RegistrationFormFields.NAME]: string;
   [RegistrationFormFields.DATE_TIME]: string;
@@ -46,7 +46,27 @@ export interface RegistrationFormTypes {
   [RegistrationFormFields.CREATED_AT]: string;
   [RegistrationFormFields.CLIENT]: string;
   [RegistrationFormFields.COUNSELOR]: string;
-}
+};
+
+export type PostRegistrationFormClientTypes = {
+  [RegistrationFormFields.ID]: string;
+  [RegistrationFormFields.NAME]: string;
+  [RegistrationFormFields.DATE_TIME]: string;
+  [RegistrationFormFields.GENDER]: Gender;
+  [RegistrationFormFields.MARITAL_STATUS]: MaritalStatus;
+  [RegistrationFormFields.OCCUPATION]: Occupation;
+  [RegistrationFormFields.OCCUPATION_OTHERS]?: string;
+  [RegistrationFormFields.DEPARTMENT]?: Department;
+  [RegistrationFormFields.PRESENT_ADDRESS]: string;
+  [RegistrationFormFields.HOME_DISTRICT]: string;
+  [RegistrationFormFields.MOBILE_NUMBER]: string;
+  [RegistrationFormFields.YOUR_PROBLEM]: string;
+  [RegistrationFormFields.REFERRED_BY]: ReferredBy;
+  [RegistrationFormFields.TYPE_OF_SERVICE]: TypeOfService;
+  [RegistrationFormFields.OFFICIAL_COMMENT]: string;
+  [RegistrationFormFields.SESSION_STATUS]: SessionStatus;
+  [RegistrationFormFields.CLIENT]: string;
+};
 
 export enum Gender {
   MALE = "male",

@@ -4,6 +4,7 @@ import _ from "lodash";
 import {
   deleteQuestion,
   deleteQuestionnaire,
+  getAllQuestionnaire,
   getFilledQuestionnaire,
   getQuestionnaire,
   postQuestion,
@@ -61,6 +62,56 @@ export const fetchQuestionnaire = createAsyncThunk(
   "questionnaire/getQuestionnaire",
   async (): Promise<{ [key: string]: QuestionnaireTypes }> => {
     const data = await getQuestionnaire();
+    const options = _.chain(data)
+      .map("options")
+      .map((value) =>
+        value
+          ? stringToObject(value, [
+              { key: "name", type: KeyTypes.String },
+              { key: "points", type: KeyTypes.Number },
+            ])
+          : []
+      )
+      .map((value) => {
+        return { options: value };
+      })
+      .value();
+
+    const evaluation_range = _.chain(data)
+      .map("evaluation_range")
+      .map((value) =>
+        value
+          ? stringToObject(value, [
+              { key: "name", type: KeyTypes.String },
+              { key: "points", type: KeyTypes.Number },
+            ])
+          : []
+      )
+      .map((value) => {
+        return { evaluation_range: value };
+      })
+      .value();
+
+    const omittedObject = _.map(
+      data,
+      (value) =>
+        _.omit(value, [
+          "options",
+          "evaluation_range",
+        ]) as unknown as QuestionnaireTypes
+    );
+
+    return _.keyBy(
+      _.merge(omittedObject, options, evaluation_range),
+      QuestionnaireKeys.ID
+    );
+  }
+);
+
+export const fetchAllQuestionnaire = createAsyncThunk(
+  "questionnaire/getQuestionnaire",
+  async (): Promise<{ [key: string]: QuestionnaireTypes }> => {
+    const data = await getAllQuestionnaire();
     const options = _.chain(data)
       .map("options")
       .map((value) =>

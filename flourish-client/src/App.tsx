@@ -38,7 +38,7 @@ import OverviewCounselor from "./pages/dashboard/counselor/overview";
 import SessionRequestCounselor from "./pages/dashboard/counselor/sessionRequest";
 import PendingFormListCounselor from "./pages/dashboard/counselor/sessionRequest/PendingFormList";
 import FormDetailsCounselor from "./pages/dashboard/counselor/FormDetails";
-import OverviewFormListCounselor from "./pages/dashboard/admin/overview/OverviewFormList";
+import OverviewFormListCounselor from "./pages/dashboard/counselor/overview/OverviewFormList";
 import OverviewFormListAdmin from "./pages/dashboard/admin/overview/OverviewFormList";
 import OverviewFormListClient from "./pages/dashboard/client/overview/OverviewFormList";
 

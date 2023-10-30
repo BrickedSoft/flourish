@@ -6,7 +6,7 @@ import { useAppDispatch } from "../../../../hooks/useStore";
 import { fetchRegistrationForm } from "../../../../store/actions/registrationFormActions";
 import {
   fetchFilledQuestionnaire,
-  fetchQuestionnaire,
+  fetchAllQuestionnaire,
 } from "../../../../store/actions/questionnaireActions/admin";
 
 const Overview = () => {
@@ -15,7 +15,7 @@ const Overview = () => {
   useEffect(() => {
     dispatch(fetchRegistrationForm());
     dispatch(fetchFilledQuestionnaire());
-    dispatch(fetchQuestionnaire());
+    dispatch(fetchAllQuestionnaire());
   }, [dispatch]);
 
   return (

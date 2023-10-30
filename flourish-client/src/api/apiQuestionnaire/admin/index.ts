@@ -18,6 +18,14 @@ export const getQuestionnaire = async (): Promise<ApiQuestionnaireTypes[]> => {
   return response.data;
 };
 
+export const getAllQuestionnaire = async (): Promise<
+  ApiQuestionnaireTypes[]
+> => {
+  const response = await api.get(apiData.allQuestionnaire, {});
+
+  return response.data;
+};
+
 export const postQuestionnaire = async (
   data: PostQuestionnaireTypes
 ): Promise<void> => {
