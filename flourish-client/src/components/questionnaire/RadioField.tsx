@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
+import { containerWidth } from "../../assets/data/dashboard/questionnaire";
 
 type FieldType = {
   [key: string]: string;
@@ -44,17 +45,12 @@ const RadioField: FC<PropsType> = ({
         fontSize={"xl"}
         color={"font.muted"}
         fontWeight={"medium"}
-        whiteSpace={"nowrap"}
+        lineHeight={"tall"}
       >
         {title}
       </FormLabel>
       <FormControl
         id={fieldName}
-        as={Grid}
-        gridTemplateColumns={"1fr auto"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        gap={16}
         isInvalid={errors[fieldName] ? true : false}
         isReadOnly={isReadOnly}
         pointerEvents={isReadOnly ? "none" : "auto"}
@@ -65,8 +61,9 @@ const RadioField: FC<PropsType> = ({
           render={({ field: { onChange } }) => (
             <RadioGroup onChange={onChange} defaultValue={value}>
               <Grid
+                w={`${options.length * containerWidth.options}px`}
                 gridTemplateColumns={`repeat(${options.length}, 1fr)`}
-                gap={24}
+                gap={16}
                 justifyContent={"center"}
                 alignItems={"center"}
               >
@@ -91,8 +88,9 @@ const RadioField: FC<PropsType> = ({
                       display={"flex"}
                       justifyContent={"center"}
                       sx={{
-                        h: 8,
-                        w: 8,
+                        h: 7,
+                        w: 7,
+                        borderColor: "primary.100",
                       }}
                       onMouseLeave={() => setIsOpen("false")}
                       onMouseEnter={() => setIsOpen(option)}

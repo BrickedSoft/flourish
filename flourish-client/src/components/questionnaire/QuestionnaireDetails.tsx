@@ -22,7 +22,10 @@ import _ from "lodash";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { filledQuestionnaireData } from "../../assets/data/dashboard/questionnaire";
+import {
+  containerWidth,
+  filledQuestionnaireData,
+} from "../../assets/data/dashboard/questionnaire";
 import { useAppDispatch } from "../../hooks/useStore";
 import { submitFilledQuestionnaire } from "../../store/actions/questionnaireActions/client";
 import {
@@ -66,7 +69,7 @@ const FieldHeading: FC<FieldHeadingType> = ({ title, ...rest }) => {
   return (
     <Heading
       as={"h1"}
-      fontSize={"xl"}
+      fontSize={"lg"}
       color={"font.heroLight"}
       fontWeight={"semibold"}
       textAlign={"center"}
@@ -209,8 +212,8 @@ const QuestionnaireDetails: FC<PropsType> = ({
           </Buttons>
 
           <Grid
-            templateColumns={"minmax(auto, 1fr) minmax(auto, 2fr)"}
-            columnGap={128}
+            templateColumns={"1fr auto"}
+            columnGap={64}
             rowGap={40}
             alignItems={"center"}
           >
@@ -223,8 +226,9 @@ const QuestionnaireDetails: FC<PropsType> = ({
 
             <GridItem
               as={Grid}
+              w={`${fieldOptions.length * containerWidth.options}px`}
               gridTemplateColumns={`repeat(${fieldOptions.length}, 1fr)`}
-              gap={24}
+              gap={16}
               justifyContent={"center"}
               alignItems={"start"}
             >
@@ -236,8 +240,8 @@ const QuestionnaireDetails: FC<PropsType> = ({
         </Flex>
 
         <Grid
-          templateColumns={"minmax(auto, 1fr) minmax(auto, 2fr)"}
-          columnGap={128}
+          templateColumns={"1fr auto"}
+          columnGap={64}
           rowGap={40}
           alignItems={"center"}
           mt={-36}

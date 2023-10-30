@@ -115,3 +115,7 @@ export const filledQuestionnaireData = {
     },
   },
 };
+
+export const containerWidth = {
+  options: 110,
+};
