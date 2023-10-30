@@ -6,5 +6,5 @@ urlpatterns = [
   path("questionnaire/", views.QuestionnaireView.as_view()),
   path("questionnaire/<str:id>/", views.QuestionnaireView.as_view()),
   path("filledQuestionnaire/", views.FilledQuestionnaireView.as_view()),
-
+  path("questionnaireAll/", views.AllQuestionnaireView.as_view()),
   ]
