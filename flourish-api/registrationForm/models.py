@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-
+from django.utils import timezone
 # Create your models here.
 
 class RegistrationForm(models.Model):
@@ -29,10 +29,10 @@ class RegistrationForm(models.Model):
     
     suggested_questionnaire = models.TextField(blank=True, default="")
     session_status = models.CharField(max_length=255, blank=True, default="")
-    session_time = models.DateTimeField(auto_now_add=True)
+    session_time = models.DateTimeField(blank=True ,default=timezone.now)
     session_location = models.CharField(max_length=255, blank=True, default="")
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(blank=True ,default=timezone.now)
     
     class Meta:
         ordering = ['created_at']

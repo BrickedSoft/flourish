@@ -14,6 +14,7 @@ class SignupSerializer(serializers.Serializer):
 
 
 class CounselorSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(source='user.username')
     class Meta:
         model = Counselor
         fields = "__all__"
