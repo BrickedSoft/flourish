@@ -98,6 +98,15 @@ class QuestionnaireView(APIView):
 
         return Response(status=status.HTTP_200_OK)
 
+class AllQuestionnaireView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        adminCounselor = get_object_or_404(AdminCounselor, user=request.user)
+        questionnaires = Questionnaire.objects.all()
+        serializer = QuestionnaireViewSerializer(questionnaires, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 class FilledQuestionnaireView(APIView):
     authentication_classes = [TokenAuthentication]
